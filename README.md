@@ -33,39 +33,23 @@ Docker Compose version v2.24.6-desktop.1
 
 `app`コンテナ、`web`コンテナ、`db`コンテナ が作成される。
 
-```container
-% make app
-docker compose exec app bash
+`src/vite.config.js`を修正
 
-root@___:/workspace# node -v
-v20.12.2
-
-root@___:/workspace# npm -v
-v10.5.0
-
-root@___:/workspace#
-v10.5.0
 ```
-
-### ViteでReact を導入
-
-[Vite](https://ja.vitejs.dev) は、高速なビルドツール  
-Vue.js の作者である Evan You氏が開発。
-
-```container
-root@___:/workspace# npm create vite
-Ok to proceed? (y) y
-
-? Project name: react
-
-? Select a framework: React
-
-? Select a variant: JavaScript
-
-root@___:/workspace# cd react && npm install
-
-root@___:/workspace/react# npm run dev
-  ➜  Local:   http://localhost:5173/
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: 'resources/js/app.jsx',
+            ssr: 'resources/js/ssr.jsx',
+            refresh: true,
+        }),
+        react(),
+    ],
+    server: {
+      host: true,
+      hmr: {
+          host: 'localhost',
+      },
+  },
+});
 ```
-
-`localhost:5173` にアクセスし、`Vite + React` の初期画面が表示されていればOK。
