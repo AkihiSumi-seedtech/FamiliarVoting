@@ -1,6 +1,7 @@
 volumes:
   db-store:
   psysh-store:
+  pma-session-store:
 
 configs:
   db-config:
@@ -69,3 +70,14 @@ services:
       - MYSQL_USER=${DB_USERNAME:-phper}
       - MYSQL_PASSWORD=${DB_PASSWORD:-secret}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-secret}
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=secret
+    ports:
+      - 8080:8000
+    volumes:
+      - pma-session-store:/sessions
