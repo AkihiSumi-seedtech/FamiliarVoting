@@ -24,14 +24,14 @@ Docker Compose version v2.24.6-desktop.1
 3. プロジェクト作成コマンドを実行
 
 ```zsh
-% git clone https://github.com/ucan-lab/docker-laravel.git <プロジェクト名>
+% git clone https://github.com/AkihiSumi-seedtech/FamiliarVoting.git
 
-% cd <プロジェクト名>
+% cd FamiliarVoting
 
 % make create-project
 ```
 
-`app`コンテナ、`web`コンテナ、`db`コンテナ、`mailpit`コンテナ が作成される。
+`app`コンテナ、`web`コンテナ、`db`コンテナ が作成される。
 
 ```container
 % make app
