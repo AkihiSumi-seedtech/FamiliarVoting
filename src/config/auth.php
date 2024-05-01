@@ -40,15 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'admin' => [
+        'admin' =>[
             'driver' => 'session',
             'provider' => 'admins',
         ],
-        // 'api' => [
-        //     'driver' => 'token',
-        //     'provider' => 'voters',
-        //     'hash' => false,
-        // ]
     ],
 
     /*
@@ -73,13 +68,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'voters' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Voter::class,
-        // ],
-
-        'admins' => [
+        'admins' =>[
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
@@ -116,15 +105,9 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        // 'voters' => [
-        //     'provider' => 'voters',
-        //     'table' => 'password_reset_tokens',
-        //     'expire' => 60,
-        //     'throttle' => 60,
-        // ],
         'admins' =>[
-            'provider' => 'users',
-            'table' => 'password_reset_tokens',
+            'provider' => 'admins',
+            'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

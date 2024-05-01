@@ -20,7 +20,7 @@ export default function ConfirmPassword() {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('password.confirm'));
+        post(route('admin.password.confirm'));
     };
 
     return (
@@ -49,7 +49,7 @@ export default function ConfirmPassword() {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ml-4" procrssing={processing}>
                         Confirm
                     </PrimaryButton>
                 </div>
