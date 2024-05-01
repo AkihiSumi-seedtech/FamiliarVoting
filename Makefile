@@ -15,6 +15,10 @@ create-project:
 	docker compose exec app php artisan key:generate
 	docker compose exec app php artisan storage:link
 	docker compose exec app chmod -R 777 storage bootstrap/cache
+	docker compose exec app composer require laravel/breeze --dev
+	docker compose exec app php artisan breeze:install
+	docker compose exec app npm install
+	docker compose exec app npm run build
 	@make fresh
 build:
 	docker compose build

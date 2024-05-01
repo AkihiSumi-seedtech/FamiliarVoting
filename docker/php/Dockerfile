@@ -40,7 +40,7 @@ RUN <<EOF
     apt-get update
     apt-get install -y nodejs
     apt-get clean
-    npm install -g npm@10.5.0
+    npm install -g npm@10.6.0
 EOF
 
 FROM base AS development
