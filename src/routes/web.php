@@ -42,5 +42,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
         return Inertia::render('Admin/Dashboard');
     })->middleware(['auth:admin', 'verified'])->name('dashboard');
 
+    Route::get('/election/create', function () {
+        return Inertia::render('Admin/election/CreateElection');
+    })->middleware(['auth:admin', 'verified'])->name('create_election');
+
     require __DIR__.'/admin.php';
 });
