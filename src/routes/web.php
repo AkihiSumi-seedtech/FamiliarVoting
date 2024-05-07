@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Election;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,9 +44,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         return Inertia::render('Admin/Dashboard');
     })->middleware(['auth:admin', 'verified'])->name('dashboard');
 
-    Route::get('/election/create', function () {
-        return Inertia::render('Admin/election/CreateElection');
-    })->middleware(['auth:admin', 'verified'])->name('create_election');
+    Route::resource('election', ElectionController::class);
+
+    // Route::get('/election/overview', function (Election $election) {
+    //     return Inertia::render('Admin/election/Overview', ['election' => $election]);
+    // })->middleware(['auth:admin', 'verified'])->name('overview');
 
     require __DIR__.'/admin.php';
 });
