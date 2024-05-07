@@ -1,5 +1,11 @@
 
 import React, { useState } from 'react';
+import candidatesData from './Can.json';
+
+
+console.log(candidatesData);
+
+import { fromJSON } from 'postcss';
 
 function Vote({ auth }) {
   const initializedData = {
@@ -14,24 +20,17 @@ function Vote({ auth }) {
   };
 
   const handleClick = () => {
-    // どれか一つのチェックボックスにチェックが入っているかどうかをチェック
     const isCheckboxChecked = data.themeColor !== "default";
 
-    // チェックが入っている場合はアラートを表示し、入っていない場合は投票処理を実行
     if (isCheckboxChecked) {
-      // アラートを表示
       
       const confirmVote = window.confirm("投票後の変更はできません。よろしいですか？");
       if (confirmVote) {
-        // 「はい」が選択された場合の処理
         window.location.href = '/thanks';
       } else {
-        // 「キャンセル」が選択された場合の処理
-        // 何もしない
       }
     } else {
-      // チェックボックスが選択されていない場合の処理
-      alert("少なくとも1つのチェックボックスを選択してください。");
+      alert("未選択です。");
     }
   };
 
