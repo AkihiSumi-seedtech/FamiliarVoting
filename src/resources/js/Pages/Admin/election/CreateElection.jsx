@@ -9,10 +9,14 @@ import React from 'react'
 function CreateElection() {
     const [currentDateTime, futureDateTime] = useDateTime()
 
+    function handleSubmit(e) {
+
+    }
+
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <Head title='Create Election' />
-            
+
             <div className='mb-3'>
                 <Link href="/">
                     <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
@@ -25,7 +29,7 @@ function CreateElection() {
 
             <div className="w-full sm:max-w-xl mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-6">
                 <div className='p-4'>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <InputLabel htmlFor="election_name" value="選挙名" className='font-extrabold' />
 
