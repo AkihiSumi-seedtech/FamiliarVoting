@@ -31,12 +31,17 @@ Route::get('/vote', function () {
 
 Route::get('/thanks', function () {
     return Inertia::render('User/Thanks');
-})->middleware(['auth', 'verified'])->name('thanks');
+})->middleware(['auth', 'verified'])->name('vote');
 
 
 Route::get('/dashboard', function () {
     return Inertia::render('User/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/electioncard', function () {
+    return Inertia::render('Admin/ElectionCard');
+})->middleware(['auth:admin', 'verified'])->name('electioncard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
