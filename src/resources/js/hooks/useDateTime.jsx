@@ -33,7 +33,7 @@ const useDateTime = () => {
             futureAdjustedMinutes = 0;
         } else {
             futureAdjustedMinutes = 0;
-            futureDate.setHours(futureDate.getHours() + 1); // 次の時間の0分にする
+            // futureDate.setHours(futureDate.getHours() + 1); // 次の時間の0分にする
         }
         const futureYear = futureDate.getFullYear();
         const futureMonth = String(futureDate.getMonth() + 1).padStart(2, '0');

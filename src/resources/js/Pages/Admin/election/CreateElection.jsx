@@ -2,17 +2,25 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import CreateElectionButton from '@/Components/elements/CreateElectionButton';
-import useDateTime from '@/hooks/useDateTime';
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, useForm } from '@inertiajs/react'
 import React from 'react'
 
 function CreateElection() {
-    const [currentDateTime, futureDateTime] = useDateTime()
+    const { data, setData, errors, post } = useForm({
+        election_name: "",
+        start_date: "",
+        end_date: "",
+    })
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        post(route("admin.election.store"))
+    }
 
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <Head title='Create Election' />
-            
+
             <div className='mb-3'>
                 <Link href="/">
                     <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
@@ -25,14 +33,14 @@ function CreateElection() {
 
             <div className="w-full sm:max-w-xl mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-6">
                 <div className='p-4'>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <InputLabel htmlFor="election_name" value="選挙名" className='font-extrabold' />
 
                             <TextInput
                                 id="election_name"
                                 name="election_name"
-                                // value={data.email}
+                                value={data.election_name}
                                 className="mt-1 block w-full"
                                 autoComplete="name"
                                 isFocused={true}
@@ -50,7 +58,7 @@ function CreateElection() {
                                     id="start_date"
                                     type="datetime-local"
                                     name="start_date"
-                                    value={currentDateTime}
+                                    value={data.start_date}
                                     className="mt-1 block w-full"
                                     autoComplete="current-start-date"
                                     onChange={(e) => setData('start_date', e.target.value)}
@@ -65,8 +73,8 @@ function CreateElection() {
                                 <TextInput
                                     id="end_date"
                                     type="datetime-local"
-                                    name="endt_date"
-                                    value={futureDateTime}
+                                    name="end_date"
+                                    value={data.end_date}
                                     className="mt-1 block w-full"
                                     autoComplete="current-end-date"
                                     onChange={(e) => setData('end_date', e.target.value)}
