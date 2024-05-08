@@ -6,7 +6,7 @@ function Overview() {
 
     return (
         <div>
-            <Head title='Dashboard' />
+            <Head title='Overview' />
             <div>{election.start_date}</div>
         </div>
     )
