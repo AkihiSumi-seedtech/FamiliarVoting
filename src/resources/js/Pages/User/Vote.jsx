@@ -100,6 +100,8 @@ function Vote({ auth }) {
       <button onClick={() => handleClick()} className="block mx-auto mt-4 px-6 py-3 bg-orange-500 text-white font-bold rounded-full">
         投票する
         </button>
+       
+        
     
     </>
   );
