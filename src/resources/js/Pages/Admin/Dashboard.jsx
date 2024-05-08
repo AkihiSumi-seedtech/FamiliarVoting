@@ -2,36 +2,37 @@ import AddButton from '@/Components/AddButton';
 import AuthenticatedLayout from '@/Layouts/AdminAuthLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
 
-export default function Dashboard({ auth, props }) {
+export default function Dashboard(props) {
     const { elections } = usePage().props
+
+    console.log(usePage().props)
 
     return (
         <AuthenticatedLayout
-            user={auth.user}
-            // header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            auth={props.auth}
+            user={props.auth.user}
         >
             <Head title="Dashboard" />
 
-            {/* {elections && elections.map((item) => (
+            {elections && elections.map((item) => (
                 <div className='mb-32'>
                     <div className='flex-auto p-4'>
                         <div className='flex flex-wrap -mr-[15px] -ml-[15px] justify-between items-center text-base'>
                             <div className='relative w-full pr-[15px] pl-[15px] font-bold mb-1 basis-1/2 '>
                                 <div className='items-center'>
                                     <div className='mr-auto'>
-                                        <h6>{item.election_name}</h6>
-                                    </div>
-                                    <div>
-                                        Building
+                                        <Link>
+                                            <h6>{item.election_name}</h6>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            ))} */}
+            ))}
 
-            {/* {elections.length === 0 && ( */}
+            {elections.length === 0 &&(
                 <div className='max-w-[720px] relative mr-auto ml-auto'>
                     <div className='flex flex-wrap -mr-[15px] -ml-[15px] content-center items-center h-[calc(100vh-60px-50px)]'>
                         <div className='basis-full max-w-full self-center text-center'>
@@ -43,7 +44,7 @@ export default function Dashboard({ auth, props }) {
                         </div>
                     </div>
                 </div>
-            {/* )} */}
+            )}
         </AuthenticatedLayout>
     );
 }

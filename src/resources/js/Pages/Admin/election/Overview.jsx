@@ -7,7 +7,7 @@ function Overview() {
     return (
         <div>
             <Head title='Dashboard' />
-            <div>{election.election_name}</div>
+            <div>{election.start_date}</div>
         </div>
     )
 }

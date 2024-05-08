@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Election;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +15,8 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        //
+        $elections = Election::all();
+        return Inertia::render('Admin/Dashboard', ['elections' => $elections]);
     }
 
     /**
