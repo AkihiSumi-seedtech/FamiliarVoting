@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('elections', function (Blueprint $table) {
             $table->id();
-            $table->string('election_name', 50);
+            $table->string('election_name');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->string('status');
+            $table->longText('description')->nullable();
+            $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

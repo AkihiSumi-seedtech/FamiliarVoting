@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreElectionRequest;
+use App\Http\Resources\ElectionResource;
+use App\Models\Admin;
 use App\Models\Election;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class ElectionController extends Controller
@@ -15,8 +18,23 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        $elections = Election::all();
-        return Inertia::render('Admin/Dashboard', ['elections' => $elections]);
+        $query = Election::query();
+
+        if (request("election_name")) {
+            $query->where("election_name", "like", "%" . request("election_name") . "%");
+        }
+        if (request("status")) {
+            $query->where("status", request("status"));
+        }
+
+        $elections = $query->paginate(10);
+
+        return inertia('Admin/Dashboard', [
+            'elections' => ElectionResource::collection($elections),
+            'title' => 'Dashboard',
+        ]);
+        // $elections = ElectionResource::all();
+        // return Inertia::render('Admin/Dashboard', ['elections' => $elections]);
     }
 
     /**
@@ -30,25 +48,25 @@ class ElectionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreElectionRequest $request)
     {
-        Validator::make($request->all(), [
-            'election_name' => 'required|string:max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date'
-        ]);
+        $data = $request->validate();
 
-        $election = Election::create($request->all());
+        $data['admin_id'] = Auth::id();
 
-        // $electionId = $election->id;
-        // return redirect()->route('admin.election.overview', ['id' => $electionId]);
+        Election::create($data);
 
-        // return redirect()->route('admin.election.overview', ['election' => $election]);
-        return Inertia::render('Admin/election/Overview', [
-            'election' => $election
-        ]);
+        return to_route('admin.election.index')
+            ->with('success', 'Election was created');
+        // Validator::make($request->all(), [
+        //     'election_name' => 'required|string:max:255',
+        //     'start_date' => 'required|date',
+        //     'end_date' => 'required|date'
+        // ])->validate();
 
-        // return Inertia::location(route('admin.election.overview', ['id' => $election->id]));
+        // $election = Election::create($request->all());
+
+        // return to_route('admin.election.index');
     }
 
     /**
@@ -57,7 +75,8 @@ class ElectionController extends Controller
     public function show(Election $election)
     {
         return Inertia::render('Admin/election/Overview', [
-            'election' => $election
+            'election' => new ElectionResource($election),
+            'success' => session('success'),
         ]);
     }
 

@@ -1,19 +1,16 @@
 import AddButton from '@/Components/AddButton';
 import AuthenticatedLayout from '@/Layouts/AdminAuthLayout';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
-export default function Dashboard(props) {
-    const { elections } = usePage().props
-
-
+export default function Dashboard({auth, elections}) {
+    console.log(elections)
     return (
         <AuthenticatedLayout
-            auth={props.auth}
-            user={props.auth.user}
+            user={auth.user}
         >
             <Head title="Dashboard" />
 
-            {elections && elections.length > 0 && elections.map((item) => (
+            {elections.data.map((item) => (
                 <div className='mb-32'>
                     <div className='flex-auto p-4'>
                         <div className='flex flex-wrap -mr-[15px] -ml-[15px] justify-between items-center text-base'>
@@ -31,7 +28,7 @@ export default function Dashboard(props) {
                 </div>
             ))}
 
-            {(!elections || elections.length === 0) &&(
+            {elections.length === 0 &&(
                 <div className='max-w-[720px] relative mr-auto ml-auto'>
                     <div className='flex flex-wrap -mr-[15px] -ml-[15px] content-center items-center h-[calc(100vh-60px-50px)]'>
                         <div className='basis-full max-w-full self-center text-center'>

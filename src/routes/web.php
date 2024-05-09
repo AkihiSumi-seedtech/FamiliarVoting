@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Election;
@@ -17,6 +18,8 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::resource('election', ElectionController::class)->middleware(['auth:admin']);
+// Route::resource('elections', ElectionController::class);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -56,15 +59,14 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::prefix('admin')->name('admin.')->group(function(){
-    Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->middleware(['auth:admin', 'verified'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
-    Route::resource('election', ElectionController::class)->middleware(['auth:admin', 'verified']);
+    Route::resource('election', ElectionController::class);
 
-    // Route::get('/election/overview', function (Election $election) {
-    //     return Inertia::render('Admin/election/Overview', ['election' => $election]);
-    // })->middleware(['auth:admin', 'verified'])->name('overview');
+    Route::get('/election/overview', function (Election $election) {
+        return Inertia::render('Admin/election/Overview', ['election' => $election]);
+    })->middleware(['auth:admin', 'verified'])->name('overview');
 
     require __DIR__.'/admin.php';
 });
