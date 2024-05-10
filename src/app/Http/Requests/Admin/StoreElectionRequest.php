@@ -23,11 +23,33 @@ class StoreElectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'election_name' => ['required', 'max:200'],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date'],
-            'status' => ['nullable', Rule::in(['building', 'scheduling', 'running'])],
-            "description" => ['nullable', 'string'],
+            'election_name' => ['required', 'max:50'],
+            'start_date' => 'required|date|after_or_equal:now',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'status' => 'string',
+            'description' => ['nullable', 'string'],
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'start_date.required' => '開始日時を入力してください。',
+            'start_date.after_or_equal' => '開始日時は現在日時以降にしてください。',
+            'end_date.required' => '終了日時を入力してください。',
+            'end_date.after_or_equal' => '終了日時は開始日時より後にしてください。',
+        ];
+    }
+
+    public function validationData()
+    {
+        $data = parent::validationData();
+
+        // もし status が空ならば、デフォルト値として 'building' を設定する
+        if (!isset($data['status'])) {
+            $data['status'] = 'building';
+        }
+
+        return $data;
     }
 }

@@ -18,8 +18,7 @@ class Election extends Model
         'admin_id',
     ];
 
-    public function adminId()
-    {
+    public function adminId() {
         return $this->belongsTo(Admin::class, 'admin_id');
     }
 }

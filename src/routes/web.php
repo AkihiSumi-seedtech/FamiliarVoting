@@ -58,11 +58,12 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::prefix('admin')->name('admin.')->group(function(){
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
-
+Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'verified'])->group(function(){
     Route::resource('election', ElectionController::class);
+    Route::get('/dashboard', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('dashboard');
+
 
     Route::get('/election/overview', function (Election $election) {
         return Inertia::render('Admin/election/Overview', ['election' => $election]);

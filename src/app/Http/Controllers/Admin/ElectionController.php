@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
 use App\Http\Resources\ElectionResource;
-use App\Models\Admin;
 use App\Models\Election;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class ElectionController extends Controller
@@ -20,21 +20,25 @@ class ElectionController extends Controller
     {
         $query = Election::query();
 
-        if (request("election_name")) {
-            $query->where("election_name", "like", "%" . request("election_name") . "%");
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", 'desc');
+
+        if (request('election_name')) {
+            $query->where('election_name', 'like', '%' . request('election_name') . '%');
         }
-        if (request("status")) {
-            $query->where("status", request("status"));
+        if (request('status')) {
+            $query->where('status', 'like', '%' . request('status') . '%' );
         }
 
-        $elections = $query->paginate(10);
+        $elections = $query->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
 
         return inertia('Admin/Dashboard', [
             'elections' => ElectionResource::collection($elections),
-            'title' => 'Dashboard',
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
         ]);
-        // $elections = ElectionResource::all();
-        // return Inertia::render('Admin/Dashboard', ['elections' => $elections]);
     }
 
     /**
@@ -42,7 +46,7 @@ class ElectionController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/election/CreateElection');
+        return Inertia('Admin/election/CreateElection', []);
     }
 
     /**
@@ -50,23 +54,13 @@ class ElectionController extends Controller
      */
     public function store(StoreElectionRequest $request)
     {
-        $data = $request->validate();
+        $data = $request->validated();
 
         $data['admin_id'] = Auth::id();
 
         Election::create($data);
 
-        return to_route('admin.election.index')
-            ->with('success', 'Election was created');
-        // Validator::make($request->all(), [
-        //     'election_name' => 'required|string:max:255',
-        //     'start_date' => 'required|date',
-        //     'end_date' => 'required|date'
-        // ])->validate();
-
-        // $election = Election::create($request->all());
-
-        // return to_route('admin.election.index');
+        return to_route('admin.election.index')->with('success', 'Election created success');
     }
 
     /**

@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ElectionResource extends JsonResource
 {
@@ -16,7 +18,6 @@ class ElectionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // return parent::toArray($request);
         return [
             'id' => $this->id,
             'election_name' => $this->election_name,
@@ -24,6 +25,7 @@ class ElectionResource extends JsonResource
             'end_date' => (new Carbon($this->end_date))->format('Y-m-d'),
             'status' => $this->status,
             'description' => $this->description,
+            'admin_id' => Auth::id(),
         ];
     }
 }

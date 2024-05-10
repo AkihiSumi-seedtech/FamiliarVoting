@@ -12,7 +12,7 @@ function CreateElection() {
         end_date: "",
     })
 
-    function handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault()
         post(route("admin.election.store"))
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,16 +17,17 @@ class ElectionFactory extends Factory
      */
     public function definition(): array
     {
+        $startDate = $this->faker->dateTimeBetween('1 day', '+1 year');
+        $endDate = Carbon::parse($startDate)->addWeek();
+
         return [
-            'name' => fake()->sentence(),
-            'start_date' => fake()->dateTime('now'),
-            'end_date' => fake()->dateTime('now', '+1 year'),
-            'status' => fake()->randomElement(['building', 'scheduling', 'running']),
-            'description' => fake()->realText(),
-            'created_by' => 1,
-            'updated_by' => 1,
-            'created_by' => time(),
-            'updated_by' => time(),
+            'election_name' => $this->faker->sentence(),
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'status' => $this->faker->randomElement(['building', 'scheduling', 'running']),
+            'admin_id' => 1,
+            'created_at' => time(),
+            'updated_at' => time(),
         ];
     }
 }
