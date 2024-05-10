@@ -48,6 +48,6 @@ class RegisteredUserController extends Controller
         Auth::guard('admin')->login($admin);
 
         // return redirect(RouteServiceProvider::ADMIN_HOME);
-        return redirect(route('admin.dashboard', absolute: false));
+        return redirect(route('admin.election.index', absolute: false));
     }
 }
