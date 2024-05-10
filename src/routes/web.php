@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Election;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

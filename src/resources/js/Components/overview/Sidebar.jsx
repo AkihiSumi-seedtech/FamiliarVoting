@@ -11,10 +11,10 @@ function Sidebar({ elections }) {
             </div>
             <div className='w-full text-white p-0 mt-2'>
                 <ul className='flex flex-wrap pl-0 list-none flex-col mb-6 text-base'>
-                    <li className='list-item font-base active:bg-[#141d28] active:rounded aria-selected:bg-[#141d28]' aria-selected="true">
+                    <li className='list-item font-base active:bg-[#141d28] active:rounded' aria-selected="true">
                         <Link className='block py-1 px-14'>概要</Link>
                     </li>
-                    <li className='font-base active:bg-[#141d28] active:rounded aria-selected:bg-[#141d28]' aria-selected="true">
+                    <li className='font-base active:bg-[#141d28] active:rounded' aria-selected="true">
                         <Link className='block py-1 px-14'>投票者</Link>
                     </li>
                     <li className='block font-base active:bg-[#141d28] active:rounded' aria-selected="true">
