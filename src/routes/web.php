@@ -55,12 +55,12 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::prefix('admin')->name('admin.')->group(function(){
+Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'verified'])->group(function(){
+    Route::resource('election', ElectionController::class);
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
-    })->middleware(['auth:admin', 'verified'])->name('dashboard');
+    })->name('dashboard');
 
-    Route::resource('election', ElectionController::class)->middleware(['auth:admin', 'verified']);
 
     // Route::get('/election/overview', function (Election $election) {
     //     return Inertia::render('Admin/election/Overview', ['election' => $election]);
