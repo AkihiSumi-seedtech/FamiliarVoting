@@ -68,8 +68,9 @@ class ElectionController extends Controller
      */
     public function show(Election $election)
     {
-        return Inertia::render('Admin/election/Overview', [
-            'election' => $election
+        return Inertia('Admin/election/Overview', [
+            'election' => new ElectionResource($election),
+            'success' => session('success'),
         ]);
     }
 

@@ -1,3 +1,4 @@
+import Sidebar from '@/Components/overview/Sidebar'
 import { Head, usePage } from '@inertiajs/react'
 import React from 'react'
 
@@ -7,7 +8,8 @@ function Overview() {
     return (
         <div>
             <Head title='Overview' />
-            <div>{election.start_date}</div>
+
+            <Sidebar />
         </div>
     )
 }
