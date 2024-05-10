@@ -58,16 +58,5 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'verified'])->group(function(){
-    Route::resource('election', ElectionController::class);
-    Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->name('dashboard');
 
-
-    Route::get('/election/overview', function (Election $election) {
-        return Inertia::render('Admin/election/Overview', ['election' => $election]);
-    })->middleware(['auth:admin', 'verified'])->name('overview');
-
-    require __DIR__.'/admin.php';
-});
+require __DIR__.'/admin.php';
