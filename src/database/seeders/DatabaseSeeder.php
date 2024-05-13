@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Election;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,12 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory(10)->create();
 
         Admin::factory()->create([
             'id' => 1,
             'name' => 'Akihi',
-            'email' => 'akih@dev.com',
+            'email' => 'akihi@dev.com',
             'password' => bcrypt('123.321aa'),
             'email_verified_at' => time(),
         ]);

@@ -21,7 +21,7 @@ class ElectionFactory extends Factory
         $endDate = Carbon::parse($startDate)->addWeek();
 
         return [
-            'election_name' => $this->faker->sentence(),
+            'election_name' => $this->faker->sentence(20),
             'start_date' => $startDate,
             'end_date' => $endDate,
             'status' => $this->faker->randomElement(['building', 'scheduling', 'running']),
