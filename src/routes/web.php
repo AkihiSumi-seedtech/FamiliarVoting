@@ -44,16 +44,12 @@ Route::get('/electioncard', function () {
     return Inertia::render('Admin/ElectionCard');
 })->middleware(['auth:admin', 'verified'])->name('electioncard');
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
 require __DIR__.'/auth.php';
-
 
 require __DIR__.'/admin.php';
