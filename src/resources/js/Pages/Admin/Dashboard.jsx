@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AdminAuthLayout';
 import { Head, Link } from '@inertiajs/react';
 import ElectionCard from './ElectionCard';
 
+
 export default function Dashboard({auth, elections}) {
     return (
         <AuthenticatedLayout
@@ -18,10 +19,11 @@ export default function Dashboard({auth, elections}) {
                             <div className='relative w-full pr-[15px] pl-[15px] font-bold mb-1 basis-1/2 '>
                                 <div className='items-center'>
                                     <div className='mr-auto'>
+                                    <Link href={route("admin.election.show", item.id)}>
                                     <ElectionCard electionName={item.election_name} 
                                     electionStartDate={item.start_date} 
                                     electionEndDate={item.end_date}/> 
-
+                                    </Link>
                                     </div>
                                 </div>
                             </div>
