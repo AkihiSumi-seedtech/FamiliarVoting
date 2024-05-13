@@ -1,5 +1,9 @@
-export default function ElectionCard({ electionName, electionStartDate, electionEndDate }) {
+import { Link } from "react-router-dom"
+
+export default function ElectionCard({ electionName, electionStartDate, electionEndDate}) {
   return (
+
+  
     <button id="main" className="p-2 justify-around flex items-center ml-32 h-48 w-480  bg-white-200 border-solid border-2 border-bg-slate-500 rounded-lg">
       
       <div>
@@ -22,6 +26,8 @@ export default function ElectionCard({ electionName, electionStartDate, election
         <div className="border-solid border-2 border-gray bg-white py-0.3 w-32 pt-5 text-center rounded-lg font-bold">
           {electionEndDate}
           <div className="py-4 w-32 mt-10 flex flex-col font-bold">日付</div>
+          
+     
         </div>
       </div>
     </button>
