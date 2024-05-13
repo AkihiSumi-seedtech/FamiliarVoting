@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ElectionController;
+//use App\Http\Controllers\CandidatesController;
+use App\Http\Controllers\Admin\CandidatesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -54,6 +56,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+        Route::get('candidates', [CandidatesController::class, 'candidates'])->name('candidates');
     });
 
 });

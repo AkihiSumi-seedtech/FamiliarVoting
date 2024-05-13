@@ -18,7 +18,7 @@ function Sidebar({ elections }) {
                         <Link className='block py-1 px-14'>投票者</Link>
                     </li>
                     <li className='block font-base active:bg-[#141d28] active:rounded' aria-selected="true">
-                        <Link className='block py-1 px-14'>立候補者</Link>
+                    <Link href={route('admin.candidates')} className='block py-1 px-14'>立候補者</Link>
                     </li>
                     <li className='block font-base active:bg-[#141d28] active:rounded' aria-selected="true">
                         <Link className='block py-1 px-14'>結果</Link>
