@@ -1,7 +1,7 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
-import CreateElectionButton from '@/Components/elements/CreateElectionButton';
+import CreateElectionButton from '@/Components/dashboard/CreateElectionButton';
 import { Head, Link, useForm } from '@inertiajs/react'
 import React from 'react'
 

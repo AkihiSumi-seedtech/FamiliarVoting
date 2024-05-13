@@ -10,6 +10,8 @@ function Overview() {
             <Head title='Overview' />
 
             <Sidebar />
+
+            <section ></section>
         </div>
     )
 }
