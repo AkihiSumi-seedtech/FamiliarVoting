@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import React from 'react'
 import MenuIcon from './MenuIcon'
 
-const MenuItem = ({ icon, link, text }) => {
+const MenuItem = ({ icon, link, text, href }) => {
     const isActive = route().current(link + '*')
 
     const iconClasses = classNames('w-4 h-4 mr-2', {
@@ -18,7 +18,7 @@ const MenuItem = ({ icon, link, text }) => {
 
     return (
         <div className='mb-4'>
-            <Link className='flex items-center group py-3'>
+            <Link className='flex items-center group py-3' href={href}>
                 <MenuIcon name={icon} className={iconClasses} />
                 <div className={textClass}>{text}</div>
             </Link>
