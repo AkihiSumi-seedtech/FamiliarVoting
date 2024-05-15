@@ -59,10 +59,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
         //Route::get('candidates', [CandidateController::class, 'candidates'])->name('candidates');
         //Route::resource('candidates', CandidateController::class);
 
-    Route::controller(CandidateController::class)->group(function(){
-     Route::get('candidates', 'index')-> name('candidates.index');
-     Route::post('candidates', 'import')->name('candidates.import');
-});
-
+         Route::controller(CandidateController::class)->group(function(){
+             Route::get('candidates', 'index')-> name('candidates.index');
+            Route::post('candidates', 'import')->name('candidates.import');
+        });
     });
 });
