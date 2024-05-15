@@ -56,6 +56,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-        Route::get('candidates', [CandidateController::class, 'candidates'])->name('candidates');
+        //Route::get('candidates', [CandidateController::class, 'candidates'])->name('candidates');
+        //Route::resource('candidates', CandidateController::class);
+
+         Route::controller(CandidateController::class)->group(function(){
+             Route::get('candidates', 'index')-> name('candidates.index');
+            Route::post('candidates', 'import')->name('candidates.import');
+        });
     });
 });
