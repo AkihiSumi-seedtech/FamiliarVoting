@@ -1,7 +1,7 @@
-import MainMenu from '@/Components/overview/MainMenu'
-import TopHeader from '@/Components/overview/TopHeader'
+import TopHeader from '@/Layouts/Navbar/TopHeader'
 import { Head } from '@inertiajs/react'
 import React from 'react'
+import MainMenu from './Navbar/MainMenu'
 
 const ElectionLayout = ({ title, children }) => {
     return (

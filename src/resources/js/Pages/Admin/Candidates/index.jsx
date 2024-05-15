@@ -7,9 +7,9 @@ const Candidates = () => {
     const {data, setData } =useForm({
         file: null
     })
-   
+
     const handleFileChange= (e) => {
-        
+
         const file = e.target.files[0];
         if (file) {
             setData('file', file);
