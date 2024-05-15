@@ -10,10 +10,8 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CandidateController;
-use App\Http\Controllers\Admin\CsvController;
 use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\Admin\VoterController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -58,9 +56,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-        Route::resource('users', CsvController::class);
-
-        Route::controller(CsvController::class)->group(function() {
+        Route::controller(VoterController::class)->group(function() {
             Route::get('voters', 'index')->name('voters.index');
             Route::post('voters', 'import')->name('voters.import');
         });

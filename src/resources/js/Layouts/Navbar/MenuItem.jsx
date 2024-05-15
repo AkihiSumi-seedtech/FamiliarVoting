@@ -7,13 +7,13 @@ const MenuItem = ({ icon, link, text, href }) => {
     const isActive = route().current(link + '*')
 
     const iconClasses = classNames('w-4 h-4 mr-2', {
-        'text-white fill-current': isActive,
-        'text-white group-hover:text-white fill-current': !isActive
+        'text-[#E75B0D] fill-current': isActive,
+        'text-white group-hover:text-[#E75B0D] fill-current': !isActive
     })
 
     const textClass = classNames({
-        'text-white': isActive,
-        'text-white group-hover:text-white fill-current': !isActive
+        'text-[#E75B0D]': isActive,
+        'text-white group-hover:text-[#E75B0D] fill-current': !isActive
     })
 
     return (

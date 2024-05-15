@@ -4,7 +4,7 @@ import { Head, Link } from '@inertiajs/react';
 import ElectionCard from './ElectionCard';
 import PageHeader from '@/Components/dashboard/PageHeader';
 
-export default function Dashboard({auth, elections}) {
+export default function Dashboard({ auth, elections }) {
     return (
         <AuthenticatedLayout
             auth={auth}

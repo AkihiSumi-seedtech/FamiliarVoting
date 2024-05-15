@@ -47,7 +47,11 @@ class ElectionController extends Controller
      */
     public function create()
     {
-        return Inertia('Admin/election/CreateElection', []);
+        $election = Election::query()->orderBy('election_name', 'asc')->get();
+
+        return Inertia('Admin/election/CreateElection', [
+            ElectionResource::collection($election),
+        ]);
     }
 
     /**
