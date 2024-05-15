@@ -58,14 +58,16 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-        Route::get('voters', [ElectionController::class, 'showVoters'])->name('voters');
-        Route::get('candidates', [CandidateController::class, 'candidates'])->name('candidates');
-
         Route::resource('users', CsvController::class);
 
         Route::controller(CsvController::class)->group(function() {
             Route::get('voters', 'index')->name('voters.index');
             Route::post('voters', 'import')->name('voters.import');
+        });
+
+        Route::controller(CandidateController::class)->group(function(){
+            Route::get('candidates', 'index')-> name('candidates.index');
+            Route::post('candidates', 'import')->name('candidates.import');
         });
     });
 });
