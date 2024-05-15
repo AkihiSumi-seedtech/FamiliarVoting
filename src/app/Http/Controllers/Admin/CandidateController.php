@@ -25,7 +25,7 @@ class CandidateController extends Controller
         $file =$request -> file('file');
         $import =new CandidatesImport();
         Excel::import($import, $file, null,\Maatwebsite\Excel\Excel::CSV);
-        
+
         return to_route('admin.candidates.index');
     }
 
