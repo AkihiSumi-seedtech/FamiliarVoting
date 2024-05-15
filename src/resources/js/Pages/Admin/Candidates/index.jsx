@@ -3,14 +3,12 @@ import ElectionLayout from '@/Layouts/ElectionLayout'
 import { useForm } from '@inertiajs/react'
 
 
-    const Candidates = () => {
-   
+const Candidates = () => {
     const {data, setData, post} =useForm({
         file: null
     })
-   
+
     const handleFileChange= (e) => {
-        
         const file = e.target.files[0];
         if(file){
             setData({ file: file });
@@ -19,23 +17,21 @@ import { useForm } from '@inertiajs/react'
 
     const handleImport = (e) =>{
         e.preventDefault()
-        
-        post(route('admin.candidates.import'),{
+
+        post(route('admin.candidates.import'), {
             onSuccess: () =>{
                 console.log('成功!')
             }
-        }
-        
-        )
+        })
     }
 
     return (
         <div>
             <input id ='file' type='file' name ='file' onChange={handleFileChange} />
-            <button tyoe='submit' value={data.file} onClick={handleImport}>Upload</button>
+            <button type='submit' value={data.file} onClick={handleImport}>Upload</button>
         </div>
     )
 }
 
-Candidates.layoute = page => <ElectionLayout title="立候補者" children={page} />
+Candidates.layout = page => <ElectionLayout title="立候補者" children={page} />
 export default Candidates

@@ -40,7 +40,6 @@ export default defineConfig({
     plugins: [
         laravel({
             input: 'resources/js/app.jsx',
-            ssr: 'resources/js/ssr.jsx',
             refresh: true,
         }),
         react(),
@@ -53,3 +52,7 @@ export default defineConfig({
   },
 });
 ```
+
+## 使用技術
+
+CSVインポート機能 : [Laravel Excel](https://laravel-excel.com)

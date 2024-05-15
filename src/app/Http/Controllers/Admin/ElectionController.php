@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Inertia\Inertia;
 
 class ElectionController extends Controller
 {
@@ -68,7 +69,15 @@ class ElectionController extends Controller
      */
     public function show(Election $election)
     {
-        return Inertia('Admin/election/Overview', [
+        return Inertia('Admin/Overview/index', [
+            'election' => new ElectionResource($election),
+            'success' => session('success'),
+        ]);
+    }
+
+    public function showVoters(Election $election)
+    {
+        return Inertia('Admin/Voters/index', [
             'election' => new ElectionResource($election),
             'success' => session('success'),
         ]);

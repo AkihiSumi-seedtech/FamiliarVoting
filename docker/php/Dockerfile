@@ -43,6 +43,7 @@ RUN <<EOF
     composer config -g process-timeout 3600
     composer config -g repos.packagist composer https://packagist.org
 EOF
+
 ARG NODE_VERSION=20.x
 RUN <<EOF
     curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | bash -

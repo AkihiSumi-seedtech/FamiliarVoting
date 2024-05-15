@@ -1,13 +1,13 @@
 import MainMenu from '@/Components/overview/MainMenu'
 import TopHeader from '@/Components/overview/TopHeader'
-import { Head } from '@inertiajs/react'
+// import { Head } from '@inertiajs/react'
 import React from 'react'
 
 function Overview({ children }) {
 
     return (
         <div>
-            <Head title='Overview' />
+            {/* <Head title='Overview' /> */}
 
             <div className='flex flex-col'>
                 <div className='flex flex-col h-screen'>
