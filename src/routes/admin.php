@@ -10,8 +10,10 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CandidateController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CsvController;
 use App\Http\Controllers\Admin\ElectionController;
+use App\Http\Controllers\Admin\VoterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -56,11 +58,15 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-        //Route::get('candidates', [CandidateController::class, 'candidates'])->name('candidates');
-        //Route::resource('candidates', CandidateController::class);
+        Route::resource('users', CsvController::class);
 
-         Route::controller(CandidateController::class)->group(function(){
-             Route::get('candidates', 'index')-> name('candidates.index');
+        Route::controller(CsvController::class)->group(function() {
+            Route::get('voters', 'index')->name('voters.index');
+            Route::post('voters', 'import')->name('voters.import');
+        });
+
+        Route::controller(CandidateController::class)->group(function(){
+            Route::get('candidates', 'index')-> name('candidates.index');
             Route::post('candidates', 'import')->name('candidates.import');
         });
     });

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import ElectionLayout from '@/Layouts/ElectionLayout';
-import { useForm } from '@inertiajs/react';
+import React from 'react'
+import ElectionLayout from '@/Layouts/ElectionLayout'
+import { useForm } from '@inertiajs/react'
 
-const Candidates = ({ candidates }) => {
-    const { data, setData } = useForm({
+
+const Candidates = () => {
+    const {data, setData } =useForm({
         file: null
-    });
-
-    const handleFileChange = (e) => {
+    })
+   
+    const handleFileChange= (e) => {
+        
         const file = e.target.files[0];
         if (file) {
             setData('file', file);
@@ -45,22 +47,11 @@ const Candidates = ({ candidates }) => {
 
     return (
         <div>
-            <h1>Candidates</h1>
-            <ul>
-                {candidates.map(candidate => (
-                    <li key={candidate.id}>{candidate.name} - {candidate.email}</li>
-                ))}
-            </ul>
-            <input id='file' type='file' name='file' onChange={handleFileChange} />
-            <button 
-                className="bg-blue-400 py-4 w-32 mt-4  items-center justify-center rounded-lg font-bold"
-                type='button' onClick={handleImport}
-            >
-                Upload
-            </button>
+            <input id ='file' type='file' name ='file' onChange={handleFileChange} />
+            <button tyoe='submit' value={data.file} onClick={handleImport}>Upload</button>
         </div>
     );
 };
 
-Candidates.layoute = page => <ElectionLayout title="Candidates">{page}</ElectionLayout>;
-export default Candidates;
+Candidates.layout = page => <ElectionLayout title="立候補者" children={page} />
+export default Candidates
