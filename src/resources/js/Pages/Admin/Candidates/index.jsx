@@ -4,11 +4,11 @@ import { useForm } from '@inertiajs/react'
 
 
 const Candidates = () => {
-    const {data, setData } =useForm({
+    const {data, setData, post } = useForm({
         file: null
     })
 
-    const handleFileChange= (e) => {
+    const handleFileChange = (e) => {
 
         const file = e.target.files[0];
         if (file) {
@@ -23,26 +23,12 @@ const Candidates = () => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append('file', data.file);
 
-        fetch(route('admin.candidates.import'), {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        post(route('admin.candidates.import'), {
+            onSuccess: () => {
+                console.log("成功!")
             }
         })
-        .then(response => {
-            if (response.ok) {
-                console.log('Success!');
-            } else {
-                console.error('Failed to import candidates');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
     };
 
     return (
