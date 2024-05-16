@@ -64,6 +64,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(CandidateController::class)->group(function(){
             Route::get('candidates', 'index')-> name('candidates.index');
             Route::post('candidates', 'import')->name('candidates.import');
+
+          
+            Route::get('/admin/fetch-candidates', [CandidateController::class, 'fetchCandidates']);
+             
             
         });
     });

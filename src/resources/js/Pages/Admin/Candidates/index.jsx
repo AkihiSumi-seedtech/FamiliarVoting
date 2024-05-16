@@ -1,34 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import ElectionLayout from '@/Layouts/ElectionLayout';
-import axios from 'axios';
+// import ImportButton from '@/Components/voters/ImportButton'
+import ElectionLayout from '@/Layouts/ElectionLayout'
+import { useForm } from '@inertiajs/react'
+import React from 'react'
 
 const Candidates = () => {
-    const [candidates, setCandidates] = useState([]);
+    const { data, setData, post } = useForm({
+        file: null
+    })
 
-    useEffect(() => {
-        fetchCandidates();
-    }, []);
-
-    const fetchCandidates = async () => {
-        try {
-            const response = await axios.get('/admin/fetch-candidates'); 
-            setCandidates(response.data);
-        } catch (error) {
-            console.error('Error fetching candidates:', error);
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setData({ file: file });
         }
-    };
+    }
+
+    const handleImport = (e) => {
+        e.preventDefault()
+
+        post(route('admin.candidates.import'), {
+            onSuccess: () => {
+                console.log("成功!")
+            }
+        })
+    }
 
     return (
         <div>
-            <h2>Candidates:</h2>
-            <ul>
-                {candidates.map(candidate => (
-                    <li key={candidate.id}>{candidate.name}</li>
-                ))}
-            </ul>
+            <input id='file' type='file' name='file' onChange={handleFileChange} />
+            <button type='submit' value={data.file} onClick={handleImport}>Upload</button>
         </div>
-    );
-};
+    )
+}
 
-Candidates.layout = page => <ElectionLayout title="立候補者" children={page} />;
-export default Candidates;
+Candidates.layout = page => <ElectionLayout title="立候補者" children={page} />
+
+export default Candidates
