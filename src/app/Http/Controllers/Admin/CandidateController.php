@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Importer;
+use Illuminate\Support\Facades\DB;
+
 
 class CandidateController extends Controller
 {
@@ -21,12 +23,13 @@ class CandidateController extends Controller
 
     public function index()
     {
-        $candidates = Candidate::get();
-
+        $candidates = \DB::table('candidates')->select('can_name', 'can_party')->get();
+    
         return Inertia::render('Admin/Candidates/index', [
-            'candidats' => $candidates,
+            'candidates' => $candidates,
         ]);
     }
+    
 
     public function import(Request $request)
     {
