@@ -11,6 +11,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CandidateController extends Controller
 {
+    
+    public function fetchCandidates()
+{
+    $candidates = Candidate::all();
+    return response()->json($candidates);
+}
+
+    
     public function index()
     {
 
