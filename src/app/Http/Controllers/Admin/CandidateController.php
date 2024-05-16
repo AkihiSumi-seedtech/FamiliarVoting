@@ -23,7 +23,7 @@ class CandidateController extends Controller
 
     public function index()
     {
-        $candidates = \DB::table('candidates')->select('can_name', 'can_party')->get();
+        $candidates = DB::table('candidates')->select('can_name', 'can_party')->get();
     
         return Inertia::render('Admin/Candidates/index', [
             'candidates' => $candidates,

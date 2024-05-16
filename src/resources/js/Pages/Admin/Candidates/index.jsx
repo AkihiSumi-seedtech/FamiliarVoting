@@ -38,8 +38,8 @@ const Candidates = ({ candidates }) => {
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>名前</th>
+                        <th>立候補者名</th>
+                        <th>所属</th>
                     </tr>
                 </thead>
                 <tbody>
