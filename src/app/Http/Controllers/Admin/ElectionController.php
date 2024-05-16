@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
+use App\Http\Requests\Admin\UpdateElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ElectionController extends Controller
@@ -85,6 +86,18 @@ class ElectionController extends Controller
             'election' => new ElectionResource($election),
             'success' => session('success'),
         ]);
+    }
+
+    public function launchElection(Request $request, Election $election)
+    {
+        // バリデーションルールを設定
+        // $data = $request->validate();
+
+        // $data['admin_id'] = Auth::id();
+
+        $election->update(['status' => 'scheduling']);
+
+        return redirect()->back();
     }
 
     /**

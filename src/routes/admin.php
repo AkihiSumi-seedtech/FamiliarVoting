@@ -56,6 +56,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+        // Route::put('launch-election', [ElectionController::class, 'launchElection'])->name('launch-election');
+        Route::post('launch-election/{election}', [ElectionController::class, 'launchElection'])->name('launch-election');
+
         Route::controller(VoterController::class)->group(function() {
             Route::get('voters', 'index')->name('voters.index');
             Route::post('voters', 'import')->name('voters.import');

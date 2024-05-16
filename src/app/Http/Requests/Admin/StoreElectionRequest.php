@@ -26,7 +26,7 @@ class StoreElectionRequest extends FormRequest
             'election_name' => ['required', 'max:50'],
             'start_date' => 'required|date|after_or_equal:now',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'status' => 'string',
+            'status' => ['string', Rule::in(['building', 'scheduling', 'running'])],
             'description' => ['nullable', 'string'],
         ];
     }

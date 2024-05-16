@@ -1,8 +1,18 @@
 import { RocketLaunch } from '@mui/icons-material'
-import { Button, Dialog } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import React from 'react'
 
-const LaunchButton = ({ handleClickOpen, open, handleClose }) => {
+const LaunchButton = ({ launchElection }) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <React.Fragment>
             <Button variant='contained' startIcon={<RocketLaunch />} onClick={handleClickOpen}>
@@ -14,7 +24,20 @@ const LaunchButton = ({ handleClickOpen, open, handleClose }) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-
+                <DialogTitle id="alert-dialog-title">
+                    {"選挙を開始しますか？"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Let Google help apps determine location.
+                        This means sending anonymous location data to Google,
+                        even when no apps are running.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>キャンセル</Button>
+                    <Button onClick={launchElection} autoFocus>実行</Button>
+                </DialogActions>
             </Dialog>
         </React.Fragment>
     )
