@@ -10,10 +10,23 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
-    protected function schedule(Schedule $schedule): void
+    protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // 開始日が過ぎた選挙のステータスを更新
+        $schedule->call(function () {
+            \App\Models\Election::where('status', 'building')
+                ->where('start_date', '<=', now())
+                ->update(['status' => 'running']);
+        })->everyMinute(); // 1分ごとに実行する例
+
+        // 終了日が過ぎた選挙のステータスを更新
+        $schedule->call(function () {
+            \App\Models\Election::where('status', 'running')
+                ->where('end_date', '<=', now())
+                ->update(['status' => 'closed']);
+        })->daily(); // 1分ごとに実行する例
     }
+
 
     /**
      * Register the commands for the application.
