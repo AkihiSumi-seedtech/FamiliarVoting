@@ -1,5 +1,5 @@
 
-export default function ElectionCard({ electionName, electionStartDate, electionEndDate}) {
+export default function ElectionCard({ electionName, electionStartDate, electionEndDate, electionStatus}) {
   return (
 
   
@@ -11,7 +11,7 @@ export default function ElectionCard({ electionName, electionStartDate, election
         </div>
         
         <div className="bg-green-400 py-4 w-32 mt-4 flex flex-col items-center justify-center rounded-lg font-bold">
-          Status
+          {electionStatus}
         </div>
 
       </div>
@@ -19,12 +19,12 @@ export default function ElectionCard({ electionName, electionStartDate, election
       <div className="flex flex-low">
         <div className="border-solid border-2 border-gray bg-white py-0.3 w-32 ml-4 mr-4 pt-5 text-center rounded-lg font-bold">
           {electionStartDate}
-          <div className="py-4 w-32 mt-10 flex flex-col font-bold">日付</div>
+          <div className="py-4 w-32 mt-10 flex flex-col font-bold">開始日</div>
         </div>
         
         <div className="border-solid border-2 border-gray bg-white py-0.3 w-32 pt-5 text-center rounded-lg font-bold">
           {electionEndDate}
-          <div className="py-4 w-32 mt-10 flex flex-col font-bold">日付</div>
+          <div className="py-4 w-32 mt-10 flex flex-col font-bold">終了日</div>
           
      
         </div>
