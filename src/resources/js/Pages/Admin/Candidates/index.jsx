@@ -32,19 +32,79 @@ const Candidates = ({ candidates }) => {
 
     return (
         <div>
-            {/* CSV ファイルのアップロードフォーム */}
             <div>
                 <input id='file' type='file' name='file' onChange={handleFileChange} />
                 <button type='submit' value={data.file} onClick={handleImport}>Upload</button>
             </div>
-
-            {/* 候補者情報の表示 */}
             <h1>候補者一覧</h1>
             <table>
                 <thead>
                     <tr>
-                        <th>立候補者名</th>
-                        <th>所属</th>
+                       
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+            <tr>
+                <th scope="col" class="text-center border-b px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    候補者名
+                </th>
+                <th scope="col" class="text-center border-b border-bpx-6 py-3">
+                    所属
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Apple MacBook Pro 17"
+                </th>
+                <td class="px-6 py-4">
+                    Silver
+                </td>
+                
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Microsoft Surface Pro
+                </th>
+                <td class="px-6 py-4">
+                    White
+                </td>
+               
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Magic Mouse 2
+                </th>
+                <td class="px-6 py-4">
+                    Black
+                </td>
+                
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Google Pixel Phone
+                </th>
+                <td class="px-6 py-4">
+                    Gray
+                </td>
+               
+            </tr>
+            <tr>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Apple Watch 5
+                </th>
+                <td class="px-6 py-4">
+                    Red
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+</div>
+
                     </tr>
                 </thead>
                 <tbody>
