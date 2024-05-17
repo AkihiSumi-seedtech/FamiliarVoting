@@ -30,5 +30,9 @@ export default function ElectionCard({ electionName, electionStartDate, election
         </div>
       </div>
     </button>
+
+
+
+
   );
 }
