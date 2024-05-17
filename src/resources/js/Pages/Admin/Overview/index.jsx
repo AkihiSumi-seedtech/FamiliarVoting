@@ -27,14 +27,17 @@ const Overview = ({ election }) => {
     }
 
     return (
-        <div>
-            {/* <form onSubmit={onSubmit}> */}
+        <ElectionLayout
+            title='概要'
+            routeCandidate={route('admin.election.candidate.index', election.id)}
+        >
+            <div>
                 <LaunchButton launchElection={handleLaunch} />
-            {/* </form> */}
-        </div>
+            </div>
+        </ElectionLayout>
     )
 }
 
-Overview.layout = page => <ElectionLayout title="概要" children={page} />
+// Overview.layout = page => <ElectionLayout title="概要" children={page} />
 
 export default Overview

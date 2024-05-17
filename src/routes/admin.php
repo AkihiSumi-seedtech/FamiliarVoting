@@ -42,6 +42,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::middleware('auth:admin')->group(function () {
         Route::resource('election', ElectionController::class);
+        Route::resource('election.candidate', CandidateController::class);
 
         Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
         Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
@@ -65,8 +66,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         });
 
         Route::controller(CandidateController::class)->group(function(){
-            Route::get('candidates', 'index')-> name('candidates.index');
-            Route::post('candidates', 'import')->name('candidates.import');
+            Route::get('candidates', 'index')-> name('candidate.index');
+            Route::post('candidates/{election}', 'import')->name('candidates.import');
 
           
             Route::get('/admin/fetch-candidates', [CandidateController::class, 'fetchCandidates']);
