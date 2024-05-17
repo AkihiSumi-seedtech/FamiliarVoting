@@ -17,6 +17,11 @@ const Candidates = ({ candidates }) => {
 
     const handleImport = (e) => {
         e.preventDefault();
+        if (!data.file) {
+            alert('ファイルを選択してください');
+            return;
+        }
+
 
         post(route('admin.candidates.import'), {
             onSuccess: () => {
