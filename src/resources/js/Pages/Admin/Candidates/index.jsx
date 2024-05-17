@@ -48,6 +48,9 @@ const Candidates = ({ candidates }) => {
                         <th scope="col" class="text-center border-t border-b border-l border-r border-gray-300 px-6 py-3 bg-gray-200">
                             所属
                         </th>
+                        <th scope="col" class="text-center border-t border-b border-l border-r border-gray-300 px-6 py-3 bg-gray-200">
+                            出馬選挙名
+                        </th>
                     </tr>
                 </thead>
                 <tbody >
@@ -55,6 +58,7 @@ const Candidates = ({ candidates }) => {
                         <tr className='border-l border-r border-b border-gray-300' key={candidate.can_id}>
                             <td className='text-center  border-r border-gray-300'>{candidate.can_name}</td>
                             <td className='text-center border-gray-300'>{candidate.can_party}</td>
+                            <td className='border-l border-gray-300'>  </td>
                         </tr>
                     ))}
                 </tbody>
