@@ -3,41 +3,32 @@
 namespace App\Imports;
 
 use App\Models\Candidate;
-use App\Models\Election;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\PersistRelations;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CandidatesImport implements ToModel
+class CandidatesImport implements ToCollection, PersistRelations, WithHeadingRow
 {
-    private $election_id;
+    use Importable;
 
-    public function __construct($election_id)
+    private $electionId;
+
+    public function __construct($electionId)
     {
-        $this->election_id = $election_id;
+        $this->electionId = $electionId;
     }
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
-    {
-        return new Candidate([
-            'candidate_name' => $row[0],
-            'candidate_party' => $row[1],
-            'election_id' => $this->election_id,
-        ]);
-        // foreach ($rows as $row)
-        // {
-        //     if($row->filter()->isNotEmpty()){
 
-        //         Candidate::create([
-        //             'candidate_name' => $row[0],
-        //             'candidate_party' => $row[1],
-        //             'election_id' => $this->election[$row[2]],
-        //         ]);
-        //     }
-        // }
+    public function collection(Collection $rows)
+    {
+        foreach ($rows as $row)
+        {
+            Candidate::create([
+                'candidate_name' => $row['candidate_name'],
+                'candidate_party' => $row['candidate_party'],
+                'election_id' => $this->electionId,
+            ]);
+        }
     }
 }

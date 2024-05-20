@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\ImportCandidateRequest;
 use App\Http\Resources\Admin\CandidateResource;
 use App\Imports\CandidatesImport;
 use App\Models\Candidate;
+use App\Models\Election;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Importer;
-use Illuminate\Support\Facades\DB;
 
 
 class CandidateController extends Controller
@@ -23,10 +21,8 @@ class CandidateController extends Controller
         $this->importer = $importer;
     }
 
-    public function index()
+    public function index(Election $election)
     {
-        // $candidates = DB::table('candidates')->select('candidate_name', 'candidate_party')->get();
-
         $query = Candidate::query();
 
         $sortField = request("sort_field", 'created_at');
@@ -40,19 +36,21 @@ class CandidateController extends Controller
             ->paginate(10)
             ->onEachSide(1);
 
-        return Inertia::render('Admin/Candidates/index', [
+        return Inertia('Admin/Candidates/index', [
             'candidates' => CandidateResource::collection($candidates),
+            'election' => $election->id,
             'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
         ]);
     }
 
-    public function store(ImportCandidateRequest $request)
+    public function store(Request $request, Election $election)
     {
         $file = $request->file('file');
-        $import = new CandidatesImport($request->election_id);
+        $import = new CandidatesImport($election->id);
         Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
-        return to_route('admin.candidates.index');
+        return to_route('admin.election.candidate.index', $election->id);
     }
 
     public function show(Candidate $candidate)
@@ -60,14 +58,5 @@ class CandidateController extends Controller
         return Inertia('Admin/Candidate/index', [
             'candidate' => new CandidateResource($candidate),
         ]);
-    }
-
-    public function import(ImportCandidateRequest $request)
-    {
-        $file = $request->file('file');
-        $import = new CandidatesImport($request->election_id);
-        Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
-
-        return to_route('admin.candidates.index');
     }
 }

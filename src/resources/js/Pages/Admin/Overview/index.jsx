@@ -6,11 +6,13 @@ import React from 'react'
 const Overview = ({ election }) => {
     const { post } = useForm();
 
+    console.log(election)
+
     const handleLaunch = async (e) => {
         e.preventDefault()
 
         try {
-            const response = await post(route('admin.launch-election', election.id), {
+            const response = await post(route('admin.launch-election', election), {
                 method: 'put', // PUTメソッドを指定
             })
             if (response.status === 200) {
@@ -29,7 +31,7 @@ const Overview = ({ election }) => {
     return (
         <ElectionLayout
             title='概要'
-            routeCandidate={route('admin.election.candidate.index', election.id)}
+            routeCandidate={route('admin.election.candidate.index', election)}
         >
             <div>
                 <LaunchButton launchElection={handleLaunch} />

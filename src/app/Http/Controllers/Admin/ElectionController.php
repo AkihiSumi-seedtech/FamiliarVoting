@@ -75,7 +75,7 @@ class ElectionController extends Controller
     public function show(Election $election)
     {
         return Inertia('Admin/Overview/index', [
-            'election' => new ElectionResource($election),
+            'election' => $election->id,
             'success' => session('success'),
         ]);
     }
@@ -90,11 +90,6 @@ class ElectionController extends Controller
 
     public function launchElection(Request $request, Election $election)
     {
-        // バリデーションルールを設定
-        // $data = $request->validate();
-
-        // $data['admin_id'] = Auth::id();
-
         $election->update(['status' => 'scheduling']);
 
         return redirect()->back();
