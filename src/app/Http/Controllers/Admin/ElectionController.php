@@ -94,7 +94,9 @@ class ElectionController extends Controller
     public function launchElection(Request $request, Election $election)
 {
     // 選挙の状態を更新
-    $this->updateElectionStatus($election);
+    // $this->updateElectionStatus($election);
+
+    $election->update(['status' => 'scheduling']);
     return redirect()->back();
 }
 
@@ -134,9 +136,7 @@ class ElectionController extends Controller
     $endDate = Carbon::parse($election->end_date);
 
     
-    if ($status === 'building' && !$endDate->isPast()) {
-        $election->update(['status' => 'scheduling']);
-    } elseif ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
+     if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
         $election->update(['status' => 'running']);
     } elseif ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
         $election->update(['status' => 'closed']);
