@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class ElectionController extends Controller
 {
@@ -89,16 +90,15 @@ class ElectionController extends Controller
     }
 
     public function launchElection(Request $request, Election $election)
-    {
-        // バリデーションルールを設定
-        // $data = $request->validate();
+{
+    // 選挙の状態を更新
+    $this->updateElectionStatus($election);
 
-        // $data['admin_id'] = Auth::id();
+    // その他の処理...
 
-        $election->update(['status' => 'scheduling']);
+    return redirect()->back();
+}
 
-        return redirect()->back();
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -123,4 +123,29 @@ class ElectionController extends Controller
     {
         //
     }
+    
+    public function updateElectionStatus(Election $election)
+{
+    $currentDate = Carbon::now();
+
+    $status = $election->status;
+
+   
+    $startDate = Carbon::parse($election->start_date);
+    $endDate = Carbon::parse($election->end_date);
+
+    
+    if ($status === 'building' && !$endDate->isPast()) {
+       
+        $election->update(['status' => 'scheduling']);
+    } elseif ($status === 'scheduling' && ($startDate->isToday() || $startDate->isPast())) {
+      
+        $election->update(['status' => 'running']);
+    } elseif ($status === 'running' && $endDate->isToday() || $endDate->isPast()) {
+       
+        $election->update(['status' => 'closed']);
+    }
+
+    return $election;
+}
 }
