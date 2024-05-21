@@ -43,6 +43,7 @@ class UpdateElectionStatus extends Command
                 // 現在の日時が終了日以降の場合、状態をclosedに更新
                 $election->update(['status' => 'closed']);
             }
+          
             
         });
 

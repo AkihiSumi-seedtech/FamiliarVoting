@@ -67,7 +67,9 @@ class ElectionController extends Controller
 
         $data['admin_id'] = Auth::id();
 
-        Election::create($data);
+        $election = Election::create($data);
+
+        $this->updateElectionStatus($election);
 
         return to_route('admin.election.index')->with('success', 'Election created success');
     }
@@ -97,6 +99,10 @@ class ElectionController extends Controller
     // $this->updateElectionStatus($election);
 
     $election->update(['status' => 'scheduling']);
+
+    Artisan::call('election:update-status');
+
+
     return redirect()->back();
 }
 
