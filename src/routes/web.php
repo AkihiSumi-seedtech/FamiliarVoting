@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Foundation\Application;
@@ -36,10 +37,8 @@ Route::get('/thanks', function () {
     return Inertia::render('User/Thanks');
 })->middleware(['auth', 'verified'])->name('vote');
 
-
-Route::get('/dashboard', function () {
-    return Inertia::render('User/Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ElectionController::class, 'voterIndex'])
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -48,6 +47,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('vote', VoteController::class);
+Route::post('vote/{election}', [VoteController::class, 'voting'])->name('voting');
 
 require __DIR__.'/auth.php';
 

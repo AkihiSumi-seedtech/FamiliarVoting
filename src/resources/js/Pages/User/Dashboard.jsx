@@ -1,21 +1,47 @@
+import ElectionCard from '@/Components/voters/ElectionCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, elections }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-center text-xl text-gray-800 leading-tight">開催中の選挙一覧</h2>}
         >
-            <Head title="Dashboard" />
+            <Head title="選挙一覧" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">You're logged in!</div>
-                    </div>
+            {!elections.data.length && (
+                <div className='text-center p-10'>現在、開催中の選挙はありません</div>
+            )}
+
+            {elections.data.length > 0 && elections.data.filter(
+                election => election.status === 'running' || election.status === 'close'
+            ).map((election) => (
+                <div className='p-4' key={election.id}>
+                    <ElectionCard
+                        toRoute={route('vote.index')}
+                        electionName={election.election_name}
+                        startDate={election.start_date}
+                        endDate={election.end_date}
+                    />
                 </div>
-            </div>
+            ))}
+
+            {elections.data.length > 0 && elections.data.filter(
+                (election) => election.status === "building" || election.status === "scheduling"
+            ).length > 0 && (
+                <div className='mt-14 text-center'>
+                    <h3 className="font-bold text-2xl text-gray-800">準備中の選挙があります</h3>
+                        <ul className="list-none mt-6">
+                            {elections.data.map((election) => (
+                                <li key={election.id} className="text-gray-600">
+                                    {election.election_name}
+                                </li>
+                            ))}
+                        </ul>
+                </div>
+            )}
+
         </AuthenticatedLayout>
     );
 }

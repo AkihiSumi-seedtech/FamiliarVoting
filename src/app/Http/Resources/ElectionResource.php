@@ -20,8 +20,8 @@ class ElectionResource extends JsonResource
         return [
             'id' => $this->id,
             'election_name' => $this->election_name,
-            'start_date' => (new Carbon($this->start_date))->format('Y-m-d'),
-            'end_date' => (new Carbon($this->end_date))->format('Y-m-d'),
+            'start_date' => (new Carbon($this->start_date))->formatLocalized('%Y年%m月%d日(%a)'),
+            'end_date' => (new Carbon($this->end_date))->formatLocalized('%Y年%m月%d日(%a)'),
             'status' => $this->status,
             'description' => $this->description,
             'admin_id' => Auth::id(),
