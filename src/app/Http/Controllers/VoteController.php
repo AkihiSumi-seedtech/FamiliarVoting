@@ -9,7 +9,6 @@ use App\Models\Election;
 use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 
 class VoteController extends Controller
 {

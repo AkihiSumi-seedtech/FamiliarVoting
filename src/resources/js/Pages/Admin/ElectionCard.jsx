@@ -12,13 +12,13 @@ function ElectionCard({ electionName, electionStatus, electionStartDate, electio
 
             </div>
 
-            <div className="flex flex-low">
-                <div className="border-solid border-2 border-gray bg-white py-0.3 w-32 ml-4 mr-4 pt-5 text-center rounded-lg font-bold">                        
-                    <div className="py-4 w-32 mt-10 flex flex-col font-bold">開始日</div>
+            <div className="flex">
+                <div className="border-solid border-2 border-gray bg-white py-0.3 w-32 ml-4 mr-4 rounded-lg font-bold">
+                    <div className="w-32 mt-10 flex flex-col font-bold">開始日</div>
                     {electionStartDate}
                 </div>
-                <div className="border-solid border-2 border-gray bg-white py-0.3 w-32 pt-5 text-center rounded-lg font-bold">                    
-                    <div className="py-4 w-32 mt-10 flex flex-col font-bold">終了日</div>
+                <div className="border-solid border-2 border-gray bg-white py-0.3 w-32  ml-4 mr-4 rounded-lg font-bold">
+                    <div className="w-32 mt-10 flex flex-col font-bold">終了日</div>
                     {electionEndDate}
                 </div>
             </div>

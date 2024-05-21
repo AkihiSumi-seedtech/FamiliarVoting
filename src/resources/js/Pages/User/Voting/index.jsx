@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 const Voting = ({ auth, candidates, election_id, success }) => {
     const { post } = useForm()
+    console.log(election_id)
 
     const [selectedCandidateId, setSelectedCandidateId] = useState(null); // 投票対象の候補者IDを保持するステート変数
 
