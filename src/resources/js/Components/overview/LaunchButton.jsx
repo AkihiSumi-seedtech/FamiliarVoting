@@ -29,9 +29,7 @@ const LaunchButton = ({ launchElection }) => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location.
-                        This means sending anonymous location data to Google,
-                        even when no apps are running.
+                        開始した選挙は中断できません。
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
