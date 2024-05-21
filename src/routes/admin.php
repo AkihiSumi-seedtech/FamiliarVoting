@@ -14,7 +14,6 @@ use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\Admin\VoterController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::middleware('guest:admin')->group(function () {
         Route::get('register', [RegisteredUserController::class, 'create'])
@@ -42,6 +41,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::middleware('auth:admin')->group(function () {
         Route::resource('election', ElectionController::class);
+        Route::resource('election.candidate', CandidateController::class)->shallow();
 
         Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
         Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
@@ -56,22 +56,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-        // Route::put('launch-election', [ElectionController::class, 'launchElection'])->name('launch-election');
         Route::post('launch-election/{election}', [ElectionController::class, 'launchElection'])->name('launch-election');
 
         Route::controller(VoterController::class)->group(function() {
             Route::get('voters', 'index')->name('voters.index');
             Route::post('voters', 'import')->name('voters.import');
-        });
-
-        Route::controller(CandidateController::class)->group(function(){
-            Route::get('candidates', 'index')-> name('candidates.index');
-            Route::post('candidates', 'import')->name('candidates.import');
-
-          
-            Route::get('/admin/fetch-candidates', [CandidateController::class, 'fetchCandidates']);
-             
-            
         });
     });
 });

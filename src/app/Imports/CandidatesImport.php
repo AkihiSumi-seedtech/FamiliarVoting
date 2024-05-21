@@ -4,24 +4,31 @@ namespace App\Imports;
 
 use App\Models\Candidate;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\PersistRelations;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CandidatesImport implements ToCollection
+class CandidatesImport implements ToCollection, PersistRelations, WithHeadingRow
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+    use Importable;
+
+    private $electionId;
+
+    public function __construct($electionId)
+    {
+        $this->electionId = $electionId;
+    }
+
     public function collection(Collection $rows)
     {
-       foreach ($rows as $row)
-       {
+        foreach ($rows as $row)
+        {
             Candidate::create([
-                'can_name' =>$row[0],
-                'can_party' =>$row[1],
+                'candidate_name' => $row['candidate_name'],
+                'candidate_party' => $row['candidate_party'],
+                'election_id' => $this->electionId,
             ]);
-       }
+        }
     }
 }
