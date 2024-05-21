@@ -95,12 +95,6 @@ class ElectionController extends Controller
 {
     // 選挙の状態を更新
     $this->updateElectionStatus($election);
-if ($election -> status === 'scheduling'){
-    $election->update(['status' => 'scheduling']);
-    $output = [];
-    Artisan::call('schedule:run', [], $output);
-}
-
     return redirect()->back();
 }
 
@@ -141,15 +135,13 @@ if ($election -> status === 'scheduling'){
 
     
     if ($status === 'building' && !$endDate->isPast()) {
-       
         $election->update(['status' => 'scheduling']);
-    } elseif ($status === 'scheduling' && ($startDate->isToday() || $startDate->isPast())) {
-      
+    } elseif ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
         $election->update(['status' => 'running']);
-    } elseif ($status === 'running' && $endDate->isToday() || $endDate->isPast()) {
-       
+    } elseif ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
         $election->update(['status' => 'closed']);
     }
+    
 
     return $election;
 }
