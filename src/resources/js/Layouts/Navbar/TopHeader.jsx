@@ -9,7 +9,7 @@ function TopHeader() {
 
     return (
         <div className='flex items-center justify-between px-6 py-4 bg-[#E75B0D] md:flex-shrink-0 md:w-60 md:justify-center'>
-            <Link className='mt-1' href='/'>
+            <Link className='mt-1' href={route('admin.election.index')}>
                 <h5>FamiliarVoting</h5>
             </Link>
             <div className='relative md:hidden'>

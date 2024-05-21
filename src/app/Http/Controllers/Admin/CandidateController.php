@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\CandidateResource;
 use App\Imports\CandidatesImport;
 use App\Models\Candidate;
+use App\Models\Election;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Importer;
-use Illuminate\Support\Facades\DB;
 
 
 class CandidateController extends Controller
@@ -21,22 +21,42 @@ class CandidateController extends Controller
         $this->importer = $importer;
     }
 
-    public function index()
+    public function index(Election $election)
     {
-        $candidates = DB::table('candidates')->select('can_name', 'can_party')->get();
-    
-        return Inertia::render('Admin/Candidates/index', [
-            'candidates' => $candidates,
+        $query = Candidate::query();
+
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", "desc");
+
+        if (request("candidate_name")) {
+            $query->where("candidate_name", "like", "%" . request("candidate_name") . "%");
+        }
+
+        $candidates = $query->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
+
+        return Inertia('Admin/Candidates/index', [
+            'candidates' => CandidateResource::collection($candidates),
+            'election' => $election->id,
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
         ]);
     }
-    
 
-    public function import(Request $request)
+    public function store(Request $request, Election $election)
     {
         $file = $request->file('file');
-        $import = new CandidatesImport();
+        $import = new CandidatesImport($election->id);
         Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
-        return to_route('admin.candidates.index');
+        return to_route('admin.election.candidate.index', $election->id);
+    }
+
+    public function show(Candidate $candidate)
+    {
+        return Inertia('Admin/Candidate/index', [
+            'candidate' => new CandidateResource($candidate),
+        ]);
     }
 }

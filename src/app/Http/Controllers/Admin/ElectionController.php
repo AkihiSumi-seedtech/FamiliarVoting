@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
+
 
 class ElectionController extends Controller
 {
@@ -43,6 +46,31 @@ class ElectionController extends Controller
         ]);
     }
 
+    public function voterIndex()
+    {
+        $query = Election::query();
+
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", 'desc');
+
+        if (request('election_name')) {
+            $query->where('election_name', 'like', '%' . request('election_name') . '%');
+        }
+        if (request('status')) {
+            $query->where('status', 'like', '%' . request('status') . '%' );
+        }
+
+        $elections = $query->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
+
+        return inertia('User/Dashboard', [
+            'elections' => ElectionResource::collection($elections),
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -64,7 +92,9 @@ class ElectionController extends Controller
 
         $data['admin_id'] = Auth::id();
 
-        Election::create($data);
+        $election = Election::create($data);
+
+        $this->updateElectionStatus($election);
 
         return to_route('admin.election.index')->with('success', 'Election created success');
     }
@@ -75,7 +105,7 @@ class ElectionController extends Controller
     public function show(Election $election)
     {
         return Inertia('Admin/Overview/index', [
-            'election' => new ElectionResource($election),
+            'election' => $election->id,
             'success' => session('success'),
         ]);
     }
@@ -90,12 +120,13 @@ class ElectionController extends Controller
 
     public function launchElection(Request $request, Election $election)
     {
-        // バリデーションルールを設定
-        // $data = $request->validate();
-
-        // $data['admin_id'] = Auth::id();
+        // 選挙の状態を更新
+        // $this->updateElectionStatus($election);
 
         $election->update(['status' => 'scheduling']);
+
+        Artisan::call('election:update-status');
+
 
         return redirect()->back();
     }
@@ -122,5 +153,24 @@ class ElectionController extends Controller
     public function destroy(Election $election)
     {
         //
+    }
+    
+    public function updateElectionStatus(Election $election)
+    {
+        $currentDate = Carbon::now();
+
+        $status = $election->status;
+
+        $startDate = Carbon::parse($election->start_date);
+        $endDate = Carbon::parse($election->end_date);
+
+        if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
+            $election->update(['status' => 'running']);
+        } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
+            $election->update(['status' => 'closed']);
+        }
+
+
+        return $election;
     }
 }
