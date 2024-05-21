@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
+
 
 class ElectionController extends Controller
 {
@@ -93,8 +95,11 @@ class ElectionController extends Controller
 {
     // 選挙の状態を更新
     $this->updateElectionStatus($election);
-
-    // その他の処理...
+if ($election -> status === 'scheduling'){
+    $election->update(['status' => 'scheduling']);
+    $output = [];
+    Artisan::call('schedule:run', [], $output);
+}
 
     return redirect()->back();
 }

@@ -12,21 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // 開始日が過ぎた選挙のステータスを更新
-        $schedule->call(function () {
-            \App\Models\Election::where('status', 'building')
-                ->where('start_date', '<=', now())
-                ->update(['status' => 'running']);
-        })->everyMinute(); // 1分ごとに実行する例
-
-        // 終了日が過ぎた選挙のステータスを更新
-        $schedule->call(function () {
-            \App\Models\Election::where('status', 'running')
-                ->where('end_date', '<=', now())
-                ->update(['status' => 'closed']);
-        })->daily(); // 1分ごとに実行する例
+        // 選挙の状態を定期的に更新するコマンドを実行
+        $schedule->command('election:update-status')->everyMinute();
     }
-
 
     /**
      * Register the commands for the application.
