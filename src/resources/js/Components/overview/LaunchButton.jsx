@@ -1,8 +1,11 @@
 import { RocketLaunch } from '@mui/icons-material'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import React from 'react'
+import { useForm } from '@inertiajs/react'
+import axios from 'axios'
+axios
 
-const LaunchButton = ({ launchElection }) => {
+const LaunchButton = () => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -12,6 +15,27 @@ const LaunchButton = ({ launchElection }) => {
     const handleClose = () => {
         setOpen(false);
     };
+
+        
+    const launchElection = async (e) => {
+        e.preventDefault()
+
+       
+
+        try {
+            const response = await axios.post(`/admin/launch-election/${election}`);
+            if (response.status === 200) {
+                // 成功処理
+                console.log('選挙が開始されました。')
+                handleClose(); // ダイアログを閉じる
+            } else {
+                // 失敗処理
+                console.error('選挙の開始に失敗しました。')
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     return (
         <React.Fragment>

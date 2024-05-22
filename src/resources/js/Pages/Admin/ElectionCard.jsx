@@ -1,3 +1,5 @@
+
+
 function ElectionCard({ electionName, electionStatus, electionStartDate, electionEndDate}) {
     return (
         <button id="main" className="p-2 justify-around flex items-center ml-32 h-48 w-480  bg-white-200 border-solid border-2 border-bg-slate-500 rounded-lg">
