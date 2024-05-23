@@ -78,7 +78,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                 <td className="whitespace-nowrap px-6 py-4">
                                                     <Checkbox
                                                         name="candidate_id"
-                                                        checked={selectedCandidate == candidate.id}
+                                                        checked={selectedCandidate === candidate.id}
                                                         onChange={() => handleCandidateCheckboxChange(candidate.id)}
                                                     />
                                                 </td>

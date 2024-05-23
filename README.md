@@ -2,7 +2,7 @@
 
 ## 環境
 
-macOS Sonoma 14.4.1 (MacBook Pro 2022)
+macOS Sonoma 14.5 (MacBook Pro 2022)
 
 ```zsh
 % git -v
@@ -24,7 +24,7 @@ Docker Compose version v2.24.6-desktop.1
 3. プロジェクト作成コマンドを実行
 
 ```zsh
-% git clone https://github.com/AkihiSumi-seedtech/FamiliarVoting.git
+% git clone https://github.com/ProgrammingTraining2024/FamiliarVoting.git
 
 % cd FamiliarVoting
 
@@ -35,7 +35,7 @@ Docker Compose version v2.24.6-desktop.1
 
 `src/vite.config.js`を修正
 
-```
+```js
 export default defineConfig({
     plugins: [
         laravel({
@@ -53,6 +53,29 @@ export default defineConfig({
 });
 ```
 
+### コンテナ操作
+コンテナ起動
+```zsh
+% make up
+```
+コンテナに入る
+```zsh
+% make app
+```
+コンテナ終了
+```zsh
+% make down
+```
+
+### コンテナ内での操作
+Vite起動
+```bash
+# npm run dev
+```
+コンテナを抜ける
+```bash
+# exit
+```
 ## 使用技術
 
 CSVインポート機能 : [Laravel Excel](https://laravel-excel.com)
