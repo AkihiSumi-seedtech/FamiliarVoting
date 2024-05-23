@@ -1,4 +1,4 @@
-
+import AutoUpdate from "./AutoUpdate";
 
 function ElectionCard({ electionName, electionStatus, electionStartDate, electionEndDate}) {
     return (
@@ -9,7 +9,8 @@ function ElectionCard({ electionName, electionStatus, electionStartDate, electio
                 </div>
 
                 <div className="bg-green-400 py-4 w-32 mt-4 flex flex-col items-center justify-center rounded-lg font-bold">
-                    {electionStatus}
+                    {electionStatus} 
+                    <AutoUpdate initialStatus={electionStatus} start_date={electionStartDate} end_date={electionEndDate} />
                 </div>
 
             </div>

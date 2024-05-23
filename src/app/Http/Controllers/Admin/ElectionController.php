@@ -94,7 +94,7 @@ class ElectionController extends Controller
 
         $election = Election::create($data);
 
-        $this->updateElectionStatus($election);
+        // $this->updateElectionStatus($election);
 
         return to_route('admin.election.index')->with('success', 'Election created success');
     }
@@ -125,7 +125,7 @@ class ElectionController extends Controller
 
         $election->update(['status' => 'scheduling']);
 
-        Artisan::call('election:update-status');
+        // Artisan::call('election:update-status');
 
 
         return redirect()->back();
@@ -155,22 +155,22 @@ class ElectionController extends Controller
         //
     }
     
-    public function updateElectionStatus(Election $election)
-    {
-        $currentDate = Carbon::now();
+    // public function updateElectionStatus(Election $election)
+    // {
+    //     $currentDate = Carbon::now();
 
-        $status = $election->status;
+    //     $status = $election->status;
 
-        $startDate = Carbon::parse($election->start_date);
-        $endDate = Carbon::parse($election->end_date);
+    //     $startDate = Carbon::parse($election->start_date);
+    //     $endDate = Carbon::parse($election->end_date);
 
-        if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
-            $election->update(['status' => 'running']);
-        } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
-            $election->update(['status' => 'closed']);
-        }
+    //     if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
+    //         $election->update(['status' => 'running']);
+    //     } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
+    //         $election->update(['status' => 'closed']);
+    //     }
 
 
-        return $election;
-    }
+    //     return $election;
+    // }
 }
