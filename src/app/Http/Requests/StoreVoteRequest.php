@@ -22,10 +22,10 @@ class StoreVoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'voter_id' => ['required', 'exists:users,id'],
-            'election_id' => ['required', 'exists:elections,id'],
-            'candidate_id' => ['nullable', 'exists:candidates,id'],
-            'is_chose_not_select' => ['nullable', 'boolean'],
+            'voter_id' => 'required|exists:users,id',
+            'election_id' => 'required|exists:elections,id',
+            'candidate_id' => 'nullable|exists:candidates,id',
+            'is_chose_not_select' => 'required|boolean',
         ];
     }
 }

@@ -29,14 +29,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/vote', function () {
-    return Inertia::render('User/Vote');
-})->middleware(['auth', 'verified'])->name('vote');
-
-Route::get('/thanks', function () {
-    return Inertia::render('User/Thanks');
-})->middleware(['auth', 'verified'])->name('vote');
-
 Route::get('/dashboard', [ElectionController::class, 'voterIndex'])
     ->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -46,8 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('vote', VoteController::class);
-Route::post('vote/{election}', [VoteController::class, 'voting'])->name('voting');
+Route::resource('election.vote', VoteController::class);
 
 require __DIR__.'/auth.php';
 

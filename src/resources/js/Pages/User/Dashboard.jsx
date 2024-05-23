@@ -19,7 +19,7 @@ export default function Dashboard({ auth, elections }) {
             ).map((election) => (
                 <div className='p-4' key={election.id}>
                     <ElectionCard
-                        toRoute={route('vote.index')}
+                        toRoute={route('election.vote.index', election.id)}
                         electionName={election.election_name}
                         startDate={election.start_date}
                         endDate={election.end_date}
