@@ -16,17 +16,17 @@ class Vote extends Model
         'is_chose_not_select',
     ];
 
-    public function voterId()
+    public function voter()
     {
         return $this->belongsTo(User::class, 'voter_id');
     }
 
-    public function electionId()
+    public function election()
     {
         return $this->belongsTo(Election::class, 'election_id');
     }
 
-    public function candidateId()
+    public function candidate()
     {
         return $this->belongsTo(Candidate::class, 'candidate_id');
     }

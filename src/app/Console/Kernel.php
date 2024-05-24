@@ -10,11 +10,14 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
-    protected function schedule(Schedule $schedule)
-    {
-        // 選挙の状態を定期的に更新するコマンドを実行
-        $schedule->command('election:update-status')->everyMinute();
-    }
+    // app/Console/Kernel.php
+
+// protected function schedule(Schedule $schedule)
+// {
+//     // // UpdateElectionStatus コマンドを毎分実行するようスケジュール
+//   $schedule->command('election:update-status')->everyMinute();
+// }
+
 
     /**
      * Register the commands for the application.

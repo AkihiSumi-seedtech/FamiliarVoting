@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('voter_id')->constrained('users');
             $table->foreignId('election_id')->constrained('elections');
             $table->foreignId('candidate_id')->nullable()->constrained('candidates');
-            $table->boolean('is_chose_not_select')->nullable()->default(false);
+            $table->boolean('is_chose_not_select');
             $table->timestamps();
         });
     }
