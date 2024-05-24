@@ -50,7 +50,7 @@ class CandidateController extends Controller
         $import = new CandidatesImport($election->id);
         Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
-        return to_route('admin.election.candidate.index', $election->id);
+        return to_route('admin.election.candidates.index', $election->id);
     }
 
     public function show(Candidate $candidate)
