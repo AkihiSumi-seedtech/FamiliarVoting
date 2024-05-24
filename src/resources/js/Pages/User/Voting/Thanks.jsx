@@ -1,9 +1,12 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Head } from '@inertiajs/react';
 
 const Thanks = ({ auth }) => {
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title='投票完了' />
+
             <div className='max-w-[720px] relative mr-auto ml-auto'>
                 <div className='flex flex-wrap -mr-[15px] -ml-[15px] content-center items-center h-[calc(100vh-60px-50px)]'>
                 <div className='basis-full max-w-full self-center text-center'>

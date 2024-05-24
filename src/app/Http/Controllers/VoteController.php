@@ -7,7 +7,6 @@ use App\Http\Resources\Admin\CandidateResource;
 use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\Vote;
-use Illuminate\Support\Facades\Auth;
 
 class VoteController extends Controller
 {
@@ -38,7 +37,6 @@ class VoteController extends Controller
     public function store(StoreVoteRequest $request)
     {
         $data = $request->validated();
-        dd($data);
 
         Vote::create($data);
 

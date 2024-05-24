@@ -15,45 +15,43 @@ Docker version 25.0.3, build 4debf41
 Docker Compose version v2.24.6-desktop.1
 ```
 
-## 環境構築
+## プロジェクトを立ち上げ
 
-### Laravel の初期プロジェクトを構築
-
-1. プロジェクトをフォーク
-2. ターミナルで、リポジトリをクローン & ディレクトリに移動
-3. プロジェクト作成コマンドを実行
-
+### Gitクローン
 ```zsh
 % git clone https://github.com/ProgrammingTraining2024/FamiliarVoting.git
 
 % cd FamiliarVoting
-
-% make create-project
 ```
 
-`app`コンテナ、`web`コンテナ、`db`コンテナ が作成される。
+### コンテナを起動し、入る
+```zsh
+% make up
 
-`src/vite.config.js`を修正
+% make app
+```
+`make` コマンドは、`Makefile` で定義している。
 
-```js
-export default defineConfig({
-    plugins: [
-        laravel({
-            input: 'resources/js/app.jsx',
-            refresh: true,
-        }),
-        react(),
-    ],
-    server: {
-      host: true,
-      hmr: {
-          host: 'localhost',
-      },
-  },
-});
+### Laravelのセットアップ
+```zsh
+# Laravel関連のパッケージをインストール
+/workspace# composer install
+
+# .envファイルを作成
+/workspace# cp .env.example .env
+
+# APP_KEYを発行
+/workspace# php artisan key:generate
+
+# キャッシュをクリア
+/workspace# php artisan config:clear
+
+# データベースを作成
+/workspace# php artisan migrate
 ```
 
 ### コンテナ操作
+
 コンテナ起動
 ```zsh
 % make up
@@ -68,6 +66,7 @@ export default defineConfig({
 ```
 
 ### コンテナ内での操作
+
 Vite起動
 ```bash
 # npm run dev
@@ -76,6 +75,17 @@ Vite起動
 ```bash
 # exit
 ```
+
 ## 使用技術
 
-CSVインポート機能 : [Laravel Excel](https://laravel-excel.com)
+フロントエンド
+- Vite (React)
+- Tailwind CSS
+- MUI
+
+バックエンド
+- Laravel 10
+- Inertia
+
+その他
+- [Laravel Excel](https://laravel-excel.com) (CSVインポート機能)

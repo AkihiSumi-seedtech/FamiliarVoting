@@ -1,10 +1,11 @@
 import Checkbox from '@/Components/Checkbox';
+import VotingConfirmDialog from '@/Components/voterPage/VotingConfirmDialog';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 
 const Voting = ({ auth, candidates, election }) => {
-    const { post, setData } = useForm({
+    const { post, data, setData } = useForm({
         voter_id: auth.user.id,
         election_id: election.id,
         candidate_id: null,
@@ -18,28 +19,41 @@ const Voting = ({ auth, candidates, election }) => {
         setSelectedCandidate(candidateId);
         setIsChoseNotSelect(false);
 
-        setData('candidate_id', candidateId)
-        setData('is_chose_not_select', false)
-        console.log(candidateId)
+        setData({
+            ...data,
+            candidate_id: candidateId,
+            is_chose_not_select: false,
+        })
     };
 
     const handleNotSelectCheckboxChange = () => {
         setSelectedCandidate(null);
         setIsChoseNotSelect(true);
 
-        setData('candidate_id', null)
-        setData('is_chose_not_select', true)
+        setData({
+            ...data,
+            candidate_id: null,
+            is_chose_not_select: true
+        })
     };
 
-    const handleVoting = (e) => {
-        e.preventDefault()
+    const [open, setOpen] = useState(false)
 
+    const handleClickOpen = () => {
         if (isChoseNotSelect === false && selectedCandidate === null) {
             alert("いずれかの選択を有効にしてください。");
             return;
+        } else {
+            setOpen(true)
         }
+    }
 
-        // const confirmVote = window.confirm("投票後の変更はできません。よろしいですか？");
+    const handleClose = () => {
+        setOpen(false)
+    }
+
+    const handleVoting = (e) => {
+        e.preventDefault()
 
         post(route('election.vote.store', election.id), {
             onSuccess: () => {
@@ -54,7 +68,7 @@ const Voting = ({ auth, candidates, election }) => {
         >
             <Head title='投票' />
 
-            <form onSubmit={handleVoting}>
+            <>
                 <div className="text-4xl text-black-700 text-center font-semibold">{election.election_name}</div>
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -114,10 +128,13 @@ const Voting = ({ auth, candidates, election }) => {
                     </div>
                 </div>
 
-                <button className="block mx-auto mt-12 px-6 py-3 bg-orange-500 text-white font-bold rounded-full">
-                    投票する
-                </button>
-            </form>
+                <VotingConfirmDialog
+                    open={open}
+                    handleClickOpen={handleClickOpen}
+                    handleClose={handleClose}
+                    handleVotingDecide={handleVoting}
+                />
+            </>
 
         </AuthenticatedLayout>
     )

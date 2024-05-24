@@ -1,4 +1,4 @@
-import ElectionCard from '@/Components/voters/ElectionCard';
+import ElectionCard from '@/Components/voterPage/ElectionCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
