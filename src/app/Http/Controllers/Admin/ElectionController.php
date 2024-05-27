@@ -73,6 +73,7 @@ class ElectionController extends Controller
         $election->update(['status' => 'scheduling']);
 
         return redirect()->back();
+
     }
 
     /**
@@ -99,22 +100,26 @@ class ElectionController extends Controller
         //
     }
     
-    // public function updateElectionStatus(Election $election)
-    // {
-    //     $currentDate = Carbon::now();
+    public function updateElectionStatus(Election $election)
+    {
+       $currentDate = Carbon::now();
 
-    //     $status = $election->status;
+        $status = $election->status;
+        $startDate = Carbon::parse($election->start_date);
+        $endDate = Carbon::parse($election->end_date);
 
-    //     $startDate = Carbon::parse($election->start_date);
-    //     $endDate = Carbon::parse($election->end_date);
+        if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) && $endDate->isFuture())) {
+            $election->update(['status' => 'running']);
+            // $election->update()が実行された後に$statusを更新する
+            $status = 'running';
+            dd($status);
+        } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
+            $election->update(['status' => 'closed']);
+            // 同様に$statusを更新する
+            $status = 'closed';
+        }
 
-    //     if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
-    //         $election->update(['status' => 'running']);
-    //     } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
-    //         $election->update(['status' => 'closed']);
-    //     }
+        // return $election;
 
-
-    //     return $election;
-    // }
+     }
 }

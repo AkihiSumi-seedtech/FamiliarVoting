@@ -10,7 +10,7 @@ function formatDateTime(dateTime) {
     return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
 
-function ElectionCard({ electionName, electionStatus, electionStartDate, electionEndDate }) {
+function ElectionCard({ electionName, electionStatus, electionStartDate, electionEndDate, electionId }) {
     const formattedStartDate = formatDateTime(electionStartDate);
     const formattedEndDate = formatDateTime(electionEndDate);
 
@@ -22,7 +22,13 @@ function ElectionCard({ electionName, electionStatus, electionStartDate, electio
                 </div>
 
                 <div className="bg-green-400 py-4 w-32 mt-4 flex flex-col items-center justify-center rounded-lg font-bold">
-                    <AutoUpdate initialStatus={electionStatus} start_date={formattedStartDate} end_date={formattedEndDate} />
+                    <AutoUpdate 
+                    initialStatus={electionStatus} 
+                    start_date={formattedStartDate} 
+                    end_date={formattedEndDate} 
+                    electionId={electionId}
+                    
+                    />
                 </div>
             </div>
 

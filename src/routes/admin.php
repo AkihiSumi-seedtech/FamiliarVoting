@@ -63,6 +63,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
         // `status` を `building` から `scheduling` にするメソッド
         Route::post('launch-election/{election}', [ElectionController::class, 'launchElection'])->name('launch-election');
+            
+        Route::post('update-election-status/{election}', [ElectionController::class, 'updateElectionStatus'])->name('update-election-status');
 
         // 結果を表示するルーティングメソッド
         Route::get('indexResult/{election}', [VoteController::class, 'indexResult'])->name('indexResult');
