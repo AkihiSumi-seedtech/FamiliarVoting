@@ -31,7 +31,7 @@ export default function Dashboard({ auth, elections }) {
                 (election) => election.status === "building" || election.status === "scheduling"
             ).length > 0 && (
                 <div className='mt-14 text-center'>
-                    <h3 className="font-bold text-2xl text-gray-800">準備中の選挙があります</h3>
+                    <h3 className="font-bold text-2xl text-gray-800">開催予定の選挙があります</h3>
                         <ul className="list-none mt-6">
                             {elections.data.map((election) => (
                                 <li key={election.id} className="text-gray-600">
