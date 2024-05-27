@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -99,10 +100,10 @@ class ElectionController extends Controller
     {
         //
     }
-    
+
     public function updateElectionStatus(Election $election)
     {
-       $currentDate = Carbon::now();
+        $currentDate = Carbon::now();
 
         $status = $election->status;
         $startDate = Carbon::parse($election->start_date);
@@ -121,5 +122,5 @@ class ElectionController extends Controller
 
         // return $election;
 
-     }
+    }
 }
