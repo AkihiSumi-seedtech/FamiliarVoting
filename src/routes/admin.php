@@ -61,6 +61,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::controller(VoterController::class)->group(function() {
             Route::get('voters', 'index')->name('voters.index');
             Route::post('voters', 'import')->name('voters.import');
+         Route::middleware('auth:admin')->group(function () {
+            
+                Route::post('update-election-status/{election}', [ElectionController::class, 'updateElectionStatus'])->name('update-election-status');
+            });
+            
+
         });
     });
 });
