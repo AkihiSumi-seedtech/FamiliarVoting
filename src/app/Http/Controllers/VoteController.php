@@ -6,7 +6,10 @@ use App\Http\Requests\StoreVoteRequest;
 use App\Http\Resources\Admin\CandidateResource;
 use App\Models\Candidate;
 use App\Models\Election;
+use App\Models\User;
 use App\Models\Vote;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VoteController extends Controller
 {
@@ -33,13 +36,37 @@ class VoteController extends Controller
         ]);
     }
 
+    public function indexResult(Election $election)
+    {
+        $result = DB::table('votes')
+            ->select('candidate_id', 'is_chose_not_select', DB::raw('COUNT(*) as count'))
+            ->whereNotNull('candidate_id')
+            ->orWhere('is_chose_not_select', 1)
+            ->groupBy('candidate_id', 'is_chose_not_select')
+            ->orderBy('count', 'DESC')
+            ->get();
+
+        dd($result);
+
+        return Inertia('Admin/Result/index', [
+            'election' => $election,
+        ]);
+    }
+
     /// 投票機能
     public function store(StoreVoteRequest $request)
     {
         $data = $request->validated();
 
-        Vote::create($data);
+        // 投票したか否かの判定ステータスを変更
+        $userId = Auth::id();
+        $user = User::where('id', $userId)->first();
 
-        return Inertia('User/Thanks')->with('success', 'You have voted.');
+        DB::transaction(function () use ($data, $user) {
+            Vote::create($data);
+            $user->update(['is_voted' => true]);
+        });
+
+        return Inertia('User/Voting/Thanks')->with('success', 'You have voted.');
     }
 }
