@@ -44,7 +44,7 @@ class ElectionController extends Controller
 
         $data['admin_id'] = Auth::id();
 
-        $election = Election::create($data);
+        Election::create($data);
 
         return to_route('admin.election.index')->with('success', 'Election created success');
     }
@@ -70,13 +70,7 @@ class ElectionController extends Controller
 
     public function launchElection(Request $request, Election $election)
     {
-        // 選挙の状態を更新
-        // $this->updateElectionStatus($election);
-
         $election->update(['status' => 'scheduling']);
-
-        // Artisan::call('election:update-status');
-
 
         return redirect()->back();
     }
