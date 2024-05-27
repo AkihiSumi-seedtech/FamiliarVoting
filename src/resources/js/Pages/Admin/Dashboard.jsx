@@ -26,6 +26,7 @@ export default function Dashboard({ auth, elections }) {
                                                 electionStartDate={item.start_date}
                                                 electionEndDate={item.end_date}
                                                 electionStatus={item.status}
+                                                electionId={item.id}
                                             />
                                         </Link>
                                     </div>

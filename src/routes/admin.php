@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CandidateController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\Admin\VoterController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function(){
@@ -41,7 +42,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
     });
 
     Route::middleware('auth:admin')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'adminIndex'])->name('dashboard');
 
         Route::resource('election', ElectionController::class);
         Route::resource('election.candidates', CandidateController::class)->shallow();
@@ -60,6 +61,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+        // `status` を `building` から `scheduling` にするメソッド
         Route::post('launch-election/{election}', [ElectionController::class, 'launchElection'])->name('launch-election');
+            
+        Route::post('update-election-status/{election}', [ElectionController::class, 'updateElectionStatus'])->name('update-election-status');
+
+        // 結果を表示するルーティングメソッド
+        Route::get('indexResult/{election}', [VoteController::class, 'indexResult'])->name('indexResult');
     });
 });

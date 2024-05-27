@@ -6,8 +6,6 @@ import React from 'react'
 const Overview = ({ election }) => {
     const { post } = useForm();
 
-    console.log(election)
-
     const handleLaunch = async (e) => {
         e.preventDefault()
 
@@ -33,6 +31,7 @@ const Overview = ({ election }) => {
             title='概要'
             routeVoters={route('admin.election.voters.index', election)}
             routeCandidate={route('admin.election.candidates.index', election)}
+            routeResult={route('admin.indexResult', election)}
         >
             <div>
                 <LaunchButton launchElection={handleLaunch} />

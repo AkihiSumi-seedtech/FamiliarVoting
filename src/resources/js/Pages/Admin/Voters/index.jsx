@@ -34,6 +34,7 @@ const Voters = ({ voters, election }) => {
             title="投票者"
             routeOverview={route('admin.election.show', election)}
             routeCandidate={route('admin.election.candidates.index', election)}
+            routeResult={route('admin.indexResult', election)}
         >
             <div>
                 <input id='file' type='file' name='file' onChange={handleFileChange} />

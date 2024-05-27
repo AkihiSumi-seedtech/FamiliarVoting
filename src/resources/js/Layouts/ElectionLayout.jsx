@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react'
 import React from 'react'
 import MainMenu from './Navbar/MainMenu'
 
-const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCandidate }) => {
+const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCandidate, routeResult }) => {
     return (
         <div>
             <Head title={title} />
@@ -19,6 +19,7 @@ const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCand
                             routeOverview={routeOverview}
                             routeVoters={routeVoters}
                             routeCandidate={routeCandidate}
+                            routeResult={routeResult}
                         />
                         <div className='w-full px-4 py-8 overflow-hidden overflow-y-auto md:p-12'>
                             {children}

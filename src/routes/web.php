@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoteController;
@@ -29,7 +30,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [ElectionController::class, 'voterIndex'])
+Route::get('/dashboard', [DashboardController::class, 'voterIndex'])
     ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
