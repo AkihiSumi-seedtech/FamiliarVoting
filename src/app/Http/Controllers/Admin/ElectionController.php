@@ -4,16 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
-use App\Http\Requests\Admin\UpdateElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Artisan;
 
 
 class ElectionController extends Controller
@@ -21,52 +15,10 @@ class ElectionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Election $election)
     {
-        $query = Election::query();
-
-        $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", 'desc');
-
-        if (request('election_name')) {
-            $query->where('election_name', 'like', '%' . request('election_name') . '%');
-        }
-        if (request('status')) {
-            $query->where('status', 'like', '%' . request('status') . '%' );
-        }
-
-        $elections = $query->orderBy($sortField, $sortDirection)
-            ->paginate(10)
-            ->onEachSide(1);
-
-        return inertia('Admin/Dashboard', [
-            'elections' => ElectionResource::collection($elections),
-            'queryParams' => request()->query() ?: null,
-            'success' => session('success'),
-        ]);
-    }
-
-    public function voterIndex()
-    {
-        $query = Election::query();
-
-        $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", 'desc');
-
-        if (request('election_name')) {
-            $query->where('election_name', 'like', '%' . request('election_name') . '%');
-        }
-        if (request('status')) {
-            $query->where('status', 'like', '%' . request('status') . '%' );
-        }
-
-        $elections = $query->orderBy($sortField, $sortDirection)
-            ->paginate(10)
-            ->onEachSide(1);
-
-        return inertia('User/Dashboard', [
-            'elections' => ElectionResource::collection($elections),
-            'queryParams' => request()->query() ?: null,
+        return inertia('Admin/Overview/index', [
+            'election' => $election->id,
             'success' => session('success'),
         ]);
     }
@@ -92,9 +44,7 @@ class ElectionController extends Controller
 
         $data['admin_id'] = Auth::id();
 
-        $election = Election::create($data);
-
-        // $this->updateElectionStatus($election);
+        Election::create($data);
 
         return to_route('admin.election.index')->with('success', 'Election created success');
     }
@@ -120,13 +70,7 @@ class ElectionController extends Controller
 
     public function launchElection(Request $request, Election $election)
     {
-        // 選挙の状態を更新
-        // $this->updateElectionStatus($election);
-
         $election->update(['status' => 'scheduling']);
-
-        // Artisan::call('election:update-status');
-
 
         return redirect()->back();
     }

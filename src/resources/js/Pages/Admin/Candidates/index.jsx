@@ -22,7 +22,7 @@ const Candidates = ({ candidates, election }) => {
             return
         }
 
-        post(route('admin.election.candidate.store', election), {
+        post(route('admin.election.candidates.store', election), {
             onSuccess: () => {
                 console.log("成功!")
             }
@@ -32,7 +32,8 @@ const Candidates = ({ candidates, election }) => {
     return (
         <ElectionLayout
             title="立候補者"
-            routeOverview={route('admin.election.index')}
+            routeOverview={route('admin.election.show', election)}
+            routeVoters={route('admin.election.voters.index', election)}
         >
             <div>
                 <input id='file' type='file' name='file' onChange={handleFileChange} />
