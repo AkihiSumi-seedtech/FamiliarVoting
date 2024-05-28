@@ -8,6 +8,7 @@ use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\User;
 use App\Models\Vote;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -46,9 +47,10 @@ class VoteController extends Controller
             ->orderBy('count', 'DESC')
             ->get();
 
-        dd($result);
+        //dd($result);
 
-        return Inertia('Admin/Result/index', [
+        return Inertia::render('Admin/Result/index', [
+            'result' => $result,
             'election' => $election,
         ]);
     }

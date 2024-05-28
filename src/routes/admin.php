@@ -68,5 +68,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
         // 結果を表示するルーティングメソッド
         Route::get('indexResult/{election}', [VoteController::class, 'indexResult'])->name('indexResult');
+
+        Route::get('/elections/{election}/results', 'ElectionController@indexResult');
     });
 });
