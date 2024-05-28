@@ -28,7 +28,7 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title="管理者ログイン" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
@@ -75,17 +75,17 @@ export default function Login({ status, canResetPassword }) {
                                     checked={data.remember}
                                     onChange={(e) => setData('remember', e.target.checked)}
                                 />
-                                <span className="ms-2 text-sm text-gray-600">保存する</span>
+                                <span className="ms-2 text-sm text-gray-600">記憶する</span>
                             </label>
 
                             {canResetPassword && (
-                            <Link
-                                href={route('admin.password.request')}
-                                className="hover:underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ml-auto"
-                            >
-                            パスワードを忘れた方はこちら
-                            </Link>
-                    )}
+                                <Link
+                                    href={route('admin.password.request')}
+                                    className="hover:underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ml-auto"
+                                >
+                                パスワードを忘れた方はこちら
+                                </Link>
+                            )}
                         </div>
 
                         <div className="flex items-center justify-center mt-4">

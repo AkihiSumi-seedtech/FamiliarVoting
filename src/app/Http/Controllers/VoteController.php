@@ -36,23 +36,6 @@ class VoteController extends Controller
         ]);
     }
 
-    public function indexResult(Election $election)
-    {
-        $result = DB::table('votes')
-            ->select('candidate_id', 'is_chose_not_select', DB::raw('COUNT(*) as count'))
-            ->whereNotNull('candidate_id')
-            ->orWhere('is_chose_not_select', 1)
-            ->groupBy('candidate_id', 'is_chose_not_select')
-            ->orderBy('count', 'DESC')
-            ->get();
-
-        dd($result);
-
-        return Inertia('Admin/Result/index', [
-            'election' => $election,
-        ]);
-    }
-
     /// 投票機能
     public function store(StoreVoteRequest $request)
     {
@@ -68,5 +51,41 @@ class VoteController extends Controller
         });
 
         return Inertia('User/Voting/Thanks')->with('success', 'You have voted.');
+    }
+
+    // 投票者側で結果を閲覧
+    public function indexVoterResult(Election $election)
+    {
+        $result = DB::table('votes')
+            ->select('candidate_id', 'is_chose_not_select', DB::raw('COUNT(*) as count'))
+            ->whereNotNull('candidate_id')
+            ->orWhere('is_chose_not_select', 1)
+            ->groupBy('candidate_id', 'is_chose_not_select')
+            ->orderBy('count', 'DESC')
+            ->get();
+
+        // dd($result);
+
+        return Inertia('User/Result/index', [
+            'election' => $election,
+        ]);
+    }
+
+    // 管理者側で結果を閲覧
+    public function indexAdminResult(Election $election)
+    {
+        $result = DB::table('votes')
+            ->select('candidate_id', 'is_chose_not_select', DB::raw('COUNT(*) as count'))
+            ->whereNotNull('candidate_id')
+            ->orWhere('is_chose_not_select', 1)
+            ->groupBy('candidate_id', 'is_chose_not_select')
+            ->orderBy('count', 'DESC')
+            ->get();
+
+        dd($result);
+
+        return Inertia('Admin/Result/index', [
+            'election' => $election,
+        ]);
     }
 }
