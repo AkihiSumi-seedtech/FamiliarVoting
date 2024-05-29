@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CandidateController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\Admin\VoterController;
 use App\Http\Controllers\VoteController;
@@ -67,8 +67,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('update-election-status/{election}', [ElectionController::class, 'updateElectionStatus'])->name('update-election-status');
 
         // 結果を表示するルーティングメソッド
-        Route::get('indexResult/{election}', [VoteController::class, 'indexResult'])->name('indexResult');
-
-        Route::get('/elections/{election}/results', 'ElectionController@indexResult');
+        Route::get('election/{election}/results', [VoteController::class, 'indexAdminResult'])->name('indexAdminResult');
     });
 });

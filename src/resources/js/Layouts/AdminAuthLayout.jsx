@@ -21,11 +21,11 @@ export default function AdminAuthenticated({ user, header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            {/* <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('admin.election.index')} active={route().current('admin.election.index')}>
                                     Dashboard
                                 </NavLink>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">

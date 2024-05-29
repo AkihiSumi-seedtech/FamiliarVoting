@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoteController;
@@ -31,7 +31,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'voterIndex'])
-    ->middleware(['auth', 'verified'])->name('dashboard');
+    ->middleware(['auth', 'verified'])->name('voterDashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('election.vote', VoteController::class);
+Route::get('indexVoterResult/{election}', [VoteController::class, 'indexVoterResult'])->name('indexVoterResult');
 
 require __DIR__.'/auth.php';
 

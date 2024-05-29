@@ -6,21 +6,17 @@ import React from 'react'
 const Overview = ({ election }) => {
     const { post } = useForm();
 
-    const handleLaunch = async (e) => {
+    const handleLaunch = (e) => {
         e.preventDefault()
         window.location.href = '/admin/dashboard';
 
         try {
-            const response = await post(route('admin.launch-election', election), {
-                method: 'put', // PUTメソッドを指定
-            })
-            if (response.status === 200) {
-                // 成功処理
-                console.log('選挙が開始されました。')
-                handleClose(); // ダイアログを閉じる
+            if (election.status === 'building') {
+                post(route('admin.launch-election', election.id), {
+                    method: 'put', // PUTメソッドを指定
+                })
             } else {
-                // 失敗処理
-                console.error('選挙の開始に失敗しました。')
+                window.alert("この選挙はすでに開始されています。")
             }
         } catch (error) {
             console.error(error)
@@ -30,9 +26,9 @@ const Overview = ({ election }) => {
     return (
         <ElectionLayout
             title='概要'
-            routeVoters={route('admin.election.voters.index', election)}
-            routeCandidate={route('admin.election.candidates.index', election)}
-            routeResult={route('admin.indexResult', election)}
+            routeVoters={route('admin.election.voters.index', election.id)}
+            routeCandidate={route('admin.election.candidates.index', election.id)}
+            routeResult={route('admin.indexAdminResult', election.id)}
         >
             <div>
                 <LaunchButton launchElection={handleLaunch} />
@@ -40,7 +36,5 @@ const Overview = ({ election }) => {
         </ElectionLayout>
     )
 }
-
-// Overview.layout = page => <ElectionLayout title="概要" children={page} />
 
 export default Overview

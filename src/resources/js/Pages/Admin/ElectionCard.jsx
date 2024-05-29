@@ -15,19 +15,18 @@ function ElectionCard({ electionName, electionStatus, electionStartDate, electio
     const formattedEndDate = formatDateTime(electionEndDate);
 
     return (
-        <button id="main" className="p-2 justify-around flex items-center ml-32 h-48 w-480 bg-white-200 border-solid border-2 border-bg-slate-500 rounded-lg">
+        <button id="main" className="p-2 justify-center flex items-center h-48 w-full bg-white border-solid border-2 border-bg-slate-500 rounded-lg">
             <div>
                 <div className="border-solid border-2 border-gray bg-white py-4 w-80 flex flex-col rounded-lg font-bold">
                     {electionName}
                 </div>
 
-                <div className="bg-green-400 py-4 w-32 mt-4 flex flex-col items-center justify-center rounded-lg font-bold">
-                    <AutoUpdate 
-                    initialStatus={electionStatus} 
-                    start_date={formattedStartDate} 
-                    end_date={formattedEndDate} 
-                    electionId={electionId}
-                    
+                <div className="bg-green-400 py-4 max-w-32 mt-4 flex flex-col items-center justify-center rounded-lg font-bold">
+                    <AutoUpdate
+                        initialStatus={electionStatus}
+                        start_date={formattedStartDate}
+                        end_date={formattedEndDate}
+                        electionId={electionId}
                     />
                 </div>
             </div>

@@ -55,11 +55,15 @@ const Voting = ({ auth, candidates, election }) => {
     const handleVoting = (e) => {
         e.preventDefault()
 
-        post(route('election.vote.store', election.id), {
-            onSuccess: () => {
-                console.log("成功!")
-            }
-        })
+        if (auth.user.is_voted === 0) {
+            post(route('election.vote.store', election.id), {
+                onSuccess: () => {
+                    console.log("成功!")
+                }
+            })
+        } else {
+            window.alert("あなたは投票済みです。")
+        }
     }
 
     return (

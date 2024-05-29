@@ -21,7 +21,6 @@ const CandidateCard = ({ candidates, electionId }) => {
                     </tr>
                 </thead>
                 <tbody>
-
                     {candidates.data.filter(
                         candidate => candidate.election_id === electionId
                     ).map((candidate) => (
