@@ -56,14 +56,11 @@ const AutoUpdate = ({ start_date, end_date, initialStatus, electionId }) => {
                 handleUpdateElectionStatus(electionId, status); // running から closed になった瞬間にも呼び出す
                 clearInterval(intervalId);
             }
-            //   console.log("Election ID:", electionId);
-            //   console.log(startDate)
-            //   console.log(endDate)
-            //   console.log(status)
         }, 1000)
 
         return () => {
         clearInterval(intervalId);
+  
         };
     }, [startDate, endDate, status, electionId]);
 

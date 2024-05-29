@@ -33,7 +33,8 @@ function CreateElection() {
 
             <div className="w-full sm:max-w-xl mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-6">
                 <div className='p-4'>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} >
+                        
                         <div>
                             <InputLabel htmlFor="election_name" value="選挙名" className='font-extrabold' />
 
