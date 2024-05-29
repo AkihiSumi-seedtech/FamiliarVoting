@@ -34,7 +34,7 @@ const Candidates = ({ candidates, election }) => {
             title="立候補者"
             routeOverview={route('admin.election.show', election)}
             routeVoters={route('admin.election.voters.index', election)}
-            routeResult={route('admin.indexResult', election)}
+            routeResult={route('admin.indexAdminResult', election)}
         >
             <div>
                 <input id='file' type='file' name='file' onChange={handleFileChange} />
@@ -55,7 +55,7 @@ const Candidates = ({ candidates, election }) => {
                 )}
 
                 {candidates.data.length > 0 && (
-                    <CandidateCard candidates={candidates} />
+                    <CandidateCard candidates={candidates} electionId={election} />
                 )}
             </div>
         </ElectionLayout>

@@ -1,17 +1,26 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 const Thanks = ({ auth }) => {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title='投票完了' />
 
-            <div className='max-w-[720px] relative mr-auto ml-auto'>
-                <div className='flex flex-wrap -mr-[15px] -ml-[15px] content-center items-center h-[calc(100vh-60px-50px)]'>
-                <div className='basis-full max-w-full self-center text-center'>
-                    <h1 className='text-3xl font-medium mb-4'>投票が完了しました!</h1>
-                </div>
+            <div className='flex'>
+                <div className='mx-auto'>
+                    <div className=''>
+                        <div className=''>
+                            <h1 className='text-3xl font-medium mb-4'>投票が完了しました!</h1>
+                            <Link href={route('voterDashboard')}>
+                                <div
+                                    className="bg-orange-600 py-4 w-40 mt-8 rounded-lg font-bold text-white text-center mx-auto"
+                                >
+                                    トップページに戻る
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </AuthenticatedLayout>

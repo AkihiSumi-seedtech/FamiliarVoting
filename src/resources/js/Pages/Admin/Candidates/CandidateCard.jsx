@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CandidateCard = ({ candidates }) => {
+const CandidateCard = ({ candidates, electionId }) => {
     return (
         <div>
             <table>
@@ -21,7 +21,9 @@ const CandidateCard = ({ candidates }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {candidates.data.map((candidate) => (
+                    {candidates.data.filter(
+                        candidate => candidate.election_id === electionId
+                    ).map((candidate) => (
                         <tr className='border-l border-r border-b border-t border-gray-300' key={candidate.id}>
                             <td className='text-center border-r border-gray-300'>{candidate.candidate_name}</td>
                             <td className='text-center border-gray-300'>{candidate.candidate_party}</td>

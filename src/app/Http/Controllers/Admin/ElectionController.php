@@ -27,7 +27,7 @@ class ElectionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Election $election)
     {
         $election = Election::query()->orderBy('election_name', 'asc')->get();
 
@@ -47,7 +47,7 @@ class ElectionController extends Controller
 
         Election::create($data);
 
-        return to_route('admin.election.index')->with('success', 'Election created success');
+        return to_route('admin.dashboard');
     }
 
     /**
@@ -56,7 +56,7 @@ class ElectionController extends Controller
     public function show(Election $election)
     {
         return Inertia('Admin/Overview/index', [
-            'election' => $election->id,
+            'election' => $election,
             'success' => session('success'),
         ]);
     }
@@ -71,10 +71,11 @@ class ElectionController extends Controller
 
     public function launchElection(Request $request, Election $election)
     {
-        $election->update(['status' => 'scheduling']);
+        if ($election->status != 'scheduling') {
+            $election->update(['status' => 'scheduling']);
+        }
 
         return redirect()->back();
-
     }
 
     /**
@@ -119,8 +120,5 @@ class ElectionController extends Controller
             // 同様に$statusを更新する
             $status = 'closed';
         }
-
-        // return $election;
-
     }
 }
