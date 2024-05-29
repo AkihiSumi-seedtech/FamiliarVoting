@@ -1,7 +1,8 @@
 import ElectionLayout from '@/Layouts/ElectionLayout';
 import React from 'react';
 
-const Result = ({ election, result }) => {
+const Result = ({ election, results, electionId }) => {
+    const filteredResults = results.filter(result => result.election_id === electionId);
     return (
         <ElectionLayout
             routeVoters={route('admin.election.voters.index', election)}
@@ -9,12 +10,12 @@ const Result = ({ election, result }) => {
             routeCandidate={route('admin.election.candidates.index', election)}
         >
            <div>
-                <h1>Result Page</h1>
-                <div>Election: {election.name}</div>
+                <h1>投票結果</h1>
+                <div>選挙名: {election.election_name}</div>
                 <ul>
-                    {result.map((item, index) => (
+                    {results.map((item, index) => (
                         <li key={index}>
-                            立候補者名: {item.candidate_id}, 獲得票数: {item.count}
+                            立候補者名: {item.candidate_name}, 獲得票数: {item.count}, 所属: {item.candidate_party}
                         </li>
                     ))}
                 </ul>

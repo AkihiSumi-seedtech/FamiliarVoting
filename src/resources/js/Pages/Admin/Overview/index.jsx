@@ -8,7 +8,7 @@ const Overview = ({ election }) => {
 
     const handleLaunch = async (e) => {
         e.preventDefault()
-        window.location.href = '/admin/election/dashboard';
+        window.location.href = '/admin/dashboard';
 
         try {
             const response = await post(route('admin.launch-election', election), {

@@ -26,7 +26,7 @@ class VoteController extends Controller
         }
 
         $candidates = $query->orderBy($sortField, $sortDirection)
-            ->paginate(10)
+            ->paginate(100)
             ->onEachSide(1);
 
         return Inertia('User/Voting/index', [
@@ -38,22 +38,25 @@ class VoteController extends Controller
     }
 
     public function indexResult(Election $election)
-    {
-        $result = DB::table('votes')
-            ->select('candidate_id', 'is_chose_not_select', DB::raw('COUNT(*) as count'))
-            ->whereNotNull('candidate_id')
-            ->orWhere('is_chose_not_select', 1)
-            ->groupBy('candidate_id', 'is_chose_not_select')
-            ->orderBy('count', 'DESC')
-            ->get();
+{
+    $results = DB::table('votes')
+        ->select('elections.election_name', 'candidates.candidate_name', 'votes.candidate_id', DB::raw('COUNT(votes.candidate_id) as count'))
+        ->leftJoin('candidates', 'votes.candidate_id', '=', 'candidates.id')
+        ->leftJoin('elections', 'votes.election_id', '=', 'elections.id')
+        ->where('votes.election_id', $election->id) 
+        ->whereNotNull('votes.candidate_id')
+        ->orWhere('votes.is_chose_not_select', 1)
+        ->groupBy('elections.election_name', 'candidates.candidate_name', 'votes.candidate_id')
+        ->orderByDesc('count')
+        ->get();
 
-        //dd($result);
+    return Inertia::render('Admin/Result/index', [
+        'results' => $results,
+        'election' => $election
+    ]);
+}
 
-        return Inertia::render('Admin/Result/index', [
-            'result' => $result,
-            'election' => $election,
-        ]);
-    }
+    
 
     /// 投票機能
     public function store(StoreVoteRequest $request)

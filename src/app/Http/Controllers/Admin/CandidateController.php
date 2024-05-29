@@ -33,12 +33,12 @@ class CandidateController extends Controller
         }
 
         $candidates = $query->orderBy($sortField, $sortDirection)
-            ->paginate(10)
+            ->paginate(100)
             ->onEachSide(1);
 
         return Inertia('Admin/Candidates/index', [
             'candidates' => CandidateResource::collection($candidates),
-            'election' => $election->id,
+            'election' => $election,
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
         ]);
@@ -57,6 +57,7 @@ class CandidateController extends Controller
     {
         return Inertia('Admin/Candidate/index', [
             'candidate' => new CandidateResource($candidate),
+            
         ]);
     }
 }

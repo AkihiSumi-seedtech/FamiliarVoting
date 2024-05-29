@@ -47,7 +47,7 @@ class ElectionController extends Controller
 
         Election::create($data);
 
-        return to_route('admin.election.index')->with('success', 'Election created success');
+        return redirect()->route('admin.dashboard');
     }
 
     /**
@@ -113,7 +113,7 @@ class ElectionController extends Controller
             $election->update(['status' => 'running']);
             // $election->update()が実行された後に$statusを更新する
             $status = 'running';
-            dd($status);
+            //dd($status);
         } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
             $election->update(['status' => 'closed']);
             // 同様に$statusを更新する
