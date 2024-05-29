@@ -26,9 +26,13 @@ const Overview = ({ election }) => {
     return (
         <ElectionLayout
             title='概要'
+            iconName="overview"
+            pageName="概要"
             routeVoters={route('admin.election.voters.index', election.id)}
             routeCandidate={route('admin.election.candidates.index', election.id)}
-            routeResult={route('admin.indexAdminResult', election.id)}
+            routeResult={route('admin.election.indexAdminResult', election.id)}
+            electionName={election.election_name}
+            electionStatus={election.status}
         >
             <div>
                 <LaunchButton launchElection={handleLaunch} />

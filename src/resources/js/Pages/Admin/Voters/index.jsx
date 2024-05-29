@@ -66,14 +66,18 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
     return (
         <ElectionLayout
             title="投票者"
+            iconName='voters'
+            pageName='投票者'
             routeOverview={route('admin.election.show', election.id)}
             routeCandidate={route('admin.election.candidates.index', election.id)}
-            routeResult={route('admin.indexAdminResult', election.id)}
+            routeResult={route('admin.election.indexAdminResult', election.id)}
+            electionName={election.election_name}
+            electionStatus={election.status}
         >
             <div>
                 <input id='file' type='file' name='file' onChange={handleFileChange} />
                 <button
-                    className="bg-orange-600 py-4 w-32 mt-4 items-center justify-center rounded-lg font-bold"
+                    className="bg-orange-600 py-4 w-32 items-center justify-center rounded-lg font-bold"
                     type='submit'
                     value={data.file}
                     onClick={handleImport}
@@ -81,7 +85,9 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                     Upload
                 </button>
 
-                {!voters.data.length && (
+                {voters.data.length != 0 || voters.data.filter(
+                    voter => voter.election_id != election.id
+                ) && (
                     <div className='mt-10 text-center'>
                         <p className='text-xl font-medium mb-4'>まだ投票者をアップロードしていないようです。</p>
                         <p className='text-xl font-medium mb-4'>投票者をアップロードしましょう。</p>
@@ -123,7 +129,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                                         <th className='px-3 py-3 text-right'>Actions</th>
                                     </tr>
                                 </thead>
-                                <thead className='test-xs text-gray-700 uppercase bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500'>
+                                <thead className='test-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500'>
                                     <tr className='text-nowrap'>
                                         <th className='p-3'></th>
                                         <th className='p-3'>
@@ -153,7 +159,9 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                                 </thead>
 
                                 <tbody>
-                                    {voters.data.map((voter) => (
+                                    {voters.data.filter(
+                                        voter => voter.election_id === election.id
+                                    ).map((voter) => (
                                         <tr
                                             className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'
                                             key={voter.id}
