@@ -67,6 +67,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('update-election-status/{election}', [ElectionController::class, 'updateElectionStatus'])->name('update-election-status');
 
         // 結果を表示するルーティングメソッド
-        Route::get('indexAdminResult/{election}', [VoteController::class, 'indexAdminResult'])->name('indexAdminResult');
+        Route::get('election/{election}/results', [VoteController::class, 'indexAdminResult'])->name('indexAdminResult');
     });
 });

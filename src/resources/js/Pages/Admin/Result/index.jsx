@@ -1,16 +1,27 @@
-import ElectionLayout from '@/Layouts/ElectionLayout'
-import React from 'react'
+import ElectionLayout from '@/Layouts/ElectionLayout';
+import React from 'react';
 
-const Result = ({ election }) => {
+const Result = ({ election, results, electionId }) => {
+    const filteredResults = results.filter(result => result.election_id === electionId);
     return (
         <ElectionLayout
             routeVoters={route('admin.election.voters.index', election)}
             routeOverview={route('admin.election.show', election)}
             routeCandidate={route('admin.election.candidates.index', election)}
         >
-            <div>Result page</div>
+           <div>
+                <h1>投票結果</h1>
+                <div>選挙名: {election.election_name}</div>
+                <ul>
+                    {results.map((item, index) => (
+                        <li key={index}>
+                            立候補者名: {item.candidate_name}, 獲得票数: {item.count}, 所属: {item.candidate_party}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </ElectionLayout>
-    )
-}
+    );
+};
 
-export default Result
+export default Result;

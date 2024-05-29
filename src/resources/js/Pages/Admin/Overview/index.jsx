@@ -8,6 +8,7 @@ const Overview = ({ election }) => {
 
     const handleLaunch = (e) => {
         e.preventDefault()
+        window.location.href = '/admin/dashboard';
 
         try {
             if (election.status === 'building') {

@@ -22,7 +22,7 @@ const Candidates = ({ candidates, election }) => {
             return
         }
 
-        post(route('admin.election.candidates.store', election), {
+        post(route('admin.election.candidates.store', election.id), {
             onSuccess: () => {
                 console.log("成功!")
             }
@@ -32,9 +32,9 @@ const Candidates = ({ candidates, election }) => {
     return (
         <ElectionLayout
             title="立候補者"
-            routeOverview={route('admin.election.show', election)}
-            routeVoters={route('admin.election.voters.index', election)}
-            routeResult={route('admin.indexAdminResult', election)}
+            routeOverview={route('admin.election.show', election.id)}
+            routeVoters={route('admin.election.voters.index', election.id)}
+            routeResult={route('admin.indexResult', election.id)}
         >
             <div>
                 <input id='file' type='file' name='file' onChange={handleFileChange} />
@@ -55,7 +55,7 @@ const Candidates = ({ candidates, election }) => {
                 )}
 
                 {candidates.data.length > 0 && (
-                    <CandidateCard candidates={candidates} electionId={election} />
+                    <CandidateCard candidates={candidates} electionId={election.id}  />
                 )}
             </div>
         </ElectionLayout>
