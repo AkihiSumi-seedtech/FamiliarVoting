@@ -8,7 +8,6 @@ use App\Imports\UserImport;
 use App\Models\Election;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Importer;
 
@@ -25,8 +24,8 @@ class VoterController extends Controller
     {
         $query = User::query();
 
-        $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", "desc");
+        $sortField = request("sort_field", 'id');
+        $sortDirection = request("sort_direction", "asc");
 
         if (request("name")) {
             $query->where("name", "like", "%" . request("name") . "%");
@@ -37,7 +36,7 @@ class VoterController extends Controller
             ->onEachSide(1);
 
         return Inertia('Admin/Voters/index', [
-            'election' => $election->id,
+            'election' => $election,
             'voters' => VoterResource::collection($voters),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
