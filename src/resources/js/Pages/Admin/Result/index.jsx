@@ -10,8 +10,10 @@ const Result = ({ election, results, electionId }) => {
         name: result.candidate_name,
         value: result.count,
         party: result.candidate_party,
+        
     }));
 
+    console.log(chartData)
     return (
         <ElectionLayout
             title='結果'
