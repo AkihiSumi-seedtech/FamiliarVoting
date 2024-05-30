@@ -32,9 +32,13 @@ const Candidates = ({ candidates, election }) => {
     return (
         <ElectionLayout
             title="立候補者"
+            iconName='candidates'
+            pageName='立候補者'
             routeOverview={route('admin.election.show', election.id)}
             routeVoters={route('admin.election.voters.index', election.id)}
-            routeResult={route('admin.indexAdminResult', election.id)}
+            routeResult={route('admin.election.indexAdminResult', election.id)}
+            electionName={election.election_name}
+            electionStatus={election.status}
         >
             <div>
                 <input id='file' type='file' name='file' onChange={handleFileChange} />

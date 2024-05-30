@@ -4,11 +4,11 @@ import { IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import MainMenu from './MainMenu'
 
-function TopHeader() {
+function SidebarLogo() {
     const [menuOpened, setMenuOpened] = useState(false)
 
     return (
-        <div className='flex items-center justify-between px-6 py-4 bg-[#E75B0D] md:flex-shrink-0 md:w-60 md:justify-center'>
+        <div className='flex items-center justify-between px-6 py-4 bg-[#E75B0D] md:flex-shrink-0 w-60 min-w-60 h-[60px] min-h-[60px] md:justify-center'>
             <Link className='mt-1' href={route('admin.dashboard')}>
                 <h5>FamiliarVoting</h5>
             </Link>
@@ -33,4 +33,4 @@ function TopHeader() {
     )
 }
 
-export default TopHeader
+export default SidebarLogo
