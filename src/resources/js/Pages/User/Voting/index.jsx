@@ -90,9 +90,7 @@ const Voting = ({ auth, candidates, election }) => {
                                     <tbody>
                                         {candidates.data.filter(
                                             candidate => candidate.election_id === election.id
-                                        ).
-                                        
-                                        map((candidate) => (
+                                        ).map((candidate) => (
                                             <tr
                                                 className="border-b border-neutral-200 dark:border-white/10"
                                                 key={candidate.id}

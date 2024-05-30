@@ -31,10 +31,12 @@ export default function Login({ status, canResetPassword }) {
         <GuestLayout>
             <Head title="ログイン" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && (
+                <div className="mb-4 font-medium text-sm text-green-600">{status}</div>
+            )}
 
-            <div className='w-full sm:max-w-md mt-20 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-6'>
-                <div className='p-4'>
+            {/* <div className='w-full sm:max-w-md mt-20 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-6'>
+                <div className='p-4'> */}
 
                     <form onSubmit={submit}>
                         <div>
@@ -77,7 +79,7 @@ export default function Login({ status, canResetPassword }) {
                                     checked={data.remember}
                                     onChange={(e) => setData('remember', e.target.checked)}
                                 />
-                                <span className="ms-2 text-sm text-gray-600">記憶する</span>
+                                <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">記憶する</span>
                             </label>
                         </div>
 
@@ -96,8 +98,8 @@ export default function Login({ status, canResetPassword }) {
                             </AuthButton>
                         </div>
                     </form>
-                </div>
-            </div>
+                {/* </div>
+            </div> */}
         </GuestLayout>
     );
 }

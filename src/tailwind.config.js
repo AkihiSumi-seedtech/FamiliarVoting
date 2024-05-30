@@ -16,8 +16,8 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             aria: {
-              asc: 'sort="ascending"',
-              desc: 'sort="descending"',
+                asc: 'sort="ascending"',
+                desc: 'sort="descending"',
             },
         },
     },
