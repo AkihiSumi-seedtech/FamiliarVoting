@@ -28,7 +28,7 @@ const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCand
                             routeCandidate={routeCandidate}
                             routeResult={routeResult}
                         />
-                        <div className='w-full pt-[80px] pb-4'>
+                        <div className='w-full pt-[80px] bg-white dark:bg-gray-800'>
                             <div className='h-full min-h-full mx-5'>
                                 {children}
                             </div>

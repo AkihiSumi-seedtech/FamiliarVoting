@@ -25,8 +25,8 @@ class CandidateController extends Controller
     {
         $query = Candidate::query();
 
-        $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", "desc");
+        $sortField = request("sort_field", 'id');
+        $sortDirection = request("sort_direction", "asc");
 
         if (request("candidate_name")) {
             $query->where("candidate_name", "like", "%" . request("candidate_name") . "%");

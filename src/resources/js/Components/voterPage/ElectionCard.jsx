@@ -17,10 +17,10 @@ const ElectionCard = ({ toRoute, electionName, startDate, endDate}) => {
 
     return (
         <Link href={toRoute}>
-            <div className='rounded-lg bg-white p-4 shadow-md flex flex-col'>
-                <h2 className='font-bold text-3xl mb-2 text-gray-800'>{electionName}</h2>
-                <h3 className='text-lg font-medium text-gray-600'>期間</h3>
-                <p className='text-lg text-gray text-center'>{formattedStartDate} 〜 {formattedEndDate}</p>
+            <div className='rounded-lg bg-white dark:bg-gray-800 p-4 shadow-md flex flex-col'>
+                <h2 className='font-bold text-3xl mb-2 text-gray-800 dark:text-gray-400'>{electionName}</h2>
+                <h3 className='text-lg font-medium text-gray-600 dark:text-gray-400'>期間</h3>
+                <p className='text-lg text-gray text-center dark:text-gray-400'>{formattedStartDate} 〜 {formattedEndDate}</p>
             </div>
         </Link>
     )

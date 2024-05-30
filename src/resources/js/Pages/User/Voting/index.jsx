@@ -73,7 +73,7 @@ const Voting = ({ auth, candidates, election }) => {
             <Head title='投票' />
 
             <>
-                <div className="text-4xl text-black-700 text-center font-semibold">{election.election_name}</div>
+                <div className="text-3xl text-black-700 dark:text-gray-300 text-center font-semibold">{election.election_name}</div>
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -102,10 +102,10 @@ const Voting = ({ auth, candidates, election }) => {
                                                         onChange={() => handleCandidateCheckboxChange(candidate.id)}
                                                     />
                                                 </td>
-                                                <td className="whitespace-nowrap px-6 py-4 text-black text-base font-bold">
+                                                <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base font-bold">
                                                     {candidate.candidate_name}
                                                 </td>
-                                                <td className="whitespace-nowrap px-6 py-4 text-black text-base">
+                                                <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base">
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
@@ -123,7 +123,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     onChange={() => handleNotSelectCheckboxChange()}
                                                 />
                                             </td>
-                                            <td className="whitespace-nowrap px-6 py-4 text-black text-base font-bold">
+                                            <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base font-bold">
                                                 選択しない
                                             </td>
                                         </tr>

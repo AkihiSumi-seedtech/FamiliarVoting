@@ -21,7 +21,7 @@ const AutoUpdate = ({ start_date, end_date, initialStatus, electionId }) => {
     const handleUpdateElectionStatus = async (electionId, status) => {
     // 追加
         const data = {
-        status: status
+            status: status
         };
 
         try {
@@ -57,10 +57,11 @@ const AutoUpdate = ({ start_date, end_date, initialStatus, electionId }) => {
                 clearInterval(intervalId);
             }
         }, 1000)
+        console.log(status)
 
         return () => {
         clearInterval(intervalId);
-  
+
         };
     }, [startDate, endDate, status, electionId]);
 

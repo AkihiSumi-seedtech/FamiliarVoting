@@ -22,7 +22,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
         router.get(route('admin.election.voters.index', [election.id, queryParams]))
     }
 
-    // 検索
+    // Searching name and email
     const searchFieldChanged = (name, value) => {
         if (value) {
             queryParams[name] = value
@@ -32,10 +32,10 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
         router.get(route('admin.election.voters.index', [election.id, queryParams]))
     }
     const onKeyPress = (name, e) => {
-        if (e.key !== "Enter") return;
+        if (e.key !== "Enter") return
 
-        searchFieldChanged(name, e.target.value);
-    };
+        searchFieldChanged(name, e.target.value)
+    }
 
     const { data, setData, post } = useForm({
         file: null
@@ -44,10 +44,11 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setData({ file: file });
+            setData({ file: file })
         }
     }
 
+    /// Importing voters CSV data file
     const handleImport = (e) => {
         e.preventDefault()
 
@@ -94,11 +95,11 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                     </div>
                 )}
 
-                <div className='bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg'>
+                <div className='bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border dark:border-gray-600'>
                     <div className='p-6 text-gray-900 dark:text-gray-100'>
                         <div className='overflow-auto'>
                             <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-                                <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500'>
+                                <thead className='text-xs text-gray-700 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700 border-b-2 border-gray-500'>
                                     <tr className='text-nowrap'>
                                         <TableHeading
                                             name="id"
@@ -126,9 +127,10 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                                             メールアドレス
                                         </TableHeading>
 
-                                        <th className='px-3 py-3 text-right'>Actions</th>
+                                        <th className='p-3 text-right'>Actions</th>
                                     </tr>
                                 </thead>
+
                                 <thead className='test-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500'>
                                     <tr className='text-nowrap'>
                                         <th className='p-3'></th>
@@ -167,7 +169,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                                             key={voter.id}
                                         >
                                             <td className='p-3'>{voter.id}</td>
-                                            <td className='p-3 text-gray-100 text-nowrap'>{voter.name}</td>
+                                            <td className='p-3 dark:text-gray-100 text-nowrap'>{voter.name}</td>
                                             <td className='p-3'>{voter.email}</td>
                                         </tr>
                                     ))}
