@@ -76,7 +76,7 @@ class VoteController extends Controller
     public function indexAdminResult(Election $election)
     {
         $results = DB::table('votes')
-        ->select('elections.election_name', 'candidates.candidate_name', 'votes.candidate_id', DB::raw('COUNT(votes.candidate_id) as count'))
+        ->select('elections.election_name', 'candidates.candidate_party', 'candidates.candidate_name', 'votes.candidate_id', DB::raw('COUNT(votes.candidate_id) as count'))
         ->leftJoin('candidates', 'votes.candidate_id', '=', 'candidates.id')
         ->leftJoin('elections', 'votes.election_id', '=', 'elections.id')
         ->where('votes.election_id', $election->id) 

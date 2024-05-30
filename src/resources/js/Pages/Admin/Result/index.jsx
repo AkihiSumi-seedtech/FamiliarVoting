@@ -1,8 +1,17 @@
 import ElectionLayout from '@/Layouts/ElectionLayout';
 import React from 'react';
+import ResultChart from './ResultChart';
 
 const Result = ({ election, results, electionId }) => {
     const filteredResults = results.filter(result => result.election_id === electionId);
+
+    // chartDataを定義する
+    const chartData = filteredResults.map(result => ({
+        name: result.candidate_name,
+        value: result.count,
+        party: result.candidate_party,
+    }));
+
     return (
         <ElectionLayout
             title='結果'
@@ -25,6 +34,8 @@ const Result = ({ election, results, electionId }) => {
                     ))}
                 </ul>
             </div>
+
+            <ResultChart chartData={chartData} />
         </ElectionLayout>
     );
 };
