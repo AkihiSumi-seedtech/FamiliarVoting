@@ -26,7 +26,7 @@ const Result = ({ election, results, electionId }) => {
             electionStatus={election.status}
         >
             <div>
-                <h1>投票結果</h1>
+                {/* <h1>投票結果</h1>
                 <div>選挙名: {election.election_name}</div>
                 <ul>
                     {results.map((item, index) => (
@@ -34,7 +34,7 @@ const Result = ({ election, results, electionId }) => {
                             立候補者名: {item.candidate_name}, 獲得票数: {item.count}, 所属: {item.candidate_party}
                         </li>
                     ))}
-                </ul>
+                </ul> */}
             </div>
 
             <ResultChart chartData={chartData} />
