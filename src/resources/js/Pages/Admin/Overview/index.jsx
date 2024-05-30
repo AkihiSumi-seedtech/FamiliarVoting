@@ -7,22 +7,20 @@ const Overview = ({ election }) => {
     const { post } = useForm();
 
     const handleLaunch = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         window.location.href = '/admin/dashboard';
-
+    
         try {
-            if (election.status === 'building') {
+            if (election.status === 'building' && new Date(election.end_date) > new Date()) {
                 post(route('admin.launch-election', election.id), {
                     method: 'put', // PUTメソッドを指定
-                })
-            } else {
-                window.alert("この選挙はすでに開始されています。")
+                });
             }
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
     }
-
+    
     return (
         <ElectionLayout
             title='概要'
@@ -31,10 +29,14 @@ const Overview = ({ election }) => {
             routeResult={route('admin.indexAdminResult', election.id)}
         >
             <div>
-                <LaunchButton launchElection={handleLaunch} />
+
+                {(election.status === 'building' && new Date(election.end_date) > new Date()) && (
+                    <LaunchButton launchElection={handleLaunch} />
+                )}
             </div>
         </ElectionLayout>
     )
+    
 }
 
 export default Overview
