@@ -13,9 +13,8 @@ export default function Dashboard({ auth, elections }) {
             <Head title="Dashboard" />
 
             {elections.data.length != 0 && ( <PageHeader /> )}
-            {/* <ElectionCard /> */}
             {elections.data.map((item) => (
-                <div key={item.id}>
+                <div className='bg-white dark:bg-gray-800' key={item.id}>
                     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div>
                             <Link href={route('admin.election.show', item.id)}>
@@ -30,9 +29,6 @@ export default function Dashboard({ auth, elections }) {
                         </div>
                     </div>
                 </div>
-                //         </div>
-                //     </div>
-                // </div>
             ))}
 
             {elections.data.length === 0 &&(

@@ -1,4 +1,5 @@
 import React from 'react'
+import ElectionStatusBadge from '../election/ElectionStatusBadge';
 
 function formatDateTime(dateTime) {
     const date = new Date(dateTime);
@@ -10,12 +11,12 @@ function formatDateTime(dateTime) {
     return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
 
-const ElectionCard = ({ electionName, electionStatus, electionStartDate, electionEndDate, }) => {
+const ElectionCard = ({ electionId, electionName, electionStatus, electionStartDate, electionEndDate, }) => {
     const formattedStartDate = formatDateTime(electionStartDate);
     const formattedEndDate = formatDateTime(electionEndDate);
 
     return (
-        <div className='relative border-solid border-2 flex flex-col min-w-0 bg-white bg-clip-border rounded-md mb-3'>
+        <div className='relative border-solid border dark:border-gray-400 flex flex-col min-w-0 bg-white dark:bg-gray-800 bg-clip-border rounded-md mb-8 dark:text-gray-300'>
             <div className='flex-auto p-4'>
                 <div className='flex flex-wrap -mr-[15px] -ml-[15px] justify-between items-center text-base'>
                     <div className='leading-normal flex-[0_0_50%] max-w-[50%]'>
@@ -24,9 +25,12 @@ const ElectionCard = ({ electionName, electionStatus, electionStartDate, electio
                                 {electionName}
                             </h6>
                         </div>
-                        <div className='w-auto flex-[0_0_100%] max-w-full pl-[15px]'>
-                            {electionStatus}
-                        </div>
+                        <ElectionStatusBadge
+                            electionId={electionId}
+                            initialStatus={electionStatus}
+                            start_date={formattedStartDate}
+                            end_date={formattedEndDate}
+                        />
                     </div>
                     <div className='leading-normal flex-[0_0_50%] max-w-[50%]'>
                         <div className='flex flex-wrap items-center mt-0 -mr-[15px] -ml-[15px]'>

@@ -18,23 +18,22 @@ function CreateElection() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <Head title='Create Election' />
 
             <div className='mb-3'>
                 <Link href="/">
-                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500 dark:text-gray-400" />
                 </Link>
             </div>
 
-            <div className='text-5xl font-light'>
+            <div className='text-5xl font-light dark:text-gray-400'>
                 選挙を作成する
             </div>
 
-            <div className="w-full sm:max-w-xl mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-6">
+            <div className="w-full sm:max-w-xl mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg mb-6">
                 <div className='p-4'>
                     <form onSubmit={handleSubmit} >
-                        
                         <div>
                             <InputLabel htmlFor="election_name" value="選挙名" className='font-extrabold' />
 
