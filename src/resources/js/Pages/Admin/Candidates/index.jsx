@@ -4,7 +4,7 @@ import { router, useForm } from '@inertiajs/react';
 import TableHeading from '@/Components/TableHeading';
 import TextInput from '@/Components/TextInput';
 import PageHeader from '@/Layouts/PageHeader';
-import MenuIcon from '@/Layouts/Navbar/MenuIcon';
+import ElectionMuiIcon from '@/Layouts/Navbar/ElectionMuiIcon';
 
 /**
  * Candidatesコンポーネントは、特定の選挙における立候補者の一覧を表示し、
@@ -103,8 +103,6 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
     return (
         <ElectionLayout
             title="立候補者"
-            // iconName='candidates'
-            // pageName='立候補者'
             routeOverview={route('admin.election.show', election.id)}
             routeVoters={route('admin.election.voters.index', election.id)}
             routeResult={route('admin.election.indexAdminResult', election.id)}
@@ -114,35 +112,52 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
             electionEndDate={election.end_date}
         >
             <div>
-                <PageHeader icon="candidates" pageName="立候補者">
-                    <div className='mr-auto flex-[0_0_33%] max-w-[33%] px-[15px]'>
-                        <div className='mb-0 flex'>
-                            <MenuIcon name="candidates" className="text-white mr-3" />
-                            <div className='dark:text-white text-lg font-extrabold'>立候補者</div>
-                        </div>
-                    </div>
-                    <div className='mt-0 flex-[0_0_67%] max-w-[67%]'>
-                        <input id='file' type='file' name='file' onChange={handleFileSelect} />
-                        <button
-                            className="bg-orange-600 w-28 h-30 rounded-lg font-bold"
-                            type='submit'
-                            value={data.file}
-                            onClick={handleImport}
-                        >
-                            Upload
-                        </button>
-                    </div>
-                </PageHeader>
-
                 {candidates.data.length === 0 && (
-                    <div className='pt-20 text-center dark:text-gray-300'>
-                        <p className='text-xl font-medium mb-4'>まだアップロードされた立候補者がいないようです。</p>
-                        <p className='text-xl font-medium'>右上のボタンから立候補者をアップロードしましょう。</p>
+                    <div className='flex -mr-[15px] h-screen dark:text-gray-300'>
+                        <div className='text-center self-center flex-[0_0_100%] max-w-full'>
+                            <div className='text-4xl flex items-center justify-center mb-2'>
+                                <ElectionMuiIcon name='candidates' className='mx-4' sx={{ fontSize: 40 }} />
+                                <div className='dark:text-gray-300'>立候補者を追加する</div>
+                            </div>
+                            <div>
+                                下のボタンから立候補者のCSVを選択してインポートしましょう
+                            </div>
+                            <div className='mt-6 flex-[0_0_67%] max-w-[67%]'>
+                                <input id='file' type='file' name='file' onChange={handleFileSelect} />
+                                <button
+                                    className="bg-orange-600 w-32 h-12 rounded-lg font-bold"
+                                    type='submit'
+                                    value={data.file}
+                                    onClick={handleImport}
+                                >
+                                    インポート
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 
                 {candidates.data.length > 0 && (
                     <div className='bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border dark:border-gray-600 mt-20'>
+                        <PageHeader icon="candidates" pageName="立候補者">
+                            <div className='mr-auto flex-[0_0_33%] max-w-[33%] px-[15px]'>
+                                <div className='mb-0 flex'>
+                                    <ElectionMuiIcon name="candidates" className="text-white mr-3" />
+                                    <div className='dark:text-white text-lg font-extrabold'>立候補者</div>
+                                </div>
+                            </div>
+                            <div className='mt-0 flex-[0_0_67%] max-w-[67%]'>
+                                <input id='file' type='file' name='file' onChange={handleFileSelect} />
+                                <button
+                                    className="bg-orange-600 w-28 h-30 rounded-lg font-bold"
+                                    type='submit'
+                                    value={data.file}
+                                    onClick={handleImport}
+                                >
+                                    Upload
+                                </button>
+                            </div>
+                        </PageHeader>
                         <div className='p-6 text-gray-900 dark:text-gray-100'>
                             <div className='overflow-auto'>
                                 <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>

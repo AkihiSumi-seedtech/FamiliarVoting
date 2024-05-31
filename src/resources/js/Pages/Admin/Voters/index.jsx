@@ -91,9 +91,12 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                 {voters.data.length != 0 || voters.data.filter(
                     voter => voter.election_id != election.id
                 ) && (
-                    <div className='mt-10 text-center'>
-                        <p className='text-xl font-medium mb-4'>まだ投票者をアップロードしていないようです。</p>
-                        <p className='text-xl font-medium mb-4'>投票者をアップロードしましょう。</p>
+                    <div className='flex flex-wrap -mr-[15px] content-center items-center h-screen'>
+                        <div className='text-center self-center flex-[0_0_100%] max-w-full'>
+                            <div className='text-4xl'>
+                                <div>投票者を追加する</div>
+                            </div>
+                        </div>
                     </div>
                 )}
 
