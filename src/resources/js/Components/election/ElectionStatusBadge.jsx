@@ -18,7 +18,6 @@ const ElectionStatusBadge = ({ start_date, end_date, initialStatus, electionId, 
     }
 
     const handleUpdateElectionStatus = async (electionId, status) => {
-    // 追加
         const data = {
             status: status
         };
@@ -51,10 +50,7 @@ const ElectionStatusBadge = ({ start_date, end_date, initialStatus, electionId, 
             }
         }, 1000)
 
-        return () => {
-        clearInterval(intervalId);
-
-        };
+        return () => {clearInterval(intervalId);}
     }, [startDate, endDate, status, electionId]);
 
     return (

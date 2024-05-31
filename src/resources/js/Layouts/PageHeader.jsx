@@ -1,15 +1,11 @@
 import React from 'react'
-import MenuIcon from './Navbar/MenuIcon'
 
-function PageHeader({ icon, text }) {
+function PageHeader({ children }) {
     return (
-        <div className='flex fixed dark:bg-gray-800 w-full left-60 z-30 border-b dark:border-s-gray-100 items-center min-h-[60px] h-[60px]'>
-            <div className='w-full -px-[15px] mx-auto'>
-                <div className='flex flex-wrap mx-[15px]'>
-                    <div className='mr-3'>
-                        <MenuIcon name={icon} className="text-white" />
-                    </div>
-                    <div className='dark:text-white text-lg font-extrabold'>{text}</div>
+        <div className='flex fixed items-center dark:bg-gray-800 w-full left-0 pl-[240px] min-h-[60px] z-10 border-b dark:border-s-gray-100 top-[60px]'>
+            <div className='w-full px-[15px] mx-auto'>
+                <div className='flex flex-wrap -mx-[15px] items-center'>
+                    {children}
                 </div>
             </div>
         </div>

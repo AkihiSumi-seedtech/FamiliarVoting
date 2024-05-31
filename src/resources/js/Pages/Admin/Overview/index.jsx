@@ -9,7 +9,7 @@ const Overview = ({ election }) => {
     const handleLaunch = (e) => {
         e.preventDefault();
         window.location.href = '/admin/dashboard';
-    
+
         try {
             if (election.status === 'building' && new Date(election.end_date) > new Date()) {
                 post(route('admin.launch-election', election.id), {
@@ -20,7 +20,7 @@ const Overview = ({ election }) => {
             console.error(error);
         }
     }
-    
+
     return (
         <ElectionLayout
             title='概要'
@@ -29,8 +29,11 @@ const Overview = ({ election }) => {
             routeVoters={route('admin.election.voters.index', election.id)}
             routeCandidate={route('admin.election.candidates.index', election.id)}
             routeResult={route('admin.election.indexAdminResult', election.id)}
+            electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}
+            electionStartDate={election.start_date}
+            electionEndDate={election.end_date}
         >
             <div>
 
@@ -40,7 +43,6 @@ const Overview = ({ election }) => {
             </div>
         </ElectionLayout>
     )
-    
 }
 
 export default Overview

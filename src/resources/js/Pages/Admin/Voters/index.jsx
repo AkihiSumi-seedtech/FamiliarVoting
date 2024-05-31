@@ -74,6 +74,8 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
             routeResult={route('admin.election.indexAdminResult', election.id)}
             electionName={election.election_name}
             electionStatus={election.status}
+            electionStartDate={election.start_date}
+            electionEndDate={election.end_date}
         >
             <div>
                 <input id='file' type='file' name='file' onChange={handleFileChange} />

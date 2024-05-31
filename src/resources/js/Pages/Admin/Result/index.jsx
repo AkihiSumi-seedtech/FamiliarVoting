@@ -1,6 +1,6 @@
 import ElectionLayout from '@/Layouts/ElectionLayout';
 import React from 'react';
-import ResultChart from './ResultChart';
+import PieChart from '@/Components/result/PieChart';
 
 const Result = ({ election, results, electionId }) => {
     const filteredResults = results.filter(result => result.election_id === electionId);
@@ -10,7 +10,6 @@ const Result = ({ election, results, electionId }) => {
         name: result.candidate_name,
         value: result.count,
         party: result.candidate_party,
-        
     }));
 
     console.log(chartData)
@@ -24,20 +23,11 @@ const Result = ({ election, results, electionId }) => {
             routeCandidate={route('admin.election.candidates.index', election)}
             electionName={election.election_name}
             electionStatus={election.status}
+            electionStartDate={election.start_date}
+            electionEndDate={election.end_date}
         >
-            <div>
-                {/* <h1>投票結果</h1>
-                <div>選挙名: {election.election_name}</div>
-                <ul>
-                    {results.map((item, index) => (
-                        <li key={index}>
-                            立候補者名: {item.candidate_name}, 獲得票数: {item.count}, 所属: {item.candidate_party}
-                        </li>
-                    ))}
-                </ul> */}
-            </div>
 
-            <ResultChart chartData={chartData} />
+            <PieChart chartData={chartData} />
         </ElectionLayout>
     );
 };
