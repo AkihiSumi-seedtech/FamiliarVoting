@@ -1,5 +1,5 @@
 import ElectionLayout from '@/Layouts/ElectionLayout';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ResultChart from './ResultChart';
 
 const Result = ({ election, results, electionId }) => {
@@ -13,7 +13,13 @@ const Result = ({ election, results, electionId }) => {
         
     }));
 
-    console.log(chartData)
+    // 選挙が終了していない場合にアラートを表示
+    useEffect(() => {
+        if (election.status !== 'closed') {
+            alert('この選挙はまだ終了していません');
+        }
+    }, [election.status]);
+
     return (
         <ElectionLayout
             title='結果'
@@ -26,18 +32,8 @@ const Result = ({ election, results, electionId }) => {
             electionStatus={election.status}
         >
             <div>
-                {/* <h1>投票結果</h1>
-                <div>選挙名: {election.election_name}</div>
-                <ul>
-                    {results.map((item, index) => (
-                        <li key={index}>
-                            立候補者名: {item.candidate_name}, 獲得票数: {item.count}, 所属: {item.candidate_party}
-                        </li>
-                    ))}
-                </ul> */}
+                <ResultChart chartData={chartData} />
             </div>
-
-            <ResultChart chartData={chartData} />
         </ElectionLayout>
     );
 };
