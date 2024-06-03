@@ -4,21 +4,21 @@ import { Head } from '@inertiajs/react';
 
 export default function Dashboard({ auth, elections }) {
     const upcomingElections = elections.data.filter(
-        election => election.status === 'building' || election.status === 'scheduling'
+        election => election.status === 'Building' || election.status === 'Scheduling'
     )
 
     const runningElections = elections.data.filter(
-        election => auth.user.election_id === election.id && election.status === 'running' && auth.user.is_voted === 0
+        election => auth.user.election_id === election.id && election.status === 'Running' && auth.user.is_voted === 0
     )
 
     const closedElections = elections.data.filter(
-        election => election.status === 'closed'
+        election => election.status === 'Closed'
     )
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-center text-xl text-gray-800 dark:text-gray-300 leading-tight">選挙一覧</h2>}
+            header={<h2 className="font-semibold text-center text-3xl text-gray-800 dark:text-gray-300 leading-tight">選挙一覧</h2>}
         >
             <Head title="選挙一覧" />
 

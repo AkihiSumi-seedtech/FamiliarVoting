@@ -61,7 +61,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::put('password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-        // `status` を `building` から `scheduling` にするメソッド
+        // `status` を `Building` から `Scheduling` にするメソッド
         Route::post('launch-election/{election}', [ElectionController::class, 'launchElection'])->name('launch-election');
 
         Route::post('update-election-status/{election}', [ElectionController::class, 'updateElectionStatus'])->name('update-election-status');

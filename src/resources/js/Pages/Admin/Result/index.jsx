@@ -12,7 +12,6 @@ const Result = ({ election, results, electionId }) => {
         party: result.candidate_party,
     }));
 
-    console.log(chartData)
     return (
         <ElectionLayout
             title='結果'
@@ -21,6 +20,7 @@ const Result = ({ election, results, electionId }) => {
             routeVoters={route('admin.election.voters.index', election)}
             routeOverview={route('admin.election.show', election)}
             routeCandidate={route('admin.election.candidates.index', election)}
+            electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}
             electionStartDate={election.start_date}

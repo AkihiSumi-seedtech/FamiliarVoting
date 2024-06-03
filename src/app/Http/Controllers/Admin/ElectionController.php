@@ -69,10 +69,10 @@ class ElectionController extends Controller
         ]);
     }
 
-    public function launchElection(Request $request, Election $election)
+    public function launchElection(Election $election)
     {
-        if ($election->status != 'scheduling') {
-            $election->update(['status' => 'scheduling']);
+        if ($election->status != 'Scheduling') {
+            $election->update(['status' => 'Scheduling']);
         }
 
         return redirect()->back();
@@ -110,16 +110,16 @@ class ElectionController extends Controller
         $startDate = Carbon::parse($election->start_date);
         $endDate = Carbon::parse($election->end_date);
 
-        if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) && $endDate->isFuture())) {
-            $election->update(['status' => 'running']);
+        if ($status === 'Scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) && $endDate->isFuture())) {
+            $election->update(['status' => 'Running']);
             // $election->update()が実行された後に$statusを更新する
             $status = 'running';
             // dd($status);
         } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
-            $election->update(['status' => 'closed']);
+            $election->update(['status' => 'Closed']);
             // 同様に$statusを更新する
-            $status = 'closed';
-            // dd($status)
+            $status = 'Closed';
+            // dd($status);
         }
     }
 }

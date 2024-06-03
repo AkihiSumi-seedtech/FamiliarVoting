@@ -11,17 +11,17 @@ import ElectionMuiIcon from '@/Layouts/Navbar/ElectionMuiIcon';
  * CSVファイルから立候補者をインポートする機能を提供する。
  *
  * @param {Object} props - コンポーネントのプロパティ
- * @param {Array} props.candidates - 立候補者のリスト
- * @param {Object} props.election - 選挙の情報
+ * @param {Array} props.candidates - 立候補者情報の配列
+ * @param {Object} props.election - 選挙情報の配列
  * @param {Object} [props.queryParams=null] - クエリパラメータ（検索条件やソート条件）
  * @returns {JSX.Element} Candidatesコンポーネント
  */
-const Candidates = ({ candidates, election, queryParams = null }) => {
+const Candidates = ({ candidates, election, queryParams = null, success }) => {
     // デフォルト値を設定
     queryParams = queryParams || {}
 
     /**
-     * ソート条件が変更されたときに呼び出す関数
+     * ソート条件が変更されたときに呼び出す
      *
      * @param {string} name - ソートするフィールド名
      */
@@ -40,7 +40,7 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
     }
 
     /**
-     * 検索条件が変更されたときに呼び出される関数
+     * 検索条件が変更されたときに呼び出される
      *
      * @param {string} name - 検索するフィールド名
      * @param {string} value - 検索する値
@@ -54,7 +54,7 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
         router.get(route('admin.election.candidates.index', [election.id, queryParams]))
     }
     /**
-     * Enterキーが押されたときに呼び出される関数
+     * Enterキーが押されたときに呼び出される
      *
      * @param {string} name - 検索するフィールド名
      * @param {Object} e - イベントオブジェクト
@@ -70,9 +70,9 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
     });
 
     /**
-     * ファイルを選択するときに呼び出される関数
+     * ファイルを選択するときに呼び出される
      *
-     * @param {Object} e - イベントオブジェクト
+     * @param {SyntheticBaseEvent} e - イベントオブジェクト
      */
     const handleFileSelect = (e) => {
         const file = e.target.files[0]
@@ -82,9 +82,9 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
     };
 
     /**
-     * ファイルをインポートしてMySQLに保存する関数
+     * ファイルをインポートしてMySQLに保存するときに呼び出される
      *
-     * @param {Object} e - イベントオブジェクト
+     * @param {SyntheticBaseEvent} e - イベントオブジェクト
      */
     const handleImport = (e) => {
         e.preventDefault()
@@ -106,6 +106,7 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
             routeOverview={route('admin.election.show', election.id)}
             routeVoters={route('admin.election.voters.index', election.id)}
             routeResult={route('admin.election.indexAdminResult', election.id)}
+            electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}
             electionStartDate={election.start_date}
@@ -122,7 +123,7 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
                             <div>
                                 下のボタンから立候補者のCSVを選択してインポートしましょう
                             </div>
-                            <div className='mt-6 flex-[0_0_67%] max-w-[67%]'>
+                            <div className='mt-6 flex-[0_0_67%]'>
                                 <input id='file' type='file' name='file' onChange={handleFileSelect} />
                                 <button
                                     className="bg-orange-600 w-32 h-12 rounded-lg font-bold"
@@ -138,107 +139,116 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
                 )}
 
                 {candidates.data.length > 0 && (
-                    <div className='bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border dark:border-gray-600 mt-20'>
-                        <PageHeader icon="candidates" pageName="立候補者">
-                            <div className='mr-auto flex-[0_0_33%] max-w-[33%] px-[15px]'>
-                                <div className='mb-0 flex'>
-                                    <ElectionMuiIcon name="candidates" className="text-white mr-3" />
-                                    <div className='dark:text-white text-lg font-extrabold'>立候補者</div>
-                                </div>
+                <div className='py-20'>
+                    <PageHeader icon="candidates" pageName="立候補者">
+                        <div className='mr-auto flex-[0_0_33%] max-w-[33%] px-[15px]'>
+                            <div className='mb-0 flex'>
+                                <ElectionMuiIcon name="candidates" className="text-white mr-3" />
+                                <div className='dark:text-white text-lg font-extrabold'>立候補者</div>
                             </div>
-                            <div className='mt-0 flex-[0_0_67%] max-w-[67%]'>
-                                <input id='file' type='file' name='file' onChange={handleFileSelect} />
-                                <button
-                                    className="bg-orange-600 w-28 h-30 rounded-lg font-bold"
-                                    type='submit'
-                                    value={data.file}
-                                    onClick={handleImport}
-                                >
-                                    Upload
-                                </button>
+                        </div>
+                        <div className='mt-0 flex-[0_0_67%] max-w-[67%]'>
+                            <input id='file' type='file' name='file' onChange={handleFileSelect} />
+                            <button
+                                className="bg-orange-600 w-28 h-10 rounded-lg font-bold"
+                                type='submit'
+                                value={data.file}
+                                onClick={handleImport}
+                            >
+                                追加
+                            </button>
+                        </div>
+                    </PageHeader>
+                    <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
+                        {success && (
+                            <div className='bg-emerald-500 py-2 px-6 text-white rounded mb-6'>
+                                {success}
                             </div>
-                        </PageHeader>
-                        <div className='p-6 text-gray-900 dark:text-gray-100'>
-                            <div className='overflow-auto'>
-                                <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-                                    <thead className='text-xs text-gray-700 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700 border-b-2 border-gray-500'>
-                                        <tr className='text-nowrap'>
-                                            <TableHeading
-                                                name='id'
-                                                sort_field={queryParams.sort_field}
-                                                sort_direction={queryParams.sort_direction}
-                                                sortChanged={sortChanged}
-                                            >
-                                                ID
-                                            </TableHeading>
-                                            <TableHeading
-                                                name="candidate_name"
-                                                sort_field={queryParams.sort_field}
-                                                sort_direction={queryParams.sort_direction}
-                                                sortChanged={sortChanged}
-                                            >
-                                                氏名
-                                            </TableHeading>
-                                            <TableHeading
-                                                name="candidate_party"
-                                                sort_field={queryParams.sort_field}
-                                                sort_direction={queryParams.sort_direction}
-                                                sortChanged={sortChanged}
-                                            >
-                                                政党
-                                            </TableHeading>
+                        )}
+                        <div className='bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg'>
+                            <div className='text-gray-900 dark:text-gray-100'>
+                                <div className='overflow-auto'>
+                                    <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+                                        <thead className='text-xs text-gray-700 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700 border-b-2 border-gray-500'>
+                                            <tr className='text-nowrap'>
+                                                <TableHeading
+                                                    name='id'
+                                                    sort_field={queryParams.sort_field}
+                                                    sort_direction={queryParams.sort_direction}
+                                                    sortChanged={sortChanged}
+                                                >
+                                                    ID
+                                                </TableHeading>
+                                                <TableHeading
+                                                    name="candidate_name"
+                                                    sort_field={queryParams.sort_field}
+                                                    sort_direction={queryParams.sort_direction}
+                                                    sortChanged={sortChanged}
+                                                >
+                                                    氏名
+                                                </TableHeading>
+                                                <TableHeading
+                                                    name="candidate_party"
+                                                    sort_field={queryParams.sort_field}
+                                                    sort_direction={queryParams.sort_direction}
+                                                    sortChanged={sortChanged}
+                                                >
+                                                    政党
+                                                </TableHeading>
 
-                                            <th className='p-3 text-right'>Actions</th>
-                                        </tr>
-                                    </thead>
-
-                                    <thead className='test-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500'>
-                                        <tr className='text-nowrap'>
-                                            <th className='p-3'></th>
-                                            <th className='p-3'>
-                                                <TextInput
-                                                    className='w-full'
-                                                    defaultValue={queryParams.candidate_name}
-                                                    placeholder="立候補者を検索"
-                                                    onBlur={(e) =>
-                                                        searchFieldChanged("candidate_name", e.target.value)
-                                                    }
-                                                    onKeyPress={(e) => onKeyPress("candidate_name", e)}
-                                                />
-                                            </th>
-                                            <th className="px-3 py-3">
-                                                <TextInput
-                                                className="w-full"
-                                                defaultValue={queryParams. candidate_party}
-                                                placeholder="政党を絞り込む"
-                                                onBlur={(e) =>
-                                                    searchFieldChanged("candidate_party", e.target.value)
-                                                }
-                                                onKeyPress={(e) => onKeyPress("candidate_party", e)}
-                                                />
-                                            </th>
-                                            <th className="p-3"></th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        {candidates.data.filter(
-                                            candidate => candidate.election_id === election.id
-                                        ).map((candidate) => (
-                                            <tr
-                                                className='bg-white dark:bg-gray-800 border-b dark:border-gray-700'
-                                                key={candidate.id}
-                                            >
-                                                <td className='p-3'>{candidate.id}</td>
-                                                <td className='p-3 dark:text-gray-100 text-nowrap'>{candidate.candidate_name}</td>
-                                                <td className='p-3'>{candidate.candidate_party}</td>
+                                                <th className='p-3 text-right'>Actions</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                        </thead>
+
+                                        <thead className='test-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500'>
+                                            <tr className='text-nowrap'>
+                                                <th className='p-3'></th>
+                                                <th className='p-3'>
+                                                    <TextInput
+                                                        className='w-full'
+                                                        defaultValue={queryParams.candidate_name}
+                                                        placeholder="立候補者を検索"
+                                                        onBlur={(e) =>
+                                                            searchFieldChanged("candidate_name", e.target.value)
+                                                        }
+                                                        onKeyPress={(e) => onKeyPress("candidate_name", e)}
+                                                    />
+                                                </th>
+                                                <th className="px-3 py-3">
+                                                    <TextInput
+                                                    className="w-full"
+                                                    defaultValue={queryParams. candidate_party}
+                                                    placeholder="政党を絞り込む"
+                                                    onBlur={(e) =>
+                                                        searchFieldChanged("candidate_party", e.target.value)
+                                                    }
+                                                    onKeyPress={(e) => onKeyPress("candidate_party", e)}
+                                                    />
+                                                </th>
+                                                <th className="p-3"></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {candidates.data.filter(
+                                                candidate => candidate.election_id === election.id
+                                            ).map((candidate) => (
+                                                <tr
+                                                    className='bg-white dark:bg-gray-800 border-b dark:border-gray-700'
+                                                    key={candidate.id}
+                                                >
+                                                    <td className='p-3'>{candidate.id}</td>
+                                                    <td className='p-3 dark:text-gray-100 text-nowrap'>{candidate.candidate_name}</td>
+                                                    <td className='p-3'>{candidate.candidate_party}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 )}
             </div>
         </ElectionLayout>

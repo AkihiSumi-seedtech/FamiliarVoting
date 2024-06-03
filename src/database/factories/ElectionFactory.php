@@ -24,7 +24,7 @@ class ElectionFactory extends Factory
             'election_name' => $this->faker->sentence(20),
             'start_date' => $startDate,
             'end_date' => $endDate,
-            'status' => $this->faker->randomElement(['building', 'scheduling', 'running', 'closed']),
+            'status' => $this->faker->randomElement(['Building', 'Scheduling', 'Running', 'Closed']),
             'admin_id' => 1,
             'created_at' => time(),
             'updated_at' => time(),

@@ -31,7 +31,7 @@ const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCand
                             routeResult={routeResult}
                         />
                         <div className='w-full bg-white dark:bg-gray-800'>
-                            <div className='h-full min-h-full mx-5'>
+                            <div className='mx-5'>
                                 {children}
                             </div>
                         </div>

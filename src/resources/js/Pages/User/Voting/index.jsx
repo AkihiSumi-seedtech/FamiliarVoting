@@ -79,7 +79,7 @@ const Voting = ({ auth, candidates, election }) => {
                         <div className="inline-block min-w-full sm:px-6 lg:px-8">
                             <div className="overflow-hidden">
                                 <table className="min-w-full text-center text-sm font-light text-surface dark:text-white">
-                                    <thead className="border-b border-neutral-200 bg-[#332D2D] font-medium text-white dark:border-white/10">
+                                    <thead className="border-b border-neutral-200 dark:bg-[#332D2D] font-medium text-white dark:border-white/10">
                                         <tr>
                                             <th scope="col" className="px-6 py-4">選択</th>
                                             <th scope="col" className="px-6 py-4">氏名</th>
@@ -102,7 +102,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                         onChange={() => handleCandidateCheckboxChange(candidate.id)}
                                                     />
                                                 </td>
-                                                <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base font-bold">
+                                                <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-lg font-bold">
                                                     {candidate.candidate_name}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base">
@@ -123,7 +123,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     onChange={() => handleNotSelectCheckboxChange()}
                                                 />
                                             </td>
-                                            <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base font-bold">
+                                            <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-lg font-bold">
                                                 選択しない
                                             </td>
                                         </tr>

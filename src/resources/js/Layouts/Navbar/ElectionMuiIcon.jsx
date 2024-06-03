@@ -1,7 +1,7 @@
 import { HowToRegRounded, HowToVoteOutlined, InterpreterModeRounded, SpaceDashboardTwoTone } from '@mui/icons-material'
 import React from 'react'
 
-const electionMuiIcon = ({ name, className, sx }) => {
+const ElectionMuiIcon = ({ name, className, sx }) => {
     if (name === 'overview') {
         return (
             <SpaceDashboardTwoTone className={className} />
@@ -10,7 +10,7 @@ const electionMuiIcon = ({ name, className, sx }) => {
 
     if (name === 'voters') {
         return (
-            <HowToRegRounded className={className} />
+            <HowToRegRounded className={className} sx={sx} />
         )
     }
 
@@ -28,4 +28,4 @@ const electionMuiIcon = ({ name, className, sx }) => {
     return null
 }
 
-export default electionMuiIcon
+export default ElectionMuiIcon
