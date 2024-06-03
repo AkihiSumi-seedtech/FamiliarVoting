@@ -69,17 +69,17 @@ const Voting = ({ auth, candidates, election }) => {
     return (
         <AuthenticatedLayout
             user={auth.user}
+            header={<h2 className="font-semibold text-center text-3xl text-gray-800 dark:text-gray-300 leading-tight">{election.election_name}</h2>}
         >
             <Head title='投票' />
 
             <>
-                <div className="text-3xl text-black-700 dark:text-gray-300 text-center font-semibold">{election.election_name}</div>
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                        <div className="inline-block min-w-full sm:px-6 lg:px-8">
                             <div className="overflow-hidden">
                                 <table className="min-w-full text-center text-sm font-light text-surface dark:text-white">
-                                    <thead className="border-b border-neutral-200 bg-[#332D2D] font-medium text-white dark:border-white/10">
+                                    <thead className="border-b border-neutral-200 dark:bg-[#332D2D] font-medium text-white dark:border-white/10">
                                         <tr>
                                             <th scope="col" className="px-6 py-4">選択</th>
                                             <th scope="col" className="px-6 py-4">氏名</th>
@@ -102,7 +102,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                         onChange={() => handleCandidateCheckboxChange(candidate.id)}
                                                     />
                                                 </td>
-                                                <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base font-bold">
+                                                <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-lg font-bold">
                                                     {candidate.candidate_name}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base">
@@ -123,7 +123,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     onChange={() => handleNotSelectCheckboxChange()}
                                                 />
                                             </td>
-                                            <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-base font-bold">
+                                            <td className="whitespace-nowrap px-6 py-4 dark:text-gray-300 text-lg font-bold">
                                                 選択しない
                                             </td>
                                         </tr>

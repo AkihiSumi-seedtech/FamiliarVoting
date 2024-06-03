@@ -47,7 +47,7 @@ class ElectionController extends Controller
 
         Election::create($data);
 
-        return to_route('admin.dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
     /**
@@ -69,10 +69,10 @@ class ElectionController extends Controller
         ]);
     }
 
-    public function launchElection(Request $request, Election $election)
+    public function launchElection(Election $election)
     {
-        if ($election->status != 'scheduling') {
-            $election->update(['status' => 'scheduling']);
+        if ($election->status != 'Scheduling') {
+            $election->update(['status' => 'Scheduling']);
         }
 
         return redirect()->back();
@@ -97,10 +97,25 @@ class ElectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Election $election)
-    {
-        //
+    /**
+ * Remove the specified resource from storage.
+ */
+public function destroy(Election $election)
+{
+    try {
+        $electionId = $election->id;
+
+        $election->delete();
+
+        dd('選挙が削除されました。');
+        
+    } catch (\Exception $e) {
+        dd('選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+        
     }
+}
+
+
 
     public function updateElectionStatus(Election $election)
     {
@@ -110,15 +125,16 @@ class ElectionController extends Controller
         $startDate = Carbon::parse($election->start_date);
         $endDate = Carbon::parse($election->end_date);
 
-        if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) && $endDate->isFuture())) {
-            $election->update(['status' => 'running']);
+        if ($status === 'Scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) && $endDate->isFuture())) {
+            $election->update(['status' => 'Running']);
             // $election->update()が実行された後に$statusを更新する
             $status = 'running';
-            dd($status);
+            // dd($status);
         } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
-            $election->update(['status' => 'closed']);
+            $election->update(['status' => 'Closed']);
             // 同様に$statusを更新する
-            $status = 'closed';
+            $status = 'Closed';
+            // dd($status);
         }
     }
 }

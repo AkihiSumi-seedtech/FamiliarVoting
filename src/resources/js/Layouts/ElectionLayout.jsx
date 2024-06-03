@@ -3,9 +3,8 @@ import { Head } from '@inertiajs/react'
 import React from 'react'
 import MainMenu from './Navbar/MainMenu'
 import TopHeader from './TopHeader'
-import PageHeader from './PageHeader'
 
-const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCandidate, routeResult, electionName, electionStatus, iconName, pageName }) => {
+const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCandidate, routeResult, electionId, electionName, electionStatus, electionStartDate, electionEndDate, iconName, pageName }) => {
     return (
         <div>
             <Head title={title} />
@@ -16,11 +15,14 @@ const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCand
                         <SidebarLogo />
                     </div>
                     <TopHeader
+                        electionId={electionId}
                         electionName={electionName}
                         electionStatus={electionStatus}
+                        electionStartDate={electionStartDate}
+                        electionEndDate={electionEndDate}
                     />
                     <div className='flex flex-grow'>
-                        <PageHeader icon={iconName} text={pageName} />
+                        {/* <PageHeader icon={iconName} text={pageName} /> */}
                         <MainMenu
                             className="flex-shrink-0 hidden w-60 p-12 overflow-y-auto bg-[#412E55] md:block z-20"
                             routeOverview={routeOverview}
@@ -28,8 +30,8 @@ const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCand
                             routeCandidate={routeCandidate}
                             routeResult={routeResult}
                         />
-                        <div className='w-full pt-[80px] bg-white dark:bg-gray-800'>
-                            <div className='h-full min-h-full mx-5'>
+                        <div className='w-full bg-white dark:bg-gray-800'>
+                            <div className='mx-5'>
                                 {children}
                             </div>
                         </div>

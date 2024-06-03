@@ -1,29 +1,23 @@
-import React from 'react';
+import React from 'react'
 
-const ResultChart = ({ chartData }) => {
-    // 総計を計算
-    const total = chartData.reduce((acc, item) => acc + item.value, 0);
+const PieChart = ({ chartData }) => {
+    const total = chartData.reduce((acc, item) => acc + item.value, 0)
 
-    // SVG の幅と高さ
-    const svgWidth = 400;
-    const svgHeight = 400;
+    const svgWidth = 400
+    const svgHeight = 400
 
-    // 円グラフの中心座標
-    const centerX = svgWidth / 2;
-    const centerY = svgHeight / 2;
+    const centerX = svgWidth / 2
+    const centerY = svgHeight / 2
 
-    // 円グラフの半径
-    const radius = Math.min(centerX, centerY) - 10; // マージンを取るために10を引く
+    const radius = Math.min(centerX, centerY) - 10
 
-    // 開始角度
-    let startAngle = -90; // 上から開始するために-90度を設定
+    let startAngle = -90
 
-    // SVG の位置をページの中心に調整
     const svgStyle = {
         position: 'absolute',
-        left: `calc(60% - ${svgWidth / 2}px)`,
+        left: `calc(50% = ${svgWidth / 2}px)`,
         top: `calc(50% - ${svgHeight / 2}px)`,
-    };
+    }
 
     return (
         <svg width={svgWidth} height={svgHeight} style={svgStyle}>
@@ -56,16 +50,16 @@ const ResultChart = ({ chartData }) => {
 
                         {/* テキスト */}
                         <text x={textX} y={textY} textAnchor="middle" alignmentBaseline="middle" fill="black">
-                        {item.name}   
+                        {item.name}
                         </text>
                         <text x={textX} y={textY + 15} textAnchor="middle" alignmentBaseline="middle" fill="black" fontWeight="bold" >
-                         {item.value}  票
+                            {item.value}  票
                         </text>
                     </g>
                 );
             })}
         </svg>
-    );
-};
+    )
+}
 
-export default ResultChart;
+export default PieChart

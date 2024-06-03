@@ -13,17 +13,17 @@ export default function Dashboard({ auth, elections }) {
             <Head title="Dashboard" />
 
             {elections.data.length != 0 && ( <PageHeader /> )}
-            {elections.data.map((item) => (
-                <div className='bg-white dark:bg-gray-800' key={item.id}>
+            {elections.data.map((election) => (
+                <div className='bg-white dark:bg-gray-800' key={election.id}>
                     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div>
-                            <Link href={route('admin.election.show', item.id)}>
+                            <Link href={route('admin.election.show', election.id)}>
                                 <ElectionCard
-                                    electionName={item.election_name}
-                                    electionStartDate={item.start_date}
-                                    electionEndDate={item.end_date}
-                                    electionStatus={item.status}
-                                    electionId={item.id}
+                                    electionName={election.election_name}
+                                    electionStartDate={election.start_date}
+                                    electionEndDate={election.end_date}
+                                    electionStatus={election.status}
+                                    electionId={election.id}
                                 />
                             </Link>
                         </div>

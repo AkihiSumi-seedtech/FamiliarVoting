@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('election.vote', VoteController::class);
-Route::get('indexVoterResult/{election}', [VoteController::class, 'indexVoterResult'])->name('indexVoterResult');
+Route::get('/{election}/result', [VoteController::class, 'indexVoterResult'])->name('indexVoterResult');
 
 require __DIR__.'/auth.php';
 

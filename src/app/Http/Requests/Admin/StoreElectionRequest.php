@@ -26,7 +26,7 @@ class StoreElectionRequest extends FormRequest
             'election_name' => ['required', 'max:50'],
             'start_date' => 'required|date|after_or_equal:now',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'status' => ['string', Rule::in(['building', 'scheduling', 'running', 'closed'])],
+            'status' => ['string', Rule::in(['Building', 'Scheduling', 'Running', 'Closed'])],
             'description' => ['nullable', 'string'],
         ];
     }
@@ -45,9 +45,9 @@ class StoreElectionRequest extends FormRequest
     {
         $data = parent::validationData();
 
-        // もし status が空ならば、デフォルト値として 'building' を設定する
+        // もし status が空ならば、デフォルト値として 'Building' を設定する
         if (!isset($data['status'])) {
-            $data['status'] = 'building';
+            $data['status'] = 'Building';
         }
 
         return $data;

@@ -1,6 +1,6 @@
 import ElectionLayout from '@/Layouts/ElectionLayout';
-import React from 'react';
-import ResultChart from './ResultChart';
+import React, { useEffect } from 'react';
+import PieChart from '@/Components/result/PieChart';
 
 const Result = ({ election, results, electionId }) => {
     const filteredResults = results.filter(result => result.election_id === electionId);
@@ -10,10 +10,21 @@ const Result = ({ election, results, electionId }) => {
         name: result.candidate_name,
         value: result.count,
         party: result.candidate_party,
-        
     }));
 
-    console.log(chartData)
+    // 選挙が終了していない場合にアラートを表示
+    useEffect(() => {
+        if (election.status !== 'closed') {
+            // アラートを表示
+            alert('この選挙はまだ終了していません。\n 投票結果は選挙期間終了後に可能になります。');
+            // 概要ページに遷移
+            window.location.href = route('admin.election.show', election);
+        } else if (filteredResults.length === 0) {
+            // 結果がない場合にアラートを表示
+            alert('投票結果該当なし');
+        }
+    }, [election.status, filteredResults.length, election]);
+
     return (
         <ElectionLayout
             title='結果'
@@ -22,22 +33,13 @@ const Result = ({ election, results, electionId }) => {
             routeVoters={route('admin.election.voters.index', election)}
             routeOverview={route('admin.election.show', election)}
             routeCandidate={route('admin.election.candidates.index', election)}
+            electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}
+            electionStartDate={election.start_date}
+            electionEndDate={election.end_date}
         >
-            <div>
-                {/* <h1>投票結果</h1>
-                <div>選挙名: {election.election_name}</div>
-                <ul>
-                    {results.map((item, index) => (
-                        <li key={index}>
-                            立候補者名: {item.candidate_name}, 獲得票数: {item.count}, 所属: {item.candidate_party}
-                        </li>
-                    ))}
-                </ul> */}
-            </div>
-
-            <ResultChart chartData={chartData} />
+            <PieChart chartData={chartData} />
         </ElectionLayout>
     );
 };

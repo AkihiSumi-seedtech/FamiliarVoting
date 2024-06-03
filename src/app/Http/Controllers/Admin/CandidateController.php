@@ -50,14 +50,14 @@ class CandidateController extends Controller
         $import = new CandidatesImport($election->id);
         Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
-        return to_route('admin.election.candidates.index', $election->id);
+        return to_route('admin.election.candidates.index', $election->id)
+            ->with('success', '立候補者のインポートに成功しました！');
     }
 
     public function show(Candidate $candidate)
     {
         return Inertia('Admin/Candidate/index', [
             'candidate' => new CandidateResource($candidate),
-            
         ]);
     }
 }
