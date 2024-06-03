@@ -2,6 +2,7 @@ import LaunchButton from '@/Components/overview/LaunchButton'
 import ElectionLayout from '@/Layouts/ElectionLayout'
 import { useForm } from '@inertiajs/react'
 import React from 'react'
+import DeleteButton from '@/Components/overview/DeleteButton'; 
 
 const Overview = ({ election }) => {
     const { post } = useForm();
@@ -20,6 +21,27 @@ const Overview = ({ election }) => {
             console.error(error);
         }
     }
+
+    const handleDelete = () => {
+        fetch(route('admin.election.destroy', {election: election.id}), {
+            method: 'DELETE',
+        })
+        
+        .then(response => {
+            if (response.ok) {
+                console.log('選挙が削除されました');
+                
+            } else {
+                console.error('選挙の削除中にエラーが発生しました');
+                
+            }
+        })
+        .catch(error => {
+            console.error('削除リクエスト中にエラーが発生しました:', error);
+
+        });
+    };
+    
     
     return (
         <ElectionLayout
@@ -33,6 +55,8 @@ const Overview = ({ election }) => {
             electionStatus={election.status}
         >
             <div>
+                {/* DeleteButtonを常に表示 */}
+                <DeleteButton onDelete={handleDelete} />
 
                 {(election.status === 'building' && new Date(election.end_date) > new Date()) && (
                     <LaunchButton launchElection={handleLaunch} />

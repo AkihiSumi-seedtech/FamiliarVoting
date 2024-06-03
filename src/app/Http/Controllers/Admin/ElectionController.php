@@ -47,7 +47,7 @@ class ElectionController extends Controller
 
         Election::create($data);
 
-        return to_route('admin.dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
     /**
@@ -97,10 +97,25 @@ class ElectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Election $election)
-    {
-        //
+    /**
+ * Remove the specified resource from storage.
+ */
+public function destroy(Election $election)
+{
+    try {
+        $electionId = $election->id;
+
+        $election->delete();
+
+        dd('選挙が削除されました。');
+        
+    } catch (\Exception $e) {
+        dd('選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+        
     }
+}
+
+
 
     public function updateElectionStatus(Election $election)
     {
