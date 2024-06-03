@@ -100,20 +100,27 @@ class ElectionController extends Controller
     /**
  * Remove the specified resource from storage.
  */
+/**
+ * Remove the specified resource from storage.
+ */
 public function destroy(Election $election)
 {
     try {
-        $electionId = $election->id;
+        // 関連するデータを削除する
+        // $election->relatedData()->delete();
 
+        // 選挙を削除
         $election->delete();
 
-        dd('選挙が削除されました。');
+        // リダイレクトなど適切な処理を行う
+        return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
         
     } catch (\Exception $e) {
-        dd('選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
-        
+        // エラーメッセージを出力して適切な処理を行う
+        return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
     }
 }
+
 
 
 
