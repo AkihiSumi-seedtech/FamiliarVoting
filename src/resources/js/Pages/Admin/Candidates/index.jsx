@@ -83,15 +83,12 @@ const Candidates = ({ candidates, election, queryParams = null }) => {
                     Upload
                 </button>
 
-                {candidates.data.length != 0 || candidates.data.filter(
-                    candidate => candidate.election_id != election.id
-                ) && (
-                    <div className='mt-10 text-center'>
-                        <p className='text-xl font-medium mb-4'>まだアップロードされた立候補者がいないようです。</p>
-                        <p className='text-xl font-medium mb-4'>立候補者をアップロードしましょう。</p>
-                    </div>
+                {candidates.data.filter(candidate => candidate.election_id === election.id).length === 0 && (
+            <div className='mt-10 text-center'>
+                <p className='text-xl font-medium mb-4'>まだアップロードされた立候補者がいないようです。</p>
+                <p className='text-xl font-medium mb-4'>立候補者をアップロードしましょう。</p>
+            </div>
                 )}
-
                 <div className='bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border dark:border-gray-600'>
                     <div className='p-6 text-gray-900 dark:text-gray-100'>
                         <div className='overflow-auto'>

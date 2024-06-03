@@ -10,15 +10,20 @@ const Result = ({ election, results, electionId }) => {
         name: result.candidate_name,
         value: result.count,
         party: result.candidate_party,
-        
     }));
 
     // 選挙が終了していない場合にアラートを表示
     useEffect(() => {
         if (election.status !== 'closed') {
-            alert('この選挙はまだ終了していません');
+            // アラートを表示
+            alert('この選挙はまだ終了していません。\n 投票結果は選挙期間終了後に可能になります。');
+            // 概要ページに遷移
+            window.location.href = route('admin.election.show', election);
+        } else if (filteredResults.length === 0) {
+            // 結果がない場合にアラートを表示
+            alert('投票結果該当なし');
         }
-    }, [election.status]);
+    }, [election.status, filteredResults.length, election]);
 
     return (
         <ElectionLayout
