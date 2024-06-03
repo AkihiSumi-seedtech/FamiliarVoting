@@ -49,7 +49,8 @@ class VoterController extends Controller
         $import = new UserImport($election->id);
         Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
-        return to_route('admin.election.voters.index', $election->id);
+        return to_route('admin.election.voters.index', $election->id)
+            ->with('success', '投票者をインポートに成功しました！');
     }
 
     public function show(User $voter)

@@ -33,15 +33,13 @@ class UpdateElectionStatus extends Command
             $status = $election->status;
             $startDate = Carbon::parse($election->start_date);
             $endDate = Carbon::parse($election->end_date);
-            
-            if ($status === 'scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
+
+            if ($status === 'Scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) || $startDate->isPast())) {
                 $election->update(['status' => 'running']);
-            
+
             } elseif ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
                 $election->update(['status' => 'closed']);
             }
-          
-            
         });
 
         $this->info('Election statuses updated successfully.');

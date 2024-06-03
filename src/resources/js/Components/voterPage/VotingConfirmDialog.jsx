@@ -9,7 +9,7 @@ function VotingConfirmDialog({ open, handleClickOpen, handleClose, handleVotingD
     return (
         <React.Fragment>
             <button
-                className="block mx-auto mt-12 px-6 py-3 bg-orange-500 text-white font-bold rounded-full"
+                className="block mx-auto mt-12 px-6 py-3 bg-orange-500 text-white text-2xl font-bold rounded-full"
                 onClick={handleClickOpen}
             >
                 投票する

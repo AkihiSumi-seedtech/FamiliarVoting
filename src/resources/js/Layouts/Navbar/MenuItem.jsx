@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react'
 import classNames from 'classnames'
 import React from 'react'
-import MenuIcon from './MenuIcon'
+import ElectionMuiIcon from './ElectionMuiIcon'
 
 const MenuItem = ({ icon, link, text, href }) => {
     const isActive = route().current(link + '*')
@@ -19,7 +19,7 @@ const MenuItem = ({ icon, link, text, href }) => {
     return (
         <div className='mb-4'>
             <Link className='flex items-center group py-3' href={href}>
-                <MenuIcon name={icon} className={iconClasses} />
+                <ElectionMuiIcon name={icon} className={iconClasses} />
                 <div className={textClass}>{text}</div>
             </Link>
         </div>

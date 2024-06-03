@@ -1,6 +1,6 @@
 import ElectionLayout from '@/Layouts/ElectionLayout';
 import React, { useEffect } from 'react';
-import ResultChart from './ResultChart';
+import PieChart from '@/Components/result/PieChart';
 
 const Result = ({ election, results, electionId }) => {
     const filteredResults = results.filter(result => result.election_id === electionId);
@@ -33,12 +33,13 @@ const Result = ({ election, results, electionId }) => {
             routeVoters={route('admin.election.voters.index', election)}
             routeOverview={route('admin.election.show', election)}
             routeCandidate={route('admin.election.candidates.index', election)}
+            electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}
+            electionStartDate={election.start_date}
+            electionEndDate={election.end_date}
         >
-            <div>
-                <ResultChart chartData={chartData} />
-            </div>
+            <PieChart chartData={chartData} />
         </ElectionLayout>
     );
 };
