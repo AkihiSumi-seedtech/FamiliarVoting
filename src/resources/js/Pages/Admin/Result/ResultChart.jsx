@@ -21,7 +21,7 @@ const ResultChart = ({ chartData }) => {
     // SVG の位置をページの中心に調整
     const svgStyle = {
         position: 'absolute',
-        left: `calc(50% - ${svgWidth / 2}px)`,
+        left: `calc(60% - ${svgWidth / 2}px)`,
         top: `calc(50% - ${svgHeight / 2}px)`,
     };
 

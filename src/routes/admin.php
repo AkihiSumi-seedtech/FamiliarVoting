@@ -68,5 +68,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
         // 結果を表示するルーティングメソッド
         Route::get('election/{election}/results', [VoteController::class, 'indexAdminResult'])->name('election.indexAdminResult');
+
+        Route::delete('election-destroy/{election}', [ElectionController::class, 'destroy'])->name('admin.election.destroy');
+
+
     });
 });
