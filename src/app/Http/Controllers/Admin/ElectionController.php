@@ -116,7 +116,7 @@ public function destroy(Election $election)
         return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
         
     } catch (\Exception $e) {
-        // エラーメッセージを出力して適切な処理を行う
+        dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
         return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
     }
 }

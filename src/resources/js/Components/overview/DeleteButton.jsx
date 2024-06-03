@@ -1,11 +1,11 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ThemeProvider, createTheme } from '@mui/material';
-import { Delete } from '@mui/icons-material'; // Delete アイコンをインポート
+import { Delete } from '@mui/icons-material'; 
 import React from 'react';
 
 const muiTheme = createTheme({
     palette: {
         app_red: {
-            main: '#E75B0D', // あなたのカスタムカラーに変更してください
+            main: '#E75B0D',
         }
     }
 });
@@ -22,7 +22,7 @@ const DeleteButton = ({ onDelete, election }) => {
     };
 
     const handleDelete = () => {
-        // ダイアログを閉じ、onDeleteを呼び出す
+        
         handleClose();
         onDelete();
     };
@@ -33,7 +33,7 @@ const DeleteButton = ({ onDelete, election }) => {
                 <Button
                     variant='contained'
                     color='app_red'
-                    startIcon={<Delete />} // Delete アイコンを追加
+                    startIcon={<Delete />} 
                     onClick={handleClickOpen}
                 >
                     <p className='text-white text-xl font-bold'>削除</p>
