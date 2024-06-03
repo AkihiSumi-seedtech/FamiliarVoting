@@ -2,8 +2,10 @@ import React from 'react';
 
 const DeleteButton = ({ onDelete, election }) => {
     const handleDelete = () => {
-        onDelete(election); // onDelete に election を渡して削除処理を呼び出す
-        console.log('クリック'); // クリック時にコンソールにログを出力
+        // ダイアログを表示し、OK が選択されたら onDelete を呼び出す
+        if (window.confirm('本当に削除しますか？')) {
+            onDelete(election);
+        }
     };
 
     return (
