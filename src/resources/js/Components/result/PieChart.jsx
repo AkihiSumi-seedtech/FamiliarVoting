@@ -3,8 +3,8 @@ import React from 'react'
 const PieChart = ({ chartData }) => {
     const total = chartData.reduce((acc, item) => acc + item.value, 0)
 
-    const svgWidth = 400
-    const svgHeight = 400
+    const svgWidth = 330
+    const svgHeight = 330
 
     const centerX = svgWidth / 2
     const centerY = svgHeight / 2

@@ -33,7 +33,7 @@ class CandidateController extends Controller
         }
 
         $candidates = $query->orderBy($sortField, $sortDirection)
-            ->paginate(100)
+            ->paginate(10)
             ->onEachSide(1);
 
         return Inertia('Admin/Candidates/index', [

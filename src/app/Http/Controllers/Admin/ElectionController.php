@@ -19,7 +19,7 @@ class ElectionController extends Controller
     public function index(Election $election)
     {
         return inertia('Admin/Overview/index', [
-            'election' => $election->id,
+            'election' => $election,
             'success' => session('success'),
         ]);
     }
@@ -128,9 +128,9 @@ public function destroy(Election $election)
         if ($status === 'Scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) && $endDate->isFuture())) {
             $election->update(['status' => 'Running']);
             // $election->update()が実行された後に$statusを更新する
-            $status = 'running';
+            $status = 'Running';
             // dd($status);
-        } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
+        } else if ($status === 'Running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
             $election->update(['status' => 'Closed']);
             // 同様に$statusを更新する
             $status = 'Closed';

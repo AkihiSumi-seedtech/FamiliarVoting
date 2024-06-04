@@ -12,6 +12,7 @@ class Candidate extends Model
     protected $fillable = [
         'candidate_name',
         'candidate_party',
+        'candidate_manifest',
         'election_id',
     ];
 

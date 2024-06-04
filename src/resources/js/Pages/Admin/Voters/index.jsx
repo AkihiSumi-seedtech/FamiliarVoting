@@ -1,3 +1,4 @@
+import Pagination from '@/Components/Pagination'
 import TableHeading from '@/Components/TableHeading'
 import TextInput from '@/Components/TextInput'
 import ElectionLayout from '@/Layouts/ElectionLayout'
@@ -247,6 +248,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                                             </tbody>
                                         </table>
                                     </div>
+                                    <Pagination links={voters.meta.links} />
                                 </div>
                             </div>
                         </div>

@@ -63,7 +63,7 @@ class VoteController extends Controller
             ->leftJoin('elections', 'votes.election_id', '=', 'elections.id')
             ->where('votes.election_id', $election->id)
             ->whereNotNull('votes.candidate_id')
-            ->orWhere('votes.is_chose_not_select', 1)
+            // ->orWhere('votes.is_chose_not_select', 1)
             ->groupBy('elections.election_name', 'candidates.candidate_name', 'votes.candidate_id')
             ->orderByDesc('count')
             ->get();
@@ -85,14 +85,15 @@ class VoteController extends Controller
         ->leftJoin('elections', 'votes.election_id', '=', 'elections.id')
         ->where('votes.election_id', $election->id)
         ->whereNotNull('votes.candidate_id')
-        ->orWhere('votes.is_chose_not_select', 1)
+        // ->orWhere('votes.is_chose_not_select', 1)
         ->groupBy('elections.election_name', 'candidates.candidate_name', 'votes.candidate_id')
         ->orderByDesc('count')
         ->get();
 
         return Inertia::render('Admin/Result/index', [
+            'votes' => Vote::count(),
             'results' => $results,
-            'election' => $election
+            'election' => $election,
         ]);
     }
 }
