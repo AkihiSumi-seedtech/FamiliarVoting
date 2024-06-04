@@ -53,13 +53,27 @@ class ElectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Election $election)
-    {
+   public function show(Election $election)
+{
+    // ログインしている admin の ID を取得
+    $currentAdminId = Auth::id();
+
+    // 選挙の作成者の admin ID を取得
+    $electionAdminId = $election->admin_id;
+
+    // ログインしている admin の ID と選挙の作成者の admin ID を比較し、一致する場合のみ表示
+    if ($currentAdminId === $electionAdminId) {
         return Inertia('Admin/Overview/index', [
             'election' => $election,
             'success' => session('success'),
         ]);
+    } else {
+        // 一致しない場合は何も表示しないか、適切なエラーメッセージを返すなどの処理を行う
+        // 以下は例示的なコードです
+        abort(403, 'You are not authorized to view this election.');
     }
+}
+
 
     public function showVoters(Election $election)
     {
@@ -108,7 +122,7 @@ public function destroy(Election $election)
     try {
         // 外部キー制約を一時的に無効にする
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        
+
         $election->delete();
 
         // 外部キー制約を再度有効にする
