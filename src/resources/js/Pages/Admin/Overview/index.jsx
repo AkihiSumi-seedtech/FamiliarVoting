@@ -6,6 +6,7 @@ import PageHeader from '@/Layouts/PageHeader'
 import formatDateTime from '@/constants/format_datetime'
 import { useForm } from '@inertiajs/react'
 import React from 'react'
+import { Inertia } from '@inertiajs/inertia'
 import DeleteButton from '@/Components/overview/DeleteButton'
 
 const Overview = ({ election }) => {
@@ -30,21 +31,19 @@ const Overview = ({ election }) => {
     }
 
     const handleDelete = () => {
-        fetch(route('admin.election.destroy', {election: election.id}), {
-            method: 'DELETE',
-        })
-
-        .then(response => {
-            if (response.ok) {
-                console.log('選挙が削除されました')
-            } else {
-                console.error('選挙の削除中にエラーが発生しました')
-            }
-        })
-        .catch(error => {
-            console.error('削除リクエスト中にエラーが発生しました:', error)
-        })
-    }
+        Inertia.delete(route('admin.election.destroy', { election: election.id }))
+            .then(response => {
+                if (response.ok) {
+                    console.log('選挙が削除されました');
+                    window.location.href = '/admin/dashboard';
+                } else {
+                    console.error('選挙の削除中にエラーが発生しました');
+                }
+            })
+            .catch(error => {
+                console.error('削除リクエスト中にエラーが発生しました:', error);
+            });
+    };
 
     return (
         <ElectionLayout
@@ -104,7 +103,6 @@ const Overview = ({ election }) => {
                                 </div>
                             </div>
                         )}
-                        {/* DeleteButtonを常に表示 */}
                         <DeleteButton onDelete={handleDelete} />
                     </div>
                 </div>

@@ -1,49 +1,65 @@
-import { Delete } from '@mui/icons-material'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
-import React, { useState } from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ThemeProvider, createTheme } from '@mui/material';
+import { Delete } from '@mui/icons-material'; 
+import React from 'react';
 
-const DeleteButton = ({ onDelete }) => {
-    const [showDialog, setShowDialog] = useState(false);
+const muiTheme = createTheme({
+    palette: {
+        app_red: {
+            main: '#E75B0D',
+        }
+    }
+});
+
+const DeleteButton = ({ onDelete, election }) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleDelete = () => {
-        setShowDialog(true);
-    };
-
-    const handleConfirmDelete = () => {
-        setShowDialog(false);
-        onDelete(); 
-    };
-
-    const handleCancelDelete = () => {
-        setShowDialog(false);
+        
+        handleClose();
+        onDelete();
     };
 
     return (
         <React.Fragment>
-            <Button variant='contained' startIcon={<Delete />} onClick={handleDelete}>
-                削除
-            </Button>
-            <Dialog
-                open={showDialog}
-                onClose={handleCancelDelete}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {"本当に削除しますか？"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        この操作は取り消せません。
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCancelDelete}>キャンセル</Button>
-                    <Button onClick={handleConfirmDelete} autoFocus>削除</Button>
-                </DialogActions>
-            </Dialog>
+            <ThemeProvider theme={muiTheme}>
+                <Button
+                    variant='contained'
+                    color='app_red'
+                    startIcon={<Delete />} 
+                    onClick={handleClickOpen}
+                >
+                    <p className='text-white text-xl font-bold'>削除</p>
+                </Button>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"本当に削除しますか？"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            削除した選挙は復元できません。
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>キャンセル</Button>
+                        <Button onClick={handleDelete} autoFocus>削除</Button>
+                    </DialogActions>
+                </Dialog>
+            </ThemeProvider>
         </React.Fragment>
-    )
-}
+    );
+};
 
-export default DeleteButton
+export default DeleteButton;
