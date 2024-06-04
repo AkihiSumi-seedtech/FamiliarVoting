@@ -105,7 +105,6 @@ const Overview = ({ election }) => {
                             </div>
                         )}
                         
-                        {/* DeleteButtonを常に表示 */}
                         <DeleteButton onDelete={handleDelete} />
                     </div>
                 </div>

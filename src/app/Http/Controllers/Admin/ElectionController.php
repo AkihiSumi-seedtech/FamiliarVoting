@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
 use Carbon\Carbon;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,13 +43,15 @@ class ElectionController extends Controller
     public function store(StoreElectionRequest $request)
     {
         $data = $request->validated();
-
-        $data['admin_id'] = Auth::id();
-
+        
+        // フォームから送信された管理者のIDを選挙のadmin_idに設定する
+        $data['admin_id'] = Auth::user()->id; 
+        
         Election::create($data);
-
+        
         return redirect()->route('admin.dashboard');
     }
+    
 
     /**
      * Display the specified resource.
@@ -60,7 +63,7 @@ class ElectionController extends Controller
 
     // 選挙の作成者の admin ID を取得
     $electionAdminId = $election->admin_id;
-
+    // dd($election);
     // ログインしている admin の ID と選挙の作成者の admin ID を比較し、一致する場合のみ表示
     if ($currentAdminId === $electionAdminId) {
         return Inertia('Admin/Overview/index', [
@@ -73,7 +76,6 @@ class ElectionController extends Controller
         abort(403, 'You are not authorized to view this election.');
     }
 }
-
 
     public function showVoters(Election $election)
     {
@@ -107,6 +109,7 @@ class ElectionController extends Controller
     {
         //
     }
+    
 
     /**
      * Remove the specified resource from storage.
