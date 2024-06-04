@@ -108,13 +108,7 @@ public function destroy(Election $election)
     try {
         // 外部キー制約を一時的に無効にする
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
-
-        // candidates, voters, votes テーブルから関連するデータを削除
-        // $election->candidates()->delete();
-        // $election->voters()->delete();
-        // $election->votes()->delete();
-
-        // 選挙を削除
+        
         $election->delete();
 
         // 外部キー制約を再度有効にする
