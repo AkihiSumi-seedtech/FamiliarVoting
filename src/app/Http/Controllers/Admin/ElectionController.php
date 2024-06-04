@@ -9,7 +9,7 @@ use App\Models\Election;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class ElectionController extends Controller
 {
@@ -106,11 +106,19 @@ class ElectionController extends Controller
 public function destroy(Election $election)
 {
     try {
-        // 関連するデータを削除する
-        // $election->relatedData()->delete();
+        // 外部キー制約を一時的に無効にする
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        // candidates, voters, votes テーブルから関連するデータを削除
+        // $election->candidates()->delete();
+        // $election->voters()->delete();
+        // $election->votes()->delete();
 
         // 選挙を削除
         $election->delete();
+
+        // 外部キー制約を再度有効にする
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         // リダイレクトなど適切な処理を行う
         return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
@@ -120,7 +128,6 @@ public function destroy(Election $election)
         return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
     }
 }
-
 
 
 

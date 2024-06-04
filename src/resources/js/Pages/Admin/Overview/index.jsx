@@ -45,6 +45,7 @@ const Overview = ({ election }) => {
             });
     };
     
+    
 
     return (
         <ElectionLayout
