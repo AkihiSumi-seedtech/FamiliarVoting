@@ -2,7 +2,7 @@ import React from 'react'
 import ElectionStatusBadge from '../election/ElectionStatusBadge';
 import formatDateTime from '@/constants/format_datetime';
 
-const ElectionCard = ({ electionId, electionName, electionStatus, electionStartDate, electionEndDate, }) => {
+const ElectionCard = ({ electionId, electionName, electionStatus, electionStartDate, electionEndDate }) => {
     const formattedStartDate = formatDateTime(electionStartDate);
     const formattedEndDate = formatDateTime(electionEndDate);
 
@@ -19,8 +19,8 @@ const ElectionCard = ({ electionId, electionName, electionStatus, electionStartD
                         <ElectionStatusBadge
                             electionId={electionId}
                             initialStatus={electionStatus}
-                            start_date={formattedStartDate}
-                            end_date={formattedEndDate}
+                            start_date={electionStartDate}
+                            end_date={electionEndDate}
                         />
                     </div>
                     <div className='leading-normal flex-[0_0_50%] max-w-[50%]'>

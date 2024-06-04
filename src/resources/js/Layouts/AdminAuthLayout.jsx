@@ -51,7 +51,7 @@ export default function AdminAuthenticated({ user, header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>アカウント設定</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.profile.edit')}>アカウント設定</Dropdown.Link>
                                         <Dropdown.Link href={route('admin.logout')} method="post" as="button">
                                             ログアウト
                                         </Dropdown.Link>
@@ -100,7 +100,7 @@ export default function AdminAuthenticated({ user, header, children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('admin.profile.edit')}>Profile</ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('admin.logout')} as="button">
                                 Log Out
                             </ResponsiveNavLink>

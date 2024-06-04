@@ -20,6 +20,7 @@ class CandidateResource extends JsonResource
             'id' => $this->id,
             'candidate_name' => $this->candidate_name,
             'candidate_party' => $this->candidate_party,
+            'candidate_manifest' => $this->candidate_manifest,
             'election_id' => $this->election_id,
         ];
     }

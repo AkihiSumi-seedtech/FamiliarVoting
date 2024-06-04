@@ -5,6 +5,7 @@ import TableHeading from '@/Components/TableHeading';
 import TextInput from '@/Components/TextInput';
 import PageHeader from '@/Layouts/PageHeader';
 import ElectionMuiIcon from '@/Layouts/Navbar/ElectionMuiIcon';
+import Pagination from '@/Components/Pagination';
 
 /**
  * Candidatesコンポーネントは、特定の選挙における立候補者の一覧を表示し、
@@ -245,6 +246,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                         </tbody>
                                     </table>
                                 </div>
+                                <Pagination links={candidates.meta.links} />
                             </div>
                         </div>
                     </div>

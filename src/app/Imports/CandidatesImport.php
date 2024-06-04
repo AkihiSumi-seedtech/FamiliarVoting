@@ -27,6 +27,7 @@ class CandidatesImport implements ToCollection, PersistRelations, WithHeadingRow
             Candidate::create([
                 'candidate_name' => $row['candidate_name'],
                 'candidate_party' => $row['candidate_party'],
+                'candidate_manifest' => $row['candidate_manifest'],
                 'election_id' => $this->electionId,
             ]);
         }
