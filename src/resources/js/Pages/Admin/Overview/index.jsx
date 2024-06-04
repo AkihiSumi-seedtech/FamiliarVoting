@@ -6,8 +6,8 @@ import PageHeader from '@/Layouts/PageHeader'
 import formatDateTime from '@/constants/format_datetime'
 import { useForm } from '@inertiajs/react'
 import React from 'react'
-import { Inertia } from '@inertiajs/inertia';
-import DeleteButton from '@/Components/overview/DeleteButton'; 
+import { Inertia } from '@inertiajs/inertia'
+import DeleteButton from '@/Components/overview/DeleteButton'
 
 const Overview = ({ election }) => {
     const formattedStartDate = formatDateTime(election.start_date)
@@ -44,7 +44,6 @@ const Overview = ({ election }) => {
                 console.error('削除リクエスト中にエラーが発生しました:', error);
             });
     };
-    
 
     return (
         <ElectionLayout
@@ -59,7 +58,7 @@ const Overview = ({ election }) => {
             electionEndDate={election.end_date}
         >
             <div className='py-20'>
-                <PageHeader icon="overview" pageName="概要">
+                <PageHeader>
                     <div className='mr-auto flex-[0_0_33%] max-w-[33%] px-[15px]'>
                         <div className='mb-0 flex'>
                             <ElectionMuiIcon name="overview" className='text-white mr-3' />
@@ -68,7 +67,7 @@ const Overview = ({ election }) => {
                     </div>
                 </PageHeader>
                 <div className='max-w-7xl sm:px-6 lg:px-8'>
-                    <div className='bg-white dark:bg-gray-800 overflow-hidden shadow-sm'>
+                    <div className=' dark:bg-gray-800 overflow-hidden'>
                         {(election.status === 'Building' && new Date(election.end_date) > new Date()) && (
                             <div className='w-full'>
                                 <div className='flex flex-wrap'>
@@ -104,7 +103,6 @@ const Overview = ({ election }) => {
                                 </div>
                             </div>
                         )}
-                        
                         <DeleteButton onDelete={handleDelete} />
                     </div>
                 </div>
