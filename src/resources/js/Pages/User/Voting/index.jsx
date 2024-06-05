@@ -109,7 +109,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
-                                                    {/* 詳細リンクなど */}
+                                                    {candidate.candidate_manifest}
                                                 </td>
                                             </tr>
                                         ))}
