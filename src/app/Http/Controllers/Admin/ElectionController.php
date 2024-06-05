@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\StoreElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
 use Carbon\Carbon;
+use App\Models\Candidate;
+use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +22,7 @@ class ElectionController extends Controller
     public function index(Election $election)
     {
         return inertia('Admin/Overview/index', [
-            'election' => $election,
+            'election' => $election->id,
             'success' => session('success'),
         ]);
     }
@@ -120,27 +122,30 @@ class ElectionController extends Controller
 /**
  * Remove the specified resource from storage.
  */
-public function destroy(Election $election)
-{
-    try {
-        // 外部キー制約を一時的に無効にする
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-        $election->delete();
 
-        // 外部キー制約を再度有効にする
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
-
-        // リダイレクトなど適切な処理を行う
-        return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
-        
-    } catch (\Exception $e) {
-        dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
-        return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+    public function destroy(Election $election)
+    {
+        try {
+            
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+    
+            Candidate::where('election_id', $election->id)->delete();
+    
+            User::where('election_id', $election->id)->delete();
+    
+            $election->delete();
+    
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
+    
+            
+            return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
+            
+        } catch (\Exception $e) {
+            dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+            return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+        }
     }
-}
-
-
 
     public function updateElectionStatus(Election $election)
     {
@@ -153,9 +158,9 @@ public function destroy(Election $election)
         if ($status === 'Scheduling' && ($currentDate->greaterThanOrEqualTo($startDate) && $endDate->isFuture())) {
             $election->update(['status' => 'Running']);
             // $election->update()が実行された後に$statusを更新する
-            $status = 'Running';
+            $status = 'running';
             // dd($status);
-        } else if ($status === 'Running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
+        } else if ($status === 'running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
             $election->update(['status' => 'Closed']);
             // 同様に$statusを更新する
             $status = 'Closed';
