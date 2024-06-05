@@ -16,7 +16,7 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         $elections = Election::query()
-            ->where('admin_id', $user->id)
+            // ->where('admin_id', $user->id)
             ->get();
 
         return inertia('User/Dashboard', [
