@@ -4,9 +4,8 @@ import ElectionLayout from '@/Layouts/ElectionLayout'
 import ElectionMuiIcon from '@/Layouts/Navbar/ElectionMuiIcon'
 import PageHeader from '@/Layouts/PageHeader'
 import formatDateTime from '@/constants/format_datetime'
-import { useForm } from '@inertiajs/react'
+import { router, useForm } from '@inertiajs/react'
 import React from 'react'
-import { Inertia } from '@inertiajs/inertia'
 import DeleteButton from '@/Components/overview/DeleteButton'
 
 const Overview = ({ election }) => {
@@ -31,7 +30,7 @@ const Overview = ({ election }) => {
     }
 
     const handleDelete = () => {
-        Inertia.delete(route('admin.election.destroy', { election: election.id }))
+        router.delete(route('admin.election.destroy', election.id))
             .then(response => {
                 if (response.ok) {
                     console.log('選挙が削除されました');

@@ -2,9 +2,13 @@ import ElectionCard from '@/Components/voterPage/ElectionCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth, elections }) {
+export default function Dashboard({ auth, elections, users }) {
+    const userElectionFilter = users.data.filter(
+        user => user.election_id
+    )
+
     const upcomingElections = elections.data.filter(
-        election => election.status === 'Building' || election.status === 'Scheduling'
+        election => auth.user.election_id === election.id &&  election.status === 'Building' || election.status === 'Scheduling'
     )
 
     const runningElections = elections.data.filter(
@@ -14,6 +18,7 @@ export default function Dashboard({ auth, elections }) {
     const closedElections = elections.data.filter(
         election => election.status === 'Closed'
     )
+    console.log(auth.user.id)
 
     return (
         <AuthenticatedLayout
@@ -22,9 +27,9 @@ export default function Dashboard({ auth, elections }) {
         >
             <Head title="選挙一覧" />
 
-            {/* 選挙が作成されていない場合 */}
-            {elections.data.length === 0 && (
-                <div className='text-center p-10'>予定されている選挙はありません</div>
+            {/* 選挙が作成されていない場合、もしくは既に投票済みで他に選挙が無い場合 */}
+            {elections.data.length === 0 || auth.user.is_voted === 1 && (
+                <div className='dark:text-white text-center p-10'>予定されている選挙はありません</div>
             )}
 
             {/* 選挙が作成済み、かつ、ステータスが実行中、かつ、投票者が投票済みでない場合 */}
@@ -81,14 +86,6 @@ export default function Dashboard({ auth, elections }) {
                     ))}
                 </div>
             )}
-
-            {/* 投票者が投票した */}
-            {/* {auth.user.is_voted === 1 && (
-                <div className='text-center text-3xl'>
-                    あなたは投票済みです。
-                </div>
-            )} */}
-
         </AuthenticatedLayout>
     );
 }
