@@ -3,6 +3,7 @@ import VotingConfirmDialog from '@/Components/voterPage/VotingConfirmDialog';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
+import VoterDetail from '@/Components/voterPage/VoterDetail';
 
 const Voting = ({ auth, candidates, election }) => {
     const { post, data, setData } = useForm({
@@ -109,7 +110,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
-                                                    {candidate.candidate_manifest}
+                                                <VoterDetail></VoterDetail> 
                                                 </td>
                                             </tr>
                                         ))}

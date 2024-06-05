@@ -96,4 +96,15 @@ class VoteController extends Controller
             'election' => $election,
         ]);
     }
+
+    public function show(Candidate $candidate){
+        $detail = DB::table('candidates')
+    ->select('candidate_manifest')
+    ->where('election_id', $candidate->id)
+    ->get();
+    
+    return Inertia::render('User/Voting/index',[
+       'detail' => $detail
+    ]);
+    }
 }
