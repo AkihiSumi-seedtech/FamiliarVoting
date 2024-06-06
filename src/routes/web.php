@@ -35,6 +35,7 @@ Route::get('/dashboard', [DashboardController::class, 'voterIndex'])
 
 Route::resource('election.vote', VoteController::class);
 Route::get('/{election}/result', [VoteController::class, 'indexVoterResult'])->name('indexVoterResult');
+Route::get('/{election}/detail',[VoteController::class, 'showDetail'])->name('showDetail');
 
 require __DIR__.'/auth.php';
 
