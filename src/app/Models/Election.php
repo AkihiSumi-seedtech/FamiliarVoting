@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Election extends Model
 {
@@ -18,8 +19,23 @@ class Election extends Model
         'admin_id',
     ];
 
-    public function admin() {
+    public function admin()
+    {
         return $this->belongsTo(Admin::class, 'admin_id');
     }
-    
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'election_user', 'election_id', 'user_id')->withTimestamps();
+    }
+
+    public function candidates(): BelongsToMany
+    {
+        return $this->belongsToMany(Candidate::class, 'candidate_election', 'election_id', 'candidate_id')->withTimestamps();
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class, 'election_id');
+    }
 }

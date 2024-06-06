@@ -11,6 +11,7 @@ const Voting = ({ auth, candidates, election }) => {
         candidate_id: null,
         is_chose_not_select: false
     })
+    console.log(candidates)
 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [isChoseNotSelect, setIsChoseNotSelect] = useState(false);
@@ -55,15 +56,7 @@ const Voting = ({ auth, candidates, election }) => {
     const handleVoting = (e) => {
         e.preventDefault()
 
-        if (auth.user.is_voted === 0) {
-            post(route('election.vote.store', election.id), {
-                onSuccess: () => {
-                    console.log("成功!")
-                }
-            })
-        } else {
-            window.alert("あなたは投票済みです。")
-        }
+        post(route('election.vote.store', election.id))
     }
 
     return (
@@ -88,9 +81,7 @@ const Voting = ({ auth, candidates, election }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {candidates.data.filter(
-                                            candidate => candidate.election_id === election.id
-                                        ).map((candidate) => (
+                                        {candidates.data.map((candidate) => (
                                             <tr
                                                 className="border-b border-neutral-200 dark:border-white/10"
                                                 key={candidate.id}

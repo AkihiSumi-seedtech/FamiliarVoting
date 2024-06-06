@@ -1,6 +1,6 @@
 import React from 'react';
 import ElectionLayout from '@/Layouts/ElectionLayout';
-import { router, useForm } from '@inertiajs/react';
+import { Link, router, useForm } from '@inertiajs/react';
 import TableHeading from '@/Components/TableHeading';
 import TextInput from '@/Components/TextInput';
 import PageHeader from '@/Layouts/PageHeader';
@@ -89,6 +89,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
      */
     const handleImport = (e) => {
         e.preventDefault()
+
         if (!data.file) {
             alert('ファイルを選択してください')
             return
@@ -98,8 +99,15 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
             onSuccess: () => {
                 console.log("成功!")
             }
-        });
-    };
+        })
+    }
+
+    const deleteCandidate = (candidate) => {
+        if (!window.confirm("本当に削除してもよろしいですか？")) {
+            return
+        }
+        router.delete(route('admin.candidates.destroy', candidate.id))
+    }
 
     return (
         <ElectionLayout
@@ -197,7 +205,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                                     政党
                                                 </TableHeading>
 
-                                                <th className='p-3 text-right'>Actions</th>
+                                                <th className='p-3 text-center'>Actions</th>
                                             </tr>
                                         </thead>
 
@@ -215,7 +223,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                                         onKeyPress={(e) => onKeyPress("candidate_name", e)}
                                                     />
                                                 </th>
-                                                <th className="px-3 py-3">
+                                                <th className="p-3">
                                                     <TextInput
                                                     className="w-full"
                                                     defaultValue={queryParams. candidate_party}
@@ -231,9 +239,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                         </thead>
 
                                         <tbody>
-                                            {candidates.data.filter(
-                                                candidate => candidate.election_id === election.id
-                                            ).map((candidate) => (
+                                            {candidates.data.map((candidate) => (
                                                 <tr
                                                     className='bg-white dark:bg-gray-800 border-b dark:border-gray-700'
                                                     key={candidate.id}
@@ -241,6 +247,20 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                                     <td className='p-3'>{candidate.id}</td>
                                                     <td className='p-3 dark:text-gray-100 text-nowrap'>{candidate.candidate_name}</td>
                                                     <td className='p-3'>{candidate.candidate_party}</td>
+                                                    <td className='p-3 text-center'>
+                                                        <Link
+                                                            href={route('admin.candidates.edit', candidate.id)}
+                                                            className='font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1'
+                                                        >
+                                                            編集
+                                                        </Link>
+                                                        <button
+                                                            onClick={() => deleteCandidate(candidate)}
+                                                            className='font-medium text-red-600 dark:text-red-500 hover:underline mx-1'
+                                                        >
+                                                            削除
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>

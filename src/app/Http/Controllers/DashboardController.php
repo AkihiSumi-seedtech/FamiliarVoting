@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
-use App\Models\User;
+use App\Models\Vote;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -15,13 +15,13 @@ class DashboardController extends Controller
      */
     public function voterIndex()
     {
-        $user = User::all();
-        $elections = Election::query()
+        $elections = Election::query()->get();
+        $votes = Vote::query()
             ->get();
 
         return inertia('User/Dashboard', [
             'elections' => ElectionResource::collection($elections),
-            'users' => $user,
+            'votes' => $votes,
         ]);
     }
 

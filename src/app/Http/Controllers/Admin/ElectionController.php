@@ -43,39 +43,38 @@ class ElectionController extends Controller
     public function store(StoreElectionRequest $request)
     {
         $data = $request->validated();
-        
+
         // フォームから送信された管理者のIDを選挙のadmin_idに設定する
-        $data['admin_id'] = Auth::user()->id; 
-        
+        $data['admin_id'] = Auth::user()->id;
+
         Election::create($data);
-        
+
         return redirect()->route('admin.dashboard');
     }
-    
 
     /**
      * Display the specified resource.
      */
-   public function show(Election $election)
-{
-    // ログインしている admin の ID を取得
-    $currentAdminId = Auth::id();
+    public function show(Election $election)
+    {
+        // ログインしている admin の ID を取得
+        $currentAdminId = Auth::id();
 
-    // 選挙の作成者の admin ID を取得
-    $electionAdminId = $election->admin_id;
-    // dd($election);
-    // ログインしている admin の ID と選挙の作成者の admin ID を比較し、一致する場合のみ表示
-    if ($currentAdminId === $electionAdminId) {
-        return Inertia('Admin/Overview/index', [
-            'election' => $election,
-            'success' => session('success'),
-        ]);
-    } else {
-        // 一致しない場合は何も表示しないか、適切なエラーメッセージを返すなどの処理を行う
-        // 以下は例示的なコードです
-        abort(403, 'You are not authorized to view this election.');
+        // 選挙の作成者の admin ID を取得
+        $electionAdminId = $election->admin_id;
+        // dd($election);
+        // ログインしている admin の ID と選挙の作成者の admin ID を比較し、一致する場合のみ表示
+        if ($currentAdminId === $electionAdminId) {
+            return Inertia('Admin/Overview/index', [
+                'election' => $election,
+                'success' => session('success'),
+            ]);
+        } else {
+            // 一致しない場合は何も表示しないか、適切なエラーメッセージを返すなどの処理を行う
+            // 以下は例示的なコードです
+            abort(403, 'You are not authorized to view this election.');
+        }
     }
-}
 
     public function showVoters(Election $election)
     {
@@ -109,7 +108,6 @@ class ElectionController extends Controller
     {
         //
     }
-    
 
     /**
      * Remove the specified resource from storage.
@@ -133,7 +131,7 @@ public function destroy(Election $election)
 
         // リダイレクトなど適切な処理を行う
         return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
-        
+
     } catch (\Exception $e) {
         dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
         return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());

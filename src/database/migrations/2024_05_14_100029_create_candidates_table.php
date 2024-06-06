@@ -16,7 +16,6 @@ return new class extends Migration
             $table ->string('candidate_name');
             $table ->string('candidate_party');
             $table->text('candidate_manifest');
-            $table->foreignId('election_id')->constrained('elections');
             $table->timestamps();
         });
     }

@@ -2,23 +2,33 @@ import ElectionCard from '@/Components/voterPage/ElectionCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth, elections, users }) {
-    const userElectionFilter = users.data.filter(
-        user => user.election_id
-    )
-
+export default function Dashboard({ auth, elections, votes }) {
     const upcomingElections = elections.data.filter(
-        election => auth.user.election_id === election.id &&  election.status === 'Building' || election.status === 'Scheduling'
+        election => election.status === 'Building' || election.status === 'Scheduling'
     )
 
     const runningElections = elections.data.filter(
-        election => auth.user.election_id === election.id && election.status === 'Running' && auth.user.is_voted === 0
+        election => election.status === 'Running'
     )
 
     const closedElections = elections.data.filter(
         election => election.status === 'Closed'
     )
-    console.log(auth.user.id)
+
+    /// 投票者が投票していない選挙を配列で返す。
+    const nonVotedElection = elections.data.filter(
+        election => (votes.some(vote => vote.voter_id !== auth.user.id || vote.election_id !== election.id)) || votes.length === 0
+    )
+
+    /// ステータスが「Building」もしくは「Scheduling」かつ、未投票の選挙を返す。
+    const duplicatedUpcomingElections = upcomingElections.filter(election => {
+        return nonVotedElection.some(nonVotedElection => nonVotedElection.id === election.id)
+    })
+
+    /// ステータスが「Running」かつ、未投票の選挙を返す。
+    const duplicatedRunningElections = runningElections.filter(election => {
+        return nonVotedElection.some(nonVotedElection => nonVotedElection.id === election.id)
+    })
 
     return (
         <AuthenticatedLayout
@@ -28,15 +38,15 @@ export default function Dashboard({ auth, elections, users }) {
             <Head title="選挙一覧" />
 
             {/* 選挙が作成されていない場合、もしくは既に投票済みで他に選挙が無い場合 */}
-            {elections.data.length === 0 || auth.user.is_voted === 1 && (
-                <div className='dark:text-white text-center p-10'>予定されている選挙はありません</div>
+            {elections.data.length === 0 && (
+                <div className='text-xl dark:text-white text-center p-10'>予定されている選挙はありません</div>
             )}
 
-            {/* 選挙が作成済み、かつ、ステータスが実行中、かつ、投票者が投票済みでない場合 */}
-            {runningElections.length > 0 && (
+            {/* 選挙が作成済み、かつ、ステータスが`Running`、かつ、投票者が投票済みでない場合 */}
+            {duplicatedRunningElections.length > 0 && (
                 <div className='pt-6'>
                     <div className="font-bold text-2xl text-gray-800 dark:text-gray-400 text-center">開催中の選挙</div>
-                    {runningElections.map((election) =>
+                    {duplicatedRunningElections.map((election) => (
                         <div className='p-4' key={election.id}>
                             <ElectionCard
                                 toRoute={route('election.vote.index', election.id)}
@@ -45,19 +55,17 @@ export default function Dashboard({ auth, elections, users }) {
                                 endDate={election.end_date}
                             />
                         </div>
-                    )}
+                    ))}
                 </div>
             )}
 
-            {/* 選挙がまだ開始されていない場合 */}
-            {upcomingElections.length > 0 && (
+            {/* 選挙がまだ開始されていない場合、かつ投票済みではない */}
+            {duplicatedUpcomingElections.length > 0 && (
                 <div className='pt-6'>
                     <div className="font-bold text-2xl text-gray-800 dark:text-gray-400 text-center">開催予定の選挙</div>
                     <div className='p-4'>
                         <ul className='text-center'>
-                            {elections.data.filter(
-                                election => auth.user.election_id === election.id && auth.user.is_voted === 0
-                            ).map((election) => (
+                            {duplicatedUpcomingElections.map((election) => (
                                 <li key={election.id} className="text-gray-600 dark:text-gray-400 mb-2">
                                     {election.election_name}
                                 </li>

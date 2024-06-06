@@ -233,9 +233,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                                             </thead>
 
                                             <tbody>
-                                                {voters.data.filter(
-                                                    voter => voter.election_id === election.id
-                                                ).map((voter) => (
+                                                {voters.data.map((voter) => (
                                                     <tr
                                                         className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'
                                                         key={voter.id}

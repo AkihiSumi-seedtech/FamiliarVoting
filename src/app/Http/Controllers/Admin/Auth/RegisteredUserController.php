@@ -47,6 +47,6 @@ class RegisteredUserController extends Controller
 
         Auth::guard('admin')->login($admin);
 
-        return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
+        return redirect(RouteServiceProvider::ADMIN_HOME);
     }
 }

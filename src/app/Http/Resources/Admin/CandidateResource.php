@@ -7,8 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CandidateResource extends JsonResource
 {
-    public static $wrap = false;
-
     /**
      * Transform the resource into an array.
      *
@@ -21,7 +19,6 @@ class CandidateResource extends JsonResource
             'candidate_name' => $this->candidate_name,
             'candidate_party' => $this->candidate_party,
             'candidate_manifest' => $this->candidate_manifest,
-            'election_id' => $this->election_id,
         ];
     }
 }
