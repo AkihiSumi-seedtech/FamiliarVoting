@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 import VoterDetail from '@/Components/voterPage/VoterDetail';
+import ShowDetail from '@/Components/voterPage/ShowDetail';
 
 const Voting = ({ auth, candidates, election }) => {
     const { post, data, setData } = useForm({
@@ -36,6 +37,19 @@ const Voting = ({ auth, candidates, election }) => {
             candidate_id: null,
             is_chose_not_select: true
         })
+    };
+    const showDetail = async (candidateId) => {
+        try {
+            const response = await fetch(`/api/candidate/${candidateId}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching candidate detail:', error);
+            throw error;
+        }
     };
 
     const [open, setOpen] = useState(false)
@@ -110,7 +124,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
-                                                <VoterDetail></VoterDetail> 
+                                                <VoterDetail candidates={candidates} />
                                                 </td>
                                             </tr>
                                         ))}
