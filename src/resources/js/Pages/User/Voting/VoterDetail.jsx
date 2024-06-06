@@ -1,9 +1,16 @@
-import React from 'react'
+import React from 'react';
 
-const VoterDetail = () => {
+const VoterDetail = ({ manifestMapping }) => {
     return (
-        <div>VoterDetail</div>
-    ) 
-    }
+        <div>
+            {Object.entries(manifestMapping).map(([candidateId, manifest]) => (
+                <div key={candidateId}>
+                    <p>{`候補者 ${candidateId} のマニフェスト:`}</p>
+                    <p>{manifest}</p>
+                </div>
+            ))}
+        </div>
+    );
+}
 
-export default VoterDetail
+export default VoterDetail;

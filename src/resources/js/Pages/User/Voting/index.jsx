@@ -16,6 +16,7 @@ const Voting = ({ auth, candidates, election }) => {
 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [isChoseNotSelect, setIsChoseNotSelect] = useState(false);
+    const [selectedManifest, setSelectedManifest] = useState(null);
 
     const handleCandidateCheckboxChange = (candidateId) => {
         setSelectedCandidate(candidateId);
@@ -111,8 +112,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
-                                                {/* <VoterDetail></VoterDetail>  */}
-                                                <Button href="vote/show">Link</Button>
+                                                <Button href="vote/show">政策を見る</Button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -144,7 +144,7 @@ const Voting = ({ auth, candidates, election }) => {
                     handleVotingDecide={handleVoting}
                 />
             </>
-
+                                            
         </AuthenticatedLayout>
     )
 }
