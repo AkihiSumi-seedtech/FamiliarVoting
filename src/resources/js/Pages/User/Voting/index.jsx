@@ -16,7 +16,6 @@ const Voting = ({ auth, candidates, election }) => {
 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [isChoseNotSelect, setIsChoseNotSelect] = useState(false);
-    const [selectedManifest, setSelectedManifest] = useState(null);
 
     const handleCandidateCheckboxChange = (candidateId) => {
         setSelectedCandidate(candidateId);
@@ -144,7 +143,6 @@ const Voting = ({ auth, candidates, election }) => {
                     handleVotingDecide={handleVoting}
                 />
             </>
-                                            
         </AuthenticatedLayout>
     )
 }

@@ -5,7 +5,7 @@ const VoterDetail = ({ manifestMapping }) => {
         <div>
             {Object.entries(manifestMapping).map(([candidateId, manifest]) => (
                 <div key={candidateId}>
-                    <p>{`候補者 ${candidateId} のマニフェスト:`}</p>
+                    <p>{candidateId} </p>
                     <p>{manifest}</p>
                 </div>
             ))}

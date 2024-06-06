@@ -100,7 +100,7 @@ class VoteController extends Controller
     public function show(Election $election)
     {
         $manifests = DB::table('candidates')
-            ->select('id', 'candidate_manifest') // 'candidate_id' を 'id' に修正
+            ->select('id', 'candidate_manifest') 
             ->where('election_id', $election->id)
             ->get();
     
