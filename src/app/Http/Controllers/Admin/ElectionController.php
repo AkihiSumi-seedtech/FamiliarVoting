@@ -8,10 +8,6 @@ use App\Http\Requests\Admin\UpdateElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
 use Carbon\Carbon;
-use App\Models\Candidate;
-use App\Models\User;
-use App\Models\Admin;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -111,7 +107,6 @@ class ElectionController extends Controller
     {
         $data = $request->validated();
         $election->update($data);
-        dd($data);
     }
 
     /**

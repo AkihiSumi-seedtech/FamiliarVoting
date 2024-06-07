@@ -109,6 +109,7 @@ const Overview = ({ election }) => {
                         <DetailTextField
                             defaultDescription={election.description}
                             electionDescription={data.description}
+                            editElectionDescription={data.description}
                             electionId={election.id}
                         />
 

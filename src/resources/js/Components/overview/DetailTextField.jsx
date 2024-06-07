@@ -4,7 +4,7 @@ import { DoneOutline, Edit } from '@mui/icons-material'
 import { useForm } from '@inertiajs/react'
 
 
-function DetailTextField({ defaultDescription, electionDescription, electionId }) {
+function DetailTextField({ defaultDescription, electionDescription,editElectionDescription, electionId }) {
     const form = useForm({
         description: electionDescription || "",
         _method: 'put',
@@ -27,7 +27,7 @@ function DetailTextField({ defaultDescription, electionDescription, electionId }
             component='form'
             noValidate
             autoComplete='off'
-            onSubmit={disabled ? null : handleDoneEdit}
+            // onSubmit={disabled ? null : handleDoneEdit}
         >
             <div className='mb-8'>
                 <div className='text-right'>
@@ -35,7 +35,7 @@ function DetailTextField({ defaultDescription, electionDescription, electionId }
                         ? <IconButton aria-label='edit' onClick={handleCanEdit}>
                             <Edit className='dark:text-white' />
                         </IconButton>
-                        : <IconButton aria-label='done'>
+                        : <IconButton aria-label='done' onClick={handleDoneEdit}>
                             <DoneOutline className='dark:text-white' />
                         </IconButton>
                     }
@@ -48,7 +48,10 @@ function DetailTextField({ defaultDescription, electionDescription, electionId }
                         fullWidth
                         disabled={disabled}
                         rows={4}
+                        value={editElectionDescription}
+                        onChange={(e) => form.setData('description', e.target.value)}
                         defaultValue={defaultDescription}
+                        type='text'
                         variant='filled'
                         color='warning'
                     />
