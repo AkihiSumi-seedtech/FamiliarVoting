@@ -70,15 +70,18 @@ const Voting = ({ auth, candidates, election }) => {
         }
     }
 
-const handleDetail = (e) => {
-    e.preventDefault();
+    const showCandidateManifest = (candidateId) => {
+        const candidateManifest = candidates.data.find(candidate => candidate.id === candidateId)?.candidate_manifest;
+        if (candidateManifest) {
+            alert(candidateManifest); // ここではalertで表示していますが、実際のアプリケーションでは適切な方法で表示する必要があります
+        } else {
+            alert("選択された候補者のmanifestはありません。");
+        }
+    };
 
-    if (selectedCandidate) {
-        window.location.href = `/election/${election.id}/vote/show?selectedCandidate=${selectedCandidate}`;
-    } else {
-        window.alert("政策を見る立候補者が選ばれていません。");
-    }
-}
+    const handleDetail = (candidateId) => {
+        showCandidateManifest(candidateId);
+    };
 
 
 
@@ -125,7 +128,7 @@ const handleDetail = (e) => {
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
-                                                <Button onClick={handleDetail}>政策を見る</Button>
+                                                <Button onClick={() => handleDetail(candidate.id)}>政策を見る</Button>
                                                 </td>
                                             </tr>
                                         ))}
