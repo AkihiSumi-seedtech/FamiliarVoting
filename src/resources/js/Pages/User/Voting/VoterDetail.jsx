@@ -1,14 +1,14 @@
 import React from 'react';
 
-const VoterDetail = ({ manifestMapping }) => {
+const VoterDetail = ({ manifestMapping, selectedCandidate }) => {
     return (
         <div>
-            {Object.entries(manifestMapping).map(([candidateId, manifest]) => (
-                <div key={candidateId}>
-                    <p>{candidateId} </p>
-                    <p>{manifest}</p>
+            {selectedCandidate && manifestMapping[selectedCandidate] && (
+                <div>
+                    <p>{selectedCandidate}</p>
+                    <p>{manifestMapping[selectedCandidate]}</p>
                 </div>
-            ))}
+            )}
         </div>
     );
 }

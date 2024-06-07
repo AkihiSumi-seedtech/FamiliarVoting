@@ -4,6 +4,7 @@ import VotingConfirmDialog from '@/Components/voterPage/VotingConfirmDialog';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
+import { visit } from '@inertiajs/inertia';
 import VoterDetail from '@/Pages/User/Voting/VoterDetail';
 
 const Voting = ({ auth, candidates, election }) => {
@@ -69,6 +70,18 @@ const Voting = ({ auth, candidates, election }) => {
         }
     }
 
+const handleDetail = (e) => {
+    e.preventDefault();
+
+    if (selectedCandidate) {
+        window.location.href = `/election/${election.id}/vote/show?selectedCandidate=${selectedCandidate}`;
+    } else {
+        window.alert("政策を見る立候補者が選ばれていません。");
+    }
+}
+
+
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -112,8 +125,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
-                                                <Button  href="vote/show">政策を見る</Button>
-
+                                                <Button onClick={handleDetail}>政策を見る</Button>
                                                 </td>
                                             </tr>
                                         ))}
