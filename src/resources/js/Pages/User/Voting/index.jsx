@@ -5,6 +5,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 import { visit } from '@inertiajs/inertia';
+import ShowDetail from './ShowDetail';
 import VoterDetail from '@/Pages/User/Voting/VoterDetail';
 
 const Voting = ({ auth, candidates, election }) => {
@@ -17,6 +18,8 @@ const Voting = ({ auth, candidates, election }) => {
 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [isChoseNotSelect, setIsChoseNotSelect] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [candidateManifest, setCandidateManifest] = useState(null);
 
     
     const handleCandidateCheckboxChange = (candidateId) => {
@@ -70,18 +73,24 @@ const Voting = ({ auth, candidates, election }) => {
         }
     }
 
-    const showCandidateManifest = (candidateId) => {
-        const candidateManifest = candidates.data.find(candidate => candidate.id === candidateId)?.candidate_manifest;
-        if (candidateManifest) {
-            alert(candidateManifest); // ここではalertで表示していますが、実際のアプリケーションでは適切な方法で表示する必要があります
-        } else {
+        const showCandidateManifest = (candidateId) => {
+            const candidate = candidates.data.find(candidate => candidate.id === candidateId);
+            if (candidate) {
+            setCandidateManifest(candidate.candidate_manifest);
+            setDialogOpen(true);
+            } else {
             alert("選択された候補者のmanifestはありません。");
-        }
-    };
-
-    const handleDetail = (candidateId) => {
-        showCandidateManifest(candidateId);
-    };
+            }
+        };
+        
+        const handleCloseDialog = () => {
+            setCandidateManifest(null);
+            setDialogOpen(false);
+        };
+        
+        const handleDetail = (candidateId) => {
+            showCandidateManifest(candidateId);
+        };
 
 
 
@@ -129,6 +138,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
                                                 <Button onClick={() => handleDetail(candidate.id)}>政策を見る</Button>
+                                                <ShowDetail open={dialogOpen} handleClose={handleCloseDialog} candidateManifest={candidateManifest} />
                                                 </td>
                                             </tr>
                                         ))}
