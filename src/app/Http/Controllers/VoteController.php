@@ -112,8 +112,6 @@ class VoteController extends Controller
 
     return Inertia::render('User/Voting/VoterDetail', [
         'manifestMapping' => $manifestMapping,
-        'selectedCandidate' => request()->input('selectedCandidate') 
-        
         ]);
     }
 }

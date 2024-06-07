@@ -5,8 +5,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 import { visit } from '@inertiajs/inertia';
-import ShowDetail from './ShowDetail';
-import VoterDetail from '@/Pages/User/Voting/VoterDetail';
+import ShowDetail from './ShowDetail'; // ShowDetailコンポーネントをインポート
 
 const Voting = ({ auth, candidates, election }) => {
     const { post, data, setData } = useForm({
@@ -20,8 +19,8 @@ const Voting = ({ auth, candidates, election }) => {
     const [isChoseNotSelect, setIsChoseNotSelect] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [candidateManifest, setCandidateManifest] = useState(null);
+    const [candidateName, setCandidateName] = useState(null); // candidateNameを追加
 
-    
     const handleCandidateCheckboxChange = (candidateId) => {
         setSelectedCandidate(candidateId);
         setIsChoseNotSelect(false);
@@ -73,26 +72,26 @@ const Voting = ({ auth, candidates, election }) => {
         }
     }
 
-        const showCandidateManifest = (candidateId) => {
-            const candidate = candidates.data.find(candidate => candidate.id === candidateId);
-            if (candidate) {
+    const showCandidateManifest = (candidateId) => {
+        const candidate = candidates.data.find(candidate => candidate.id === candidateId);
+        if (candidate) {
             setCandidateManifest(candidate.candidate_manifest);
+            setCandidateName(candidate.candidate_name); // candidateNameを設定
             setDialogOpen(true);
-            } else {
+        } else {
             alert("選択された候補者のmanifestはありません。");
-            }
-        };
-        
-        const handleCloseDialog = () => {
-            setCandidateManifest(null);
-            setDialogOpen(false);
-        };
-        
-        const handleDetail = (candidateId) => {
-            showCandidateManifest(candidateId);
-        };
+        }
+    };
 
+    const handleCloseDialog = () => {
+        setCandidateManifest(null);
+        setDialogOpen(false);
+        setCandidateName(null); // Dialogを閉じたらcandidateNameもnullにする
+    };
 
+    const handleDetail = (candidateId) => {
+        showCandidateManifest(candidateId);
+    };
 
     return (
         <AuthenticatedLayout
@@ -137,8 +136,9 @@ const Voting = ({ auth, candidates, election }) => {
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
-                                                <Button onClick={() => handleDetail(candidate.id)}>政策を見る</Button>
-                                                <ShowDetail open={dialogOpen} handleClose={handleCloseDialog} candidateManifest={candidateManifest} />
+                                                    <Button onClick={() => handleDetail(candidate.id)}>政策を見る</Button>
+                                                    {/* candidateNameをShowDetailに渡す */}
+                                                    <ShowDetail open={dialogOpen} handleClose={handleCloseDialog} candidateManifest={candidateManifest} candidateName={candidateName} />
                                                 </td>
                                             </tr>
                                         ))}
@@ -175,4 +175,4 @@ const Voting = ({ auth, candidates, election }) => {
     )
 }
 
-export default Voting
+export default Voting;

@@ -9,47 +9,47 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 
-    const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
     },
     '& .MuiDialogActions-root': {
         padding: theme.spacing(1),
     },
-    }));
+}));
 
-    export default function ShowDetail({ open, handleClose, candidateManifest }) {
+export default function ShowDetail({ open, handleClose, candidateManifest, candidateName }) {
     return (
-        <BootstrapDialog
+    <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-        の政策
+    >
+    <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+        {candidateName}の政策 {/* candidateNameを表示 */}
         </DialogTitle>
         <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
+        aria-label="close"
+        onClick={handleClose}
+        sx={{
             position: 'absolute',
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
-            }}
+        }}
         >
-            <CloseIcon />
+        <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-            <Typography gutterBottom>
-            {candidateManifest}
-            </Typography>
-        </DialogContent>
-        <DialogActions>
-            <Button autoFocus onClick={handleClose}>
-            閉じる
-            </Button>
-        </DialogActions>
-        </BootstrapDialog>
+        <Typography gutterBottom>
+    {candidateManifest}
+        </Typography>
+    </DialogContent>
+    <DialogActions>
+        <Button autoFocus onClick={handleClose}>
+        閉じる
+        </Button>
+    </DialogActions>
+    </BootstrapDialog>
     );
-    }
+}
