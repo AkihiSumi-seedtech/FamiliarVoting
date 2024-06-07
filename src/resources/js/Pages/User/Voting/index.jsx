@@ -4,8 +4,7 @@ import VotingConfirmDialog from '@/Components/voterPage/VotingConfirmDialog';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
-import { visit } from '@inertiajs/inertia';
-import ShowDetail from './ShowDetail'; // ShowDetailコンポーネントをインポート
+import ShowDetail from './ShowDetail'; 
 
 const Voting = ({ auth, candidates, election }) => {
     const { post, data, setData } = useForm({
@@ -19,7 +18,7 @@ const Voting = ({ auth, candidates, election }) => {
     const [isChoseNotSelect, setIsChoseNotSelect] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [candidateManifest, setCandidateManifest] = useState(null);
-    const [candidateName, setCandidateName] = useState(null); // candidateNameを追加
+    const [candidateName, setCandidateName] = useState(null); 
 
     const handleCandidateCheckboxChange = (candidateId) => {
         setSelectedCandidate(candidateId);
@@ -76,7 +75,7 @@ const Voting = ({ auth, candidates, election }) => {
         const candidate = candidates.data.find(candidate => candidate.id === candidateId);
         if (candidate) {
             setCandidateManifest(candidate.candidate_manifest);
-            setCandidateName(candidate.candidate_name); // candidateNameを設定
+            setCandidateName(candidate.candidate_name);
             setDialogOpen(true);
         } else {
             alert("選択された候補者のmanifestはありません。");
@@ -86,7 +85,7 @@ const Voting = ({ auth, candidates, election }) => {
     const handleCloseDialog = () => {
         setCandidateManifest(null);
         setDialogOpen(false);
-        setCandidateName(null); // Dialogを閉じたらcandidateNameもnullにする
+        setCandidateName(null);
     };
 
     const handleDetail = (candidateId) => {
@@ -137,7 +136,6 @@ const Voting = ({ auth, candidates, election }) => {
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
                                                     <Button onClick={() => handleDetail(candidate.id)}>政策を見る</Button>
-                                                    {/* candidateNameをShowDetailに渡す */}
                                                     <ShowDetail open={dialogOpen} handleClose={handleCloseDialog} candidateManifest={candidateManifest} candidateName={candidateName} />
                                                 </td>
                                             </tr>
