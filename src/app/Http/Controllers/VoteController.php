@@ -114,14 +114,6 @@ class VoteController extends Controller
         'manifestMapping' => $manifestMapping,
         'selectedCandidate' => request()->input('selectedCandidate') 
         
-    ]);
-}
-
-    
-    
-    
-
-    
-    
-    
+        ]);
+    }
 }
