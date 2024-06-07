@@ -26,7 +26,7 @@ export default function ShowDetail({ open, handleClose, candidateManifest, candi
         open={open}
     >
     <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-        {candidateName}の政策 {/* candidateNameを表示 */}
+        <div className='text-3xl text-center font-bold'>{candidateName}</div>
         </DialogTitle>
         <IconButton
         aria-label="close"
@@ -42,7 +42,7 @@ export default function ShowDetail({ open, handleClose, candidateManifest, candi
         </IconButton>
         <DialogContent dividers>
         <Typography gutterBottom>
-    {candidateManifest}
+    <div class>{candidateManifest}</div>
         </Typography>
     </DialogContent>
     <DialogActions>
