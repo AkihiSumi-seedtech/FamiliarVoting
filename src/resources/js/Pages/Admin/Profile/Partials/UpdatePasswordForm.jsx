@@ -39,9 +39,9 @@ export default function UpdatePasswordForm({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">パスワードを変更する</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">パスワードを変更する</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                     アカウントの安全性を保つために、長くてランダムなパスワードを使用していることを確認してください。
                 </p>
             </header>
@@ -80,7 +80,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password_confirmation" value="パスワード再入力" />
+                    <InputLabel htmlFor="password_confirmation" value="再入力してください" />
 
                     <TextInput
                         id="password_confirmation"
@@ -104,7 +104,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">保存しました</p>
                     </Transition>
                 </div>
             </form>

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateElectionRequest extends FormRequest
+class UpdateCandidateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +21,11 @@ class UpdateElectionRequest extends FormRequest
      */
     public function rules(): array
     {
+        $candidate = $this->route('candidate');
         return [
-            'election_name' => ['required', 'max:50'],
-            'start_date' => 'required|date|after_or_equal:now',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'status' => 'string',
-            'description' => ['nullable', 'text'],
+            "candidate_name" => ['required', 'string'],
+            "candidate_party" => ['required', 'string'],
+            // 'candidate_manifest' => ['required', 'text'],
         ];
     }
 }

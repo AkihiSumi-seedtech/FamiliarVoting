@@ -4,7 +4,7 @@ import React from 'react'
 import MainMenu from './Navbar/MainMenu'
 import TopHeader from './TopHeader'
 
-const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCandidate, routeResult, electionId, electionName, electionStatus, electionStartDate, electionEndDate, iconName, pageName }) => {
+const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCandidate, routeResult, electionId, electionName, electionStatus, electionStartDate, electionEndDate }) => {
     return (
         <div>
             <Head title={title} />
@@ -22,7 +22,6 @@ const ElectionLayout = ({ title, children, routeOverview, routeVoters, routeCand
                         electionEndDate={electionEndDate}
                     />
                     <div className='flex flex-grow'>
-                        {/* <PageHeader icon={iconName} text={pageName} /> */}
                         <MainMenu
                             className="flex-shrink-0 hidden w-60 p-12 overflow-y-auto bg-[#412E55] md:block z-20"
                             routeOverview={routeOverview}

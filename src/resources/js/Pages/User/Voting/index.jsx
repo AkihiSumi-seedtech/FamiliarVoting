@@ -29,7 +29,7 @@ const Voting = ({ auth, candidates, election }) => {
             candidate_id: candidateId,
             is_chose_not_select: false,
         })
-    };
+    };1
 
     const handleNotSelectCheckboxChange = () => {
         setSelectedCandidate(null);
@@ -60,15 +60,7 @@ const Voting = ({ auth, candidates, election }) => {
     const handleVoting = (e) => {
         e.preventDefault()
 
-        if (auth.user.is_voted === 0) {
-            post(route('election.vote.store', election.id), {
-                onSuccess: () => {
-                    console.log("成功!")
-                }
-            })
-        } else {
-            window.alert("あなたは投票済みです。")
-        }
+        post(route('election.vote.store', election.id))
     }
 
     const showCandidateManifest = (candidateId) => {
@@ -114,9 +106,7 @@ const Voting = ({ auth, candidates, election }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {candidates.data.filter(
-                                            candidate => candidate.election_id === election.id
-                                        ).map((candidate) => (
+                                        {candidates.data.map((candidate) => (
                                             <tr
                                                 className="border-b border-neutral-200 dark:border-white/10"
                                                 key={candidate.id}

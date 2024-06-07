@@ -27,7 +27,7 @@ const LaunchButton = ({ launchElection }) => {
                 <Button
                     variant='contained'
                     color='app_orange'
-                    startIcon={<RocketLaunch className='dark:text-white' />}
+                    startIcon={<RocketLaunch className='text-white' />}
                     onClick={handleClickOpen}
                 >
                     <p className='text-white text-xl font-bold'>開始</p>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Candidate extends Model
 {
@@ -13,11 +14,15 @@ class Candidate extends Model
         'candidate_name',
         'candidate_party',
         'candidate_manifest',
-        'election_id',
     ];
 
-    public function electionId()
+    public function elections(): BelongsToMany
     {
-        return $this->belongsTo(Election::class, 'election_id');
+        return $this->belongsToMany(
+            Election::class,
+            'candidate_election',
+            'candidate_id',
+            'election_id'
+        )->withTimestamps();
     }
 }

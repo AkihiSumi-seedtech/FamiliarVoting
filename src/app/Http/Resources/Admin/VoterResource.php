@@ -18,7 +18,6 @@ class VoterResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'election_id' => $this->election_id,
         ];
     }
 }

@@ -10,7 +10,7 @@ const muiTheme = createTheme({
     }
 });
 
-const DeleteButton = ({ onDelete, election }) => {
+const DeleteButton = ({ onDelete }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -22,7 +22,6 @@ const DeleteButton = ({ onDelete, election }) => {
     };
 
     const handleDelete = () => {
-        
         handleClose();
         onDelete();
     };
@@ -33,7 +32,7 @@ const DeleteButton = ({ onDelete, election }) => {
                 <Button
                     variant='contained'
                     color='app_red'
-                    startIcon={<Delete />} 
+                    startIcon={<Delete className='text-white' />}
                     onClick={handleClickOpen}
                 >
                     <p className='text-white text-xl font-bold'>削除</p>

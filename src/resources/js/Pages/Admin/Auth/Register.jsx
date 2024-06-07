@@ -106,7 +106,7 @@ export default function Register() {
                     </div>
                 </form>
 
-                <h4 className='font-light text-center dark:text-gray-400'>
+                <h4 className='font-light text-center dark:text-gray-200'>
                     <Link
                         href={route('admin.login')}
                         className="hover:underline"

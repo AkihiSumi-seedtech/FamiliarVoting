@@ -25,7 +25,8 @@ class VoteController extends Controller
             $query->where("candidate_name", "like", "%" . request("candidate_name") . "%");
         }
 
-        $candidates = $query->orderBy($sortField, $sortDirection)
+        $candidates = $election->candidates()
+            ->orderBy($sortField, $sortDirection)
             ->paginate(100)
             ->onEachSide(1);
 

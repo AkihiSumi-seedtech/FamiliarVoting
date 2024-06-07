@@ -6,26 +6,11 @@ import TextInput from '@/Components/TextInput';
 import PageHeader from '@/Layouts/PageHeader';
 import ElectionMuiIcon from '@/Layouts/Navbar/ElectionMuiIcon';
 import Pagination from '@/Components/Pagination';
+import EditFormDialog from '@/Components/candidates/EditFormDialog';
 
-/**
- * Candidatesコンポーネントは、特定の選挙における立候補者の一覧を表示し、
- * CSVファイルから立候補者をインポートする機能を提供する。
- *
- * @param {Object} props - コンポーネントのプロパティ
- * @param {Array} props.candidates - 立候補者情報の配列
- * @param {Object} props.election - 選挙情報の配列
- * @param {Object} [props.queryParams=null] - クエリパラメータ（検索条件やソート条件）
- * @returns {JSX.Element} Candidatesコンポーネント
- */
 const Candidates = ({ candidates, election, queryParams = null, success }) => {
-    // デフォルト値を設定
     queryParams = queryParams || {}
 
-    /**
-     * ソート条件が変更されたときに呼び出す
-     *
-     * @param {string} name - ソートするフィールド名
-     */
     const sortChanged = (name) => {
         if (name === queryParams.sort_field) {
             if (queryParams.sort_field === 'asc') {
@@ -40,12 +25,6 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
         router.get(route('admin.election.candidates.index', [election.id, queryParams]))
     }
 
-    /**
-     * 検索条件が変更されたときに呼び出される
-     *
-     * @param {string} name - 検索するフィールド名
-     * @param {string} value - 検索する値
-     */
     const searchFieldChanged = (name, value) => {
         if (value) {
             queryParams[name] = value
@@ -54,12 +33,6 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
         }
         router.get(route('admin.election.candidates.index', [election.id, queryParams]))
     }
-    /**
-     * Enterキーが押されたときに呼び出される
-     *
-     * @param {string} name - 検索するフィールド名
-     * @param {Object} e - イベントオブジェクト
-     */
     const onKeyPress = (name, e) => {
         if (e.key !== "Enter") return
 
@@ -70,11 +43,6 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
         file: null
     });
 
-    /**
-     * ファイルを選択するときに呼び出される
-     *
-     * @param {SyntheticBaseEvent} e - イベントオブジェクト
-     */
     const handleFileSelect = (e) => {
         const file = e.target.files[0]
         if (file) {
@@ -82,13 +50,9 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
         }
     };
 
-    /**
-     * ファイルをインポートしてMySQLに保存するときに呼び出される
-     *
-     * @param {SyntheticBaseEvent} e - イベントオブジェクト
-     */
     const handleImport = (e) => {
         e.preventDefault()
+
         if (!data.file) {
             alert('ファイルを選択してください')
             return
@@ -98,8 +62,15 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
             onSuccess: () => {
                 console.log("成功!")
             }
-        });
-    };
+        })
+    }
+
+    const deleteCandidate = (candidate) => {
+        if (!window.confirm("本当に削除してもよろしいですか？")) {
+            return
+        }
+        router.delete(route('admin.candidates.destroy', candidate.id))
+    }
 
     return (
         <ElectionLayout
@@ -197,7 +168,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                                     政党
                                                 </TableHeading>
 
-                                                <th className='p-3 text-right'>Actions</th>
+                                                <th className='p-3 text-center'>Actions</th>
                                             </tr>
                                         </thead>
 
@@ -215,7 +186,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                                         onKeyPress={(e) => onKeyPress("candidate_name", e)}
                                                     />
                                                 </th>
-                                                <th className="px-3 py-3">
+                                                <th className="p-3">
                                                     <TextInput
                                                     className="w-full"
                                                     defaultValue={queryParams. candidate_party}
@@ -231,9 +202,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                         </thead>
 
                                         <tbody>
-                                            {candidates.data.filter(
-                                                candidate => candidate.election_id === election.id
-                                            ).map((candidate) => (
+                                            {candidates.data.map((candidate) => (
                                                 <tr
                                                     className='bg-white dark:bg-gray-800 border-b dark:border-gray-700'
                                                     key={candidate.id}
@@ -241,6 +210,21 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                                     <td className='p-3'>{candidate.id}</td>
                                                     <td className='p-3 dark:text-gray-100 text-nowrap'>{candidate.candidate_name}</td>
                                                     <td className='p-3'>{candidate.candidate_party}</td>
+                                                    <td className='p-3 text-center'>
+                                                        <EditFormDialog
+                                                            editCandidateName={data.candidate_name}
+                                                            editCandidateParty={data.candidate_party}
+                                                            candidateName={candidate.candidate_name}
+                                                            candidateParty={candidate.candidate_party}
+                                                            candidateId={candidate.id}
+                                                        />
+                                                        <button
+                                                            onClick={() => deleteCandidate(candidate)}
+                                                            className='font-medium text-red-600 dark:text-red-500 hover:underline mx-1'
+                                                        >
+                                                            削除
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>

@@ -46,10 +46,10 @@ export default function DeleteUserForm({ className = '' }) {
     return (
         <section className={`space-y-6 ${className}`}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">アカウントを削除する</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">アカウントを削除する</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
-                    アカウントが削除されると、そのリソースとデータはすべて永久に削除されます。アカウントを削除する前に、保持したいデータや情報をダウンロードしてください。
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    アカウントが削除されると、そのリソースとデータはすべて永久に削除されます。<br/>アカウントを削除する前に、保持したいデータや情報をダウンロードしてください。
                 </p>
             </header>
 
@@ -57,13 +57,12 @@ export default function DeleteUserForm({ className = '' }) {
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
+                    <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                         本当にアカウントを削除しますか？
                     </h2>
 
-                    <p className="mt-1 text-sm text-gray-600">
-                        アカウントが削除されると、そのリソースとデータはすべて永久に削除されます。<br/>
-                        パスワードを入力して、アカウントの永久削除を希望することを確認してください。
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        アカウントが削除されると、そのリソースとデータはすべて永久に削除されます。<br/>パスワードを入力して、アカウントの永久削除を希望することを確認してください。
                     </p>
 
                     <div className="mt-6">
