@@ -72,5 +72,6 @@ class VoterController extends Controller
         return Inertia('Admin/Voter/index', [
             'voter' => new VoterResource($voter),
         ]);
+        
     }
 }

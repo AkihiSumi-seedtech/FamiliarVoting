@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\UpdateElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
 use Carbon\Carbon;
+use App\Models\Candidate;
+use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +23,7 @@ class ElectionController extends Controller
     public function index(Election $election)
     {
         return inertia('Admin/Overview/index', [
-            'election' => $election,
+            'election' => $election->id,
             'success' => session('success'),
         ]);
     }
@@ -131,7 +133,6 @@ class ElectionController extends Controller
 
             // リダイレクトなど適切な処理を行う
             return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
-
         } catch (\Exception $e) {
             dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
             return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());

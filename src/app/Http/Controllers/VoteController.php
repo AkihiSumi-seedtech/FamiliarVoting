@@ -97,4 +97,22 @@ class VoteController extends Controller
             'election' => $election,
         ]);
     }
+    
+    public function show(Election $election)
+    {
+        $manifests = DB::table('candidates')
+            ->select('id', 'candidate_manifest', ) 
+            ->where('election_id', $election->id)
+            ->get();
+
+        $manifestMapping = [];
+
+        foreach ($manifests as $manifest) {
+            $manifestMapping[$manifest->id] = $manifest->candidate_manifest;
+        }
+
+        return Inertia::render('User/Voting/VoterDetail', [
+            'manifestMapping' => $manifestMapping,
+        ]);
+    }
 }
