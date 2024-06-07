@@ -19,7 +19,9 @@ const Result = ({ auth, election, result, electionId }) => {
         >
             <Head title='結果' />
 
-            <PieChart chartData={chartData} />
+            <div className='flex justify-center'>
+                <PieChart chartData={chartData} />
+            </div>
         </AuthenticatedLayout>
     )
 }

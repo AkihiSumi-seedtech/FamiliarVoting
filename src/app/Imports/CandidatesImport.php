@@ -14,6 +14,7 @@ class CandidatesImport implements ToCollection, PersistRelations, WithHeadingRow
     use Importable;
 
     private $electionId;
+    private $importedCandidateIds = [];
 
     public function __construct($electionId)
     {
@@ -24,12 +25,18 @@ class CandidatesImport implements ToCollection, PersistRelations, WithHeadingRow
     {
         foreach ($rows as $row)
         {
-            Candidate::create([
+            $candidate = Candidate::create([
                 'candidate_name' => $row['candidate_name'],
                 'candidate_party' => $row['candidate_party'],
                 'candidate_manifest' => $row['candidate_manifest'],
-                'election_id' => $this->electionId,
             ]);
+
+            $this->importedCandidateIds[] = $candidate->id;
         }
+    }
+
+    public function getImportedCandidateIds()
+    {
+        return $this->importedCandidateIds;
     }
 }

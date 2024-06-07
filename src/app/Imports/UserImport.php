@@ -15,6 +15,7 @@ class UserImport implements ToCollection, PersistRelations, WithHeadingRow
     use Importable;
 
     private $electionId;
+    private $importedUserIds = [];
 
     public function __construct($electionId)
     {
@@ -25,12 +26,25 @@ class UserImport implements ToCollection, PersistRelations, WithHeadingRow
     {
         foreach ($rows as $row)
         {
-            User::create([
+            // 既存ユーザーの場合は、中間テーブルだけに登録
+            $existingUser = User::where('email', $row['email'])->first();
+            if ($existingUser) {
+                $this->importedUserIds[] = $existingUser->id;
+                continue;
+            }
+
+            $user = User::create([
                 'name' => $row['name'],
                 'email' => $row['email'],
                 'password' => Hash::make($row['password']),
-                'election_id' => $this->electionId,
             ]);
+
+            $this->importedUserIds[] = $user->id;
         }
+    }
+
+    public function getImportedUserIds()
+    {
+        return $this->importedUserIds;
     }
 }

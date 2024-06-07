@@ -25,7 +25,8 @@ class VoteController extends Controller
             $query->where("candidate_name", "like", "%" . request("candidate_name") . "%");
         }
 
-        $candidates = $query->orderBy($sortField, $sortDirection)
+        $candidates = $election->candidates()
+            ->orderBy($sortField, $sortDirection)
             ->paginate(100)
             ->onEachSide(1);
 
@@ -94,6 +95,24 @@ class VoteController extends Controller
             'votes' => Vote::count(),
             'results' => $results,
             'election' => $election,
+        ]);
+    }
+    
+    public function show(Election $election)
+    {
+        $manifests = DB::table('candidates')
+            ->select('id', 'candidate_manifest', ) 
+            ->where('election_id', $election->id)
+            ->get();
+
+        $manifestMapping = [];
+
+        foreach ($manifests as $manifest) {
+            $manifestMapping[$manifest->id] = $manifest->candidate_manifest;
+        }
+
+        return Inertia::render('User/Voting/VoterDetail', [
+            'manifestMapping' => $manifestMapping,
         ]);
     }
 }

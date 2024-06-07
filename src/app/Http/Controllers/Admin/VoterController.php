@@ -8,6 +8,7 @@ use App\Imports\UserImport;
 use App\Models\Election;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Importer;
 
@@ -31,7 +32,8 @@ class VoterController extends Controller
             $query->where("name", "like", "%" . request("name") . "%");
         }
 
-        $voters = $query->orderBy($sortField, $sortDirection)
+        $voters = $election->users()
+            ->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
 
@@ -45,12 +47,24 @@ class VoterController extends Controller
 
     public function store(Request $request, Election $election)
     {
-        $file = $request->file('file');
-        $import = new UserImport($election->id);
-        Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
+        DB::beginTransaction();
 
-        return to_route('admin.election.voters.index', $election->id)
-            ->with('success', '投票者をインポートに成功しました！');
+        try {
+            $file = $request->file('file');
+            $import = new UserImport($election->id);
+            Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
+
+            $importedUserIds = $import->getImportedUserIds();
+            $election->users()->sync($importedUserIds);
+
+            DB::commit();
+
+            return to_route('admin.election.voters.index', $election->id)
+                ->with('success', '投票者のインポートに成功しました！');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'インポート中にエラーが発生しました。: ' . $e->getMessage());
+        }
     }
 
     public function show(User $voter)
@@ -58,5 +72,6 @@ class VoterController extends Controller
         return Inertia('Admin/Voter/index', [
             'voter' => new VoterResource($voter),
         ]);
+        
     }
 }
