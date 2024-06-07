@@ -135,7 +135,7 @@ const Voting = ({ auth, candidates, election }) => {
                                                     {candidate.candidate_party}
                                                 </td>
                                                 <td className="whitespace-nowrap px-6 py-4">
-                                                    <Button onClick={() => handleDetail(candidate.id)}>政策を見る</Button>
+                                                    <Button onClick={() => handleDetail(candidate.id)}><div className='font-bold'>政策を見る</div></Button>
                                                     <ShowDetail open={dialogOpen} handleClose={handleCloseDialog} candidateManifest={candidateManifest} candidateName={candidateName} />
                                                 </td>
                                             </tr>
