@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
+use App\Http\Requests\Admin\UpdateElectionRequest;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
 use Carbon\Carbon;
@@ -104,41 +105,38 @@ class ElectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Election $election)
+    public function update(UpdateElectionRequest $request, Election $election)
     {
-        //
+        $data = $request->validated();
+        $election->update($data);
+        dd($data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    /**
- * Remove the specified resource from storage.
- */
-/**
- * Remove the specified resource from storage.
- */
-public function destroy(Election $election)
-{
-    try {
-        // 外部キー制約を一時的に無効にする
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+    public function destroy(Election $election)
+    {
+        try {
+            // 外部キー制約を一時的に無効にする
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-        $election->delete();
+            $election->users()->detach();
+            $election->candidates()->detach();
 
-        // 外部キー制約を再度有効にする
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+            $election->delete();
 
-        // リダイレクトなど適切な処理を行う
-        return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
+            // 外部キー制約を再度有効にする
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-    } catch (\Exception $e) {
-        dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
-        return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+            // リダイレクトなど適切な処理を行う
+            return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
+
+        } catch (\Exception $e) {
+            dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+            return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+        }
     }
-}
-
-
 
     public function updateElectionStatus(Election $election)
     {
@@ -152,12 +150,10 @@ public function destroy(Election $election)
             $election->update(['status' => 'Running']);
             // $election->update()が実行された後に$statusを更新する
             $status = 'Running';
-            // dd($status);
         } else if ($status === 'Running' && ($currentDate->greaterThanOrEqualTo($endDate) || $endDate->isPast())) {
             $election->update(['status' => 'Closed']);
             // 同様に$statusを更新する
             $status = 'Closed';
-            // dd($status);
         }
     }
 }

@@ -69,40 +69,26 @@ class CandidateController extends Controller
         }
     }
 
-    public function show(Candidate $candidate)
-    {
-        // return Inertia('Admin/Candidate/index', [
-        //     'candidate' => new CandidateResource($candidate),
-        // ]);
-    }
+    public function show()
+    {}
 
-    public function edit(Candidate $candidate, Election $election)
-    {
-        dd($election->id);
-        return inertia('Admin/Candidates/Edit', [
-            'candidate' => new CandidateResource($candidate),
-            'election' => $election,
-        ]);
-    }
+    public function edit()
+    {}
 
-    public function update(UpdateCandidateRequest $request, Candidate $candidate, Election $election)
+    public function update(UpdateCandidateRequest $request, Candidate $candidate)
     {
         $data = $request->validated();
         $candidate->update($data);
-
-        return to_route('admin.election.candidates.index', $election->id)
-            ->with('success', "\"$candidate->candidate_name\"さんの情報を更新しました。");
     }
 
     public function destroy(Candidate $candidate, Election $election)
     {
         $name = $candidate->candidate_name;
-        $electionId = $candidate->election_id;
 
         DB::beginTransaction();
 
         try {
-            $candidate->elections()->detach($electionId);
+            $candidate->elections()->detach($election->id);
             $candidate->delete();
 
             DB::commit();

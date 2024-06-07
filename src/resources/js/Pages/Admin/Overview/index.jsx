@@ -7,12 +7,13 @@ import formatDateTime from '@/constants/format_datetime'
 import { router, useForm } from '@inertiajs/react'
 import React from 'react'
 import DeleteButton from '@/Components/overview/DeleteButton'
+import DetailTextField from '@/Components/overview/DetailTextField'
 
 const Overview = ({ election }) => {
     const formattedStartDate = formatDateTime(election.start_date)
     const formattedEndDate = formatDateTime(election.end_date)
 
-    const { post } = useForm();
+    const { data, post } = useForm();
 
     const handleLaunch = (e) => {
         e.preventDefault();
@@ -68,19 +69,21 @@ const Overview = ({ election }) => {
                 <div className='max-w-7xl sm:px-6 lg:px-8'>
                     <div className=' dark:bg-gray-800 overflow-hidden'>
                         {(election.status === 'Building' && new Date(election.end_date) > new Date()) && (
-                            <div className='w-full'>
+                            <div className='w-full mb-8'>
                                 <div className='flex flex-wrap'>
                                     <div className='flex mb-4'>
                                         <DateCard dateText='開始日時' electionDate={formattedStartDate} />
                                         <DateCard dateText='終了日時' electionDate={formattedEndDate} />
                                     </div>
                                 </div>
-                                <LaunchButton launchElection={handleLaunch} />
+                                <div className='mb-6'>
+                                    <LaunchButton launchElection={handleLaunch} />
+                                </div>
                             </div>
                         )}
 
                         {(election.status === 'Scheduling' && new Date(election.end_date) > new Date()) && (
-                            <div className='w-full text-center'>
+                            <div className='w-full text-center mb-8'>
                                 <div className='dark:text-gray-200 text-2xl'>
                                     この選挙は、{formattedStartDate}に開始予定です。
                                 </div>
@@ -88,7 +91,7 @@ const Overview = ({ election }) => {
                         )}
 
                         {(election.status === 'Running' && new Date(election.end_date) > new Date()) && (
-                            <div className='w-full text-center'>
+                            <div className='w-full text-center mb-8'>
                                 <div className='dark:text-gray-200 text-2xl'>
                                     この選挙は、{formattedEndDate}に終了します。
                                 </div>
@@ -96,12 +99,19 @@ const Overview = ({ election }) => {
                         )}
 
                         {(election.status === 'Closed' && new Date(election.end_date) > new Date()) && (
-                            <div className='w-full text-center'>
+                            <div className='w-full text-center mb-8'>
                                 <div className='dark:text-gray-200 text-2xl'>
                                     この選挙は、{formattedEndDate}に終了しました。
                                 </div>
                             </div>
                         )}
+
+                        <DetailTextField
+                            defaultDescription={election.description}
+                            electionDescription={data.description}
+                            electionId={election.id}
+                        />
+
                         <DeleteButton onDelete={handleDelete} />
                     </div>
                 </div>

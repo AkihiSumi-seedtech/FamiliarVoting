@@ -11,7 +11,6 @@ const Voting = ({ auth, candidates, election }) => {
         candidate_id: null,
         is_chose_not_select: false
     })
-    console.log(candidates)
 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [isChoseNotSelect, setIsChoseNotSelect] = useState(false);
@@ -25,7 +24,7 @@ const Voting = ({ auth, candidates, election }) => {
             candidate_id: candidateId,
             is_chose_not_select: false,
         })
-    };
+    };1
 
     const handleNotSelectCheckboxChange = () => {
         setSelectedCandidate(null);

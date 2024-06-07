@@ -25,7 +25,7 @@ class UpdateCandidateRequest extends FormRequest
         return [
             "candidate_name" => ['required', 'string'],
             "candidate_party" => ['required', 'string'],
-            'candidate_manifest' => ['required', 'text'],
+            // 'candidate_manifest' => ['required', 'text'],
         ];
     }
 }

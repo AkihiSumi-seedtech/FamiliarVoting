@@ -80,7 +80,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password_confirmation" value="パスワード再入力" />
+                    <InputLabel htmlFor="password_confirmation" value="再入力してください" />
 
                     <TextInput
                         id="password_confirmation"

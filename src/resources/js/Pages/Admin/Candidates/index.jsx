@@ -1,31 +1,16 @@
 import React from 'react';
 import ElectionLayout from '@/Layouts/ElectionLayout';
-import { Link, router, useForm } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import TableHeading from '@/Components/TableHeading';
 import TextInput from '@/Components/TextInput';
 import PageHeader from '@/Layouts/PageHeader';
 import ElectionMuiIcon from '@/Layouts/Navbar/ElectionMuiIcon';
 import Pagination from '@/Components/Pagination';
+import EditFormDialog from '@/Components/candidates/EditFormDialog';
 
-/**
- * Candidatesコンポーネントは、特定の選挙における立候補者の一覧を表示し、
- * CSVファイルから立候補者をインポートする機能を提供する。
- *
- * @param {Object} props - コンポーネントのプロパティ
- * @param {Array} props.candidates - 立候補者情報の配列
- * @param {Object} props.election - 選挙情報の配列
- * @param {Object} [props.queryParams=null] - クエリパラメータ（検索条件やソート条件）
- * @returns {JSX.Element} Candidatesコンポーネント
- */
 const Candidates = ({ candidates, election, queryParams = null, success }) => {
-    // デフォルト値を設定
     queryParams = queryParams || {}
 
-    /**
-     * ソート条件が変更されたときに呼び出す
-     *
-     * @param {string} name - ソートするフィールド名
-     */
     const sortChanged = (name) => {
         if (name === queryParams.sort_field) {
             if (queryParams.sort_field === 'asc') {
@@ -40,12 +25,6 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
         router.get(route('admin.election.candidates.index', [election.id, queryParams]))
     }
 
-    /**
-     * 検索条件が変更されたときに呼び出される
-     *
-     * @param {string} name - 検索するフィールド名
-     * @param {string} value - 検索する値
-     */
     const searchFieldChanged = (name, value) => {
         if (value) {
             queryParams[name] = value
@@ -54,12 +33,6 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
         }
         router.get(route('admin.election.candidates.index', [election.id, queryParams]))
     }
-    /**
-     * Enterキーが押されたときに呼び出される
-     *
-     * @param {string} name - 検索するフィールド名
-     * @param {Object} e - イベントオブジェクト
-     */
     const onKeyPress = (name, e) => {
         if (e.key !== "Enter") return
 
@@ -70,11 +43,6 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
         file: null
     });
 
-    /**
-     * ファイルを選択するときに呼び出される
-     *
-     * @param {SyntheticBaseEvent} e - イベントオブジェクト
-     */
     const handleFileSelect = (e) => {
         const file = e.target.files[0]
         if (file) {
@@ -82,11 +50,6 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
         }
     };
 
-    /**
-     * ファイルをインポートしてMySQLに保存するときに呼び出される
-     *
-     * @param {SyntheticBaseEvent} e - イベントオブジェクト
-     */
     const handleImport = (e) => {
         e.preventDefault()
 
@@ -248,12 +211,13 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
                                                     <td className='p-3 dark:text-gray-100 text-nowrap'>{candidate.candidate_name}</td>
                                                     <td className='p-3'>{candidate.candidate_party}</td>
                                                     <td className='p-3 text-center'>
-                                                        <Link
-                                                            href={route('admin.candidates.edit', candidate.id)}
-                                                            className='font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1'
-                                                        >
-                                                            編集
-                                                        </Link>
+                                                        <EditFormDialog
+                                                            editCandidateName={data.candidate_name}
+                                                            editCandidateParty={data.candidate_party}
+                                                            candidateName={candidate.candidate_name}
+                                                            candidateParty={candidate.candidate_party}
+                                                            candidateId={candidate.id}
+                                                        />
                                                         <button
                                                             onClick={() => deleteCandidate(candidate)}
                                                             className='font-medium text-red-600 dark:text-red-500 hover:underline mx-1'

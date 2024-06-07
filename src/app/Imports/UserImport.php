@@ -26,6 +26,13 @@ class UserImport implements ToCollection, PersistRelations, WithHeadingRow
     {
         foreach ($rows as $row)
         {
+            // 既存ユーザーの場合は、中間テーブルだけに登録
+            $existingUser = User::where('email', $row['email'])->first();
+            if ($existingUser) {
+                $this->importedUserIds[] = $existingUser->id;
+                continue;
+            }
+
             $user = User::create([
                 'name' => $row['name'],
                 'email' => $row['email'],
