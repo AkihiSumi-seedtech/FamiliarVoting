@@ -2,40 +2,28 @@ import ElectionCard from '@/Components/voterPage/ElectionCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth, elections, votes }) {
-    const upcomingElections = elections.data.filter(
+export default function Dashboard({ auth, usersElections, votedElections, unVotedElections }) {
+    const upcomingElections = usersElections.data.filter(
         election => election.status === 'Building' || election.status === 'Scheduling'
     )
 
-    const runningElections = elections.data.filter(
+    const runningElections = usersElections.data.filter(
         election => election.status === 'Running'
     )
 
-    const closedElections = elections.data.filter(
+    const closedElections = usersElections.data.filter(
         election => election.status === 'Closed'
     )
 
-    /// 投票者が投票していない選挙を配列で返す。
-    const nonVotedElection = elections.data.filter(
-        election => (votes.some(vote => vote.voter_id !== auth.user.id && vote.election_id !== election.id))
-    )
-    console.log(elections.data.filter(
-        election => (votes.some(vote => vote.voter_id !== auth.user.id && vote.election_id !== election.id))
-    ))
-    // console.log(nonVotedElection)
-
     /// ステータスが「Building」もしくは「Scheduling」かつ、未投票の選挙を返す。
     const duplicatedUpcomingElections = upcomingElections.filter(election => {
-        return nonVotedElection.some(nonVotedElection => nonVotedElection.id === election.id)
+        return unVotedElections.data.some(unVoted => unVoted.id === election.id)
     })
 
     /// ステータスが「Running」かつ、未投票の選挙を返す。
     const duplicatedRunningElections = runningElections.filter(
-        election => nonVotedElection.some(nonVotedElection => nonVotedElection.id === election.id)
+        election => unVotedElections.data.some(unVoted => unVoted.id === election.id)
     )
-
-    // console.log(runningElections)
-    // console.log(duplicatedRunningElections)
 
     return (
         <AuthenticatedLayout
@@ -45,9 +33,7 @@ export default function Dashboard({ auth, elections, votes }) {
             <Head title="選挙一覧" />
 
             {/* 選挙が作成されていない場合、もしくは既に投票済みで他に選挙が無い場合 */}
-            {elections.data.length === 0 || elections.data.filter(
-                election => votes.some(vote => vote.voter_id === auth.user.id && vote.election_id === election.id)
-            ).length > 0 || upcomingElections.length === 0 || runningElections.length === 0 || closedElections.length > 0 && (
+            {usersElections.data.length === 0 && (
                 <div className='text-xl dark:text-white text-center p-10'>予定されている選挙はありません</div>
             )}
 

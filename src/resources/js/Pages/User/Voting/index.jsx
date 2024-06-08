@@ -63,6 +63,7 @@ const Voting = ({ auth, candidates, election }) => {
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-center text-3xl text-gray-800 dark:text-gray-300 leading-tight">{election.election_name}</h2>}
+            electionDescription={election.description}
         >
             <Head title='投票' />
 

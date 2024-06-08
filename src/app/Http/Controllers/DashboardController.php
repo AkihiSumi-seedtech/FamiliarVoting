@@ -15,13 +15,30 @@ class DashboardController extends Controller
      */
     public function voterIndex()
     {
-        $elections = Election::query()->get();
-        $votes = Vote::query()
-            ->get();
+        $user = auth()->user();
+
+        $usersElections = $user->elections;
+        $usersElections->load('votes');
+
+        $votedElections = [];
+        $unVotedElections = [];
+
+        foreach ($usersElections as $election) {
+            // Check if the voter has cast a vote for this election
+            if ($election->votes->where('voter_id', $user->id)->count() > 0) {
+                $votedElections[] = $election;
+            } else {
+                $unVotedElections[] = $election;
+            }
+        }
+
+        $votedElectionsResource = ElectionResource::collection($votedElections);
+        $unVotedElectionsResource = ElectionResource::collection($unVotedElections);
 
         return inertia('User/Dashboard', [
-            'elections' => ElectionResource::collection($elections),
-            'votes' => $votes,
+            'usersElections' => ElectionResource::collection($usersElections),
+            'votedElections' => $votedElectionsResource,
+            'unVotedElections' => $unVotedElectionsResource,
         ]);
     }
 
