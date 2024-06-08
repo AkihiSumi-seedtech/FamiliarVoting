@@ -17,8 +17,12 @@ export default function Dashboard({ auth, elections, votes }) {
 
     /// 投票者が投票していない選挙を配列で返す。
     const nonVotedElection = elections.data.filter(
-        election => (votes.some(vote => vote.voter_id !== auth.user.id || vote.election_id !== election.id)) || votes.length === 0
+        election => (votes.some(vote => vote.voter_id !== auth.user.id && vote.election_id !== election.id))
     )
+    console.log(elections.data.filter(
+        election => (votes.some(vote => vote.voter_id !== auth.user.id && vote.election_id !== election.id))
+    ))
+    // console.log(nonVotedElection)
 
     /// ステータスが「Building」もしくは「Scheduling」かつ、未投票の選挙を返す。
     const duplicatedUpcomingElections = upcomingElections.filter(election => {
@@ -26,9 +30,12 @@ export default function Dashboard({ auth, elections, votes }) {
     })
 
     /// ステータスが「Running」かつ、未投票の選挙を返す。
-    const duplicatedRunningElections = runningElections.filter(election => {
-        return nonVotedElection.some(nonVotedElection => nonVotedElection.id === election.id)
-    })
+    const duplicatedRunningElections = runningElections.filter(
+        election => nonVotedElection.some(nonVotedElection => nonVotedElection.id === election.id)
+    )
+
+    // console.log(runningElections)
+    // console.log(duplicatedRunningElections)
 
     return (
         <AuthenticatedLayout
@@ -38,7 +45,9 @@ export default function Dashboard({ auth, elections, votes }) {
             <Head title="選挙一覧" />
 
             {/* 選挙が作成されていない場合、もしくは既に投票済みで他に選挙が無い場合 */}
-            {elections.data.length === 0 && (
+            {elections.data.length === 0 || elections.data.filter(
+                election => votes.some(vote => vote.voter_id === auth.user.id && vote.election_id === election.id)
+            ).length > 0 || upcomingElections.length === 0 || runningElections.length === 0 || closedElections.length > 0 && (
                 <div className='text-xl dark:text-white text-center p-10'>予定されている選挙はありません</div>
             )}
 
