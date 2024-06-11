@@ -83,6 +83,7 @@ const Voting = ({ auth, candidates, election }) => {
                                     <thead className="border-b border-neutral-200 dark:bg-[#332D2D] font-medium dark:text-white dark:border-white/10">
                                         <tr>
                                             <ElectionDescriptionDialog electionDescription={editedDescription} />
+                                            <p>選挙概要はこちらをクリック</p>
                                             <DetailTextField
                                                 defaultDescription={election.description}
                                                 electionDescription={election.description}
