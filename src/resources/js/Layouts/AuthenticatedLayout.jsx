@@ -5,7 +5,7 @@ import { DescriptionOutlined } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
-import ElectionDescriptionDialog from '@/Components/voterPage/ElectionDescriptionDialog';
+// import ElectionDescriptionDialog from '@/Components/voterPage/ElectionDescriptionDialog';
 
 export default function Authenticated({ user, header, children, electionDescription }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -101,7 +101,7 @@ export default function Authenticated({ user, header, children, electionDescript
             {header && (
                 <header className="bg-white dark:bg-gray-800 shadow flex">
                     <div className="max-w-7xl mx-auto p-4 sm:px-6 lg:px-8">{header}</div>
-                    <ElectionDescriptionDialog electionDescription={electionDescription} />
+                    {/* <ElectionDescriptionDialog electionDescription={electionDescription} /> */}
                 </header>
             )}
 

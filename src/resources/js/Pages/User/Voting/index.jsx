@@ -4,6 +4,8 @@ import VotingConfirmDialog from '@/Components/voterPage/VotingConfirmDialog';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
+import ElectionDescriptionDialog from '@/Components/voterPage/ElectionDescriptionDialog';
+import DetailTextField from '@/Components/overview/DetailTextField';
 
 const Voting = ({ auth, candidates, election }) => {
     const { post, data, setData } = useForm({
@@ -15,6 +17,11 @@ const Voting = ({ auth, candidates, election }) => {
 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [isChoseNotSelect, setIsChoseNotSelect] = useState(false);
+    const [editedDescription, setEditedDescription] = useState(election.description); // 追加
+
+    const handleDescriptionUpdate = (description) => {
+        setEditedDescription(description);
+    }
 
     const handleCandidateCheckboxChange = (candidateId) => {
         setSelectedCandidate(candidateId);
@@ -75,10 +82,14 @@ const Voting = ({ auth, candidates, election }) => {
                                 <table className="min-w-full text-center text-sm font-light text-surface dark:text-white">
                                     <thead className="border-b border-neutral-200 dark:bg-[#332D2D] font-medium dark:text-white dark:border-white/10">
                                         <tr>
-                                            <th scope="col" className="px-5 py-4">選択</th>
-                                            <th scope="col" className="px-6 py-4">氏名</th>
-                                            <th scope="col" className="px-6 py-4">所属</th>
-                                            <th scope="col" className="px-6 py-4">詳細</th>
+                                            <ElectionDescriptionDialog electionDescription={editedDescription} />
+                                            <DetailTextField
+                                                defaultDescription={election.description}
+                                                electionDescription={election.description}
+                                                editElectionDescription={editedDescription}
+                                                electionId={election.id}
+                                                onUpdateDescription={handleDescriptionUpdate} // 編集された内容を受け取るコールバック関数を渡す
+                                            />
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -20,6 +20,7 @@ function DetailTextField({ defaultDescription, electionDescription,editElectionD
         e.preventDefault()
         form.post(route('admin.election.update', electionId))
         setDisabled(true)
+        onUpdateDescription(form.data.description);
     }
 
     return (
