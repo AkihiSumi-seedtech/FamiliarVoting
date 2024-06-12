@@ -32,8 +32,7 @@ class VoterController extends Controller
             $query->where("name", "like", "%" . request("name") . "%");
         }
 
-        $voters = $election->users()
-            ->orderBy($sortField, $sortDirection)
+        $voters = $query->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
 
@@ -44,7 +43,6 @@ class VoterController extends Controller
             'success' => session('success'),
         ]);
     }
-
     public function store(Request $request, Election $election)
     {
         DB::beginTransaction();
