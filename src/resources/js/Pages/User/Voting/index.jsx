@@ -83,7 +83,8 @@ const Voting = ({ auth, candidates, election }) => {
                                     <thead className="border-b border-neutral-200 dark:bg-[#332D2D] font-medium dark:text-white dark:border-white/10">
                                         <tr>
                                             <ElectionDescriptionDialog electionDescription={editedDescription} />
-                                            <p>選挙概要はこちらをクリック</p>
+                                            <p>選挙概要は</p>
+                                            <p>こちら</p>
                                             <DetailTextField
                                                 defaultDescription={election.description}
                                                 electionDescription={election.description}
@@ -91,6 +92,10 @@ const Voting = ({ auth, candidates, election }) => {
                                                 electionId={election.id}
                                                 onUpdateDescription={handleDescriptionUpdate} // 編集された内容を受け取るコールバック関数を渡す
                                             />
+                                            
+                                            <th scope="col" className="px-6 py-4">氏名</th>
+                                            <th scope="col" className="px-6 py-4">所属</th>
+                                            <th scope="col" className="px-6 py-4">詳細</th>
                                         </tr>
                                     </thead>
                                     <tbody>
