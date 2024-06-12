@@ -22,28 +22,34 @@ class VoterController extends Controller
     }
 
     public function index(Election $election)
-    {
-        $query = User::query();
+{
+    $query = $election->users();
 
-        $sortField = request("sort_field", 'id');
-        $sortDirection = request("sort_direction", "asc");
+    $sortField = request("sort_field", 'id');
+    $sortDirection = request("sort_direction", "asc");
 
-        if (request("name")) {
-            $query->where("name", "like", "%" . request("name") . "%");
-        }
-
-        $voters = $election->users()
-            ->orderBy($sortField, $sortDirection)
-            ->paginate(10)
-            ->onEachSide(1);
-
-        return Inertia('Admin/Voters/index', [
-            'election' => $election,
-            'voters' => VoterResource::collection($voters),
-            'queryParams' => request()->query() ?: null,
-            'success' => session('success'),
-        ]);
+    if (request("name")) {
+        $query->where("name", "like", "%" . request("name") . "%");
     }
+
+    if (request("email")) {
+        $query->where("email", "like", "%" . request("email") . "%");
+    }
+
+    $voters = $query
+        ->orderBy($sortField, $sortDirection)
+        ->paginate(10)
+        ->onEachSide(1);
+
+    return Inertia('Admin/Voters/index', [
+        'election' => $election,
+        'voters' => VoterResource::collection($voters),
+        'queryParams' => request()->query() ?: null,
+        'success' => session('success'),
+    ]);
+}
+
+    
 
     public function store(Request $request, Election $election)
     {
