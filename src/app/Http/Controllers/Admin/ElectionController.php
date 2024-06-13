@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
 use App\Http\Requests\Admin\UpdateElectionRequest;
-use App\Http\Resources\ElectionResource;
 use App\Models\Election;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,26 +13,11 @@ use Illuminate\Support\Facades\DB;
 class ElectionController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index(Election $election)
-    {
-        return inertia('Admin/Overview/index', [
-            'election' => $election->id,
-            'success' => session('success'),
-        ]);
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
-    public function create(Election $election)
+    public function create()
     {
-        $election = Election::query()->orderBy('election_name', 'asc')->get();
-
-        return Inertia('Admin/election/CreateElection', [
-            ElectionResource::collection($election),
-        ]);
+        return Inertia('Admin/election/CreateElection');
     }
 
     /**
@@ -75,14 +59,6 @@ class ElectionController extends Controller
         }
     }
 
-    public function showVoters(Election $election)
-    {
-        return Inertia('Admin/Voters/index', [
-            'election' => new ElectionResource($election),
-            'success' => session('success'),
-        ]);
-    }
-
     public function launchElection(Election $election)
     {
         if ($election->status != 'Scheduling') {
@@ -90,14 +66,6 @@ class ElectionController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Election $election)
-    {
-        //
     }
 
     /**
@@ -151,5 +119,20 @@ class ElectionController extends Controller
             // 同様に$statusを更新する
             $status = 'Closed';
         }
+    }
+        public function checkValidity($id)
+    {
+        $election = Election::find($id);
+
+        if (!$election) {
+            return response()->json(['isValid' => false], 404);
+        }
+
+        $hasCandidates = $election->candidates()->exists();
+        $hasVoters = DB::table('candidate_user')->where('election_id', $id)->exists();
+
+        $isValid = $hasCandidates && $hasVoters;
+
+        return response()->json(['isValid' => $isValid]);
     }
 }

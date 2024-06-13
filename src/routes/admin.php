@@ -72,10 +72,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('update-election-status/{election}', [ElectionController::class, 'updateElectionStatus'])->name('update-election-status');
 
         // 結果を表示するルーティングメソッド
-        Route::get('election/{election}/results', [VoteController::class, 'indexAdminResult'])->name('election.indexAdminResult');
+        Route::get('election/{election}/results', [VoteController::class, 'showAdminResult'])->name('election.showAdminResult');
 
         Route::delete('election-destroy/{election}', [ElectionController::class, 'destroy'])->name('admin.election.destroy');
-
-
     });
 });

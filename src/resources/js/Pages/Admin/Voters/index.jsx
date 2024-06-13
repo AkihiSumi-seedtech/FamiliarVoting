@@ -107,7 +107,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
             title="投票者"
             routeOverview={route('admin.election.show', election.id)}
             routeCandidate={route('admin.election.candidates.index', election.id)}
-            routeResult={route('admin.election.indexAdminResult', election.id)}
+            routeResult={route('admin.election.showAdminResult', election.id)}
             electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}
@@ -123,7 +123,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                                 <div className='dark:text-gray-300'>投票者を追加する</div>
                             </div>
                             <div>
-                                下のボタンから投票者のCSCを選択してインポートしましょう
+                                下のボタンから投票者のCSVを選択してインポートしましょう
                             </div>
                             <div className='mt-6 flex-[0_0_67%]'>
                             <input id='file' type='file' name='file' onChange={handleFileSelect} />

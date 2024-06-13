@@ -15,15 +15,30 @@ const Overview = ({ election }) => {
 
     const { data, post } = useForm();
 
-    const handleLaunch = (e) => {
+    const handleLaunch = async (e) => {
         e.preventDefault();
-        window.location.href = '/admin/dashboard';
 
         try {
-            if (election.status === 'Building' && new Date(election.end_date) > new Date()) {
-                post(route('admin.launch-election', election.id), {
-                    method: 'put',
-                });
+            const candidateElectionResponse = await fetch(`/api/candidate-election/${election.id}`);
+            const electionUserResponse = await fetch(`/api/election-user/${election.id}`);
+
+            if (!candidateElectionResponse.ok || !electionUserResponse.ok) {
+                throw new Error('データベースエラーが発生しました');
+            }
+
+            const candidateElectionCount = await candidateElectionResponse.json();
+            const electionUserCount = await electionUserResponse.json();
+
+            if (candidateElectionCount > 0 && electionUserCount > 0) {
+                if (election.status === 'Building' && new Date(election.end_date) > new Date()) {
+                    post(route('admin.launch-election', election.id), {
+                        method: 'put',
+                    });
+                    window.location.href = '/admin/dashboard';
+                }
+            } else {
+                alert('投票者および立候補者が登録されている必要があります。');
+                window.location.href = `/admin/election/${election.id}`;
             }
         } catch (error) {
             console.error(error);
@@ -50,7 +65,7 @@ const Overview = ({ election }) => {
             title='概要'
             routeVoters={route('admin.election.voters.index', election.id)}
             routeCandidate={route('admin.election.candidates.index', election.id)}
-            routeResult={route('admin.election.indexAdminResult', election.id)}
+            routeResult={route('admin.election.showAdminResult', election.id)}
             electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}

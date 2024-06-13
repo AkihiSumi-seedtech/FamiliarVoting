@@ -25,7 +25,7 @@ class CandidateController extends Controller
 
     public function index(Election $election)
     {
-        $query = Candidate::query();
+        $query = $election->candidates();
 
         $sortField = request("sort_field", 'id');
         $sortDirection = request("sort_direction", "asc");
@@ -34,7 +34,10 @@ class CandidateController extends Controller
             $query->where("candidate_name", "like", "%" . request("candidate_name") . "%");
         }
 
-        $candidates = $election->candidates()
+        if (request("candidate_party")) {
+            $query->where("candidate_party", "like", "%" . request("candidate_party") . "%");
+
+        $candidates = $query
             ->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
@@ -46,6 +49,7 @@ class CandidateController extends Controller
             'success' => session('success'),
         ]);
     }
+
 
     public function store(Request $request, Election $election)
     {
@@ -68,12 +72,6 @@ class CandidateController extends Controller
             return back()->with('error', 'インポート中にエラーが発生しました。: ' . $e->getMessage());
         }
     }
-
-    public function show()
-    {}
-
-    public function edit()
-    {}
 
     public function update(UpdateCandidateRequest $request, Candidate $candidate)
     {

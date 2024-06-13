@@ -16,11 +16,11 @@ return new class extends Migration
             $table->foreignId('voter_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('election_id')->constrained('elections')->onDelete('cascade');
             $table->foreignId('candidate_id')->nullable()->constrained('candidates');
-            $table->boolean('is_chose_not_select');
+            $table->boolean('is_chose_not_select')->default(false);
             $table->timestamps();
 
             $table->primary(['voter_id', 'election_id']);
-            // $table->unique(['voter_id', 'election_id']);
+            $table->unique(['voter_id', 'election_id']);
         });
     }
 

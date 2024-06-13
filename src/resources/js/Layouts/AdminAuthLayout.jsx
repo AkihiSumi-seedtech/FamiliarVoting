@@ -16,9 +16,7 @@ export default function AdminAuthenticated({ user, header, children }) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                                </Link>
                             </div>
                         </div>
 
@@ -87,12 +85,6 @@ export default function AdminAuthenticated({ user, header, children }) {
                 </div>
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('admin.election.index')} active={route().current('admin.election.index')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
                     <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                         <div className="px-4">
                             <div className="font-medium text-base text-gray-800 dark:text-gray-200">{user.name}</div>
