@@ -20,7 +20,7 @@ import React from 'react'
  */
 const Voters = ({ voters, election, queryParams = null, success }) => {
     queryParams = queryParams || {}
-
+    console.log(election);
     /**
      * ソート条件が変更されたときに呼び出す
      *

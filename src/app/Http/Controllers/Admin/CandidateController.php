@@ -36,6 +36,7 @@ class CandidateController extends Controller
 
         if (request("candidate_party")) {
             $query->where("candidate_party", "like", "%" . request("candidate_party") . "%");
+        }
 
         $candidates = $query
             ->orderBy($sortField, $sortDirection)
