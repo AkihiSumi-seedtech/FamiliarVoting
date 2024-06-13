@@ -3,7 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import PieChart from '@/Components/result/PieChart';
 
-const Result = ({ auth, election, result, electionId }) => {
+const Result = ({ auth, result, electionId }) => {
+    console.log(result)
     const filteredResult = result.filter(result => result.election_id === electionId)
 
     const chartData = filteredResult.map(result => ({

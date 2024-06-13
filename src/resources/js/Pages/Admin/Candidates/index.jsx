@@ -10,6 +10,7 @@ import EditFormDialog from '@/Components/candidates/EditFormDialog';
 
 const Candidates = ({ candidates, election, queryParams = null, success }) => {
     queryParams = queryParams || {}
+    console.log(election)
 
     const sortChanged = (name) => {
         if (name === queryParams.sort_field) {
@@ -82,7 +83,7 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
             title="立候補者"
             routeOverview={route('admin.election.show', election.id)}
             routeVoters={route('admin.election.voters.index', election.id)}
-            routeResult={route('admin.election.indexAdminResult', election.id)}
+            routeResult={route('admin.election.showAdminResult', election.id)}
             electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}

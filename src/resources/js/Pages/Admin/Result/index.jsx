@@ -8,7 +8,6 @@ const Result = ({ election, results, electionId }) => {
     const filteredResults = results.filter(
         result => result.election_id === electionId
     );
-    console.log(filteredResults)
 
     // 投票総数を計算
     const totalVotes = filteredResults.reduce((acc, result) => acc + result.count, 0);

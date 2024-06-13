@@ -22,34 +22,32 @@ class VoterController extends Controller
     }
 
     public function index(Election $election)
-{
-    $query = $election->users();
+    {
+        $query = $election->users();
 
-    $sortField = request("sort_field", 'id');
-    $sortDirection = request("sort_direction", "asc");
+        $sortField = request("sort_field", 'id');
+        $sortDirection = request("sort_direction", "asc");
 
-    if (request("name")) {
-        $query->where("name", "like", "%" . request("name") . "%");
+        if (request("name")) {
+            $query->where("name", "like", "%" . request("name") . "%");
+        }
+
+        if (request("email")) {
+            $query->where("email", "like", "%" . request("email") . "%");
+        }
+
+        $voters = $query
+            ->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
+
+        return Inertia('Admin/Voters/index', [
+            'election' => $election,
+            'voters' => VoterResource::collection($voters),
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
+        ]);
     }
-
-    if (request("email")) {
-        $query->where("email", "like", "%" . request("email") . "%");
-    }
-
-    $voters = $query
-        ->orderBy($sortField, $sortDirection)
-        ->paginate(10)
-        ->onEachSide(1);
-
-    return Inertia('Admin/Voters/index', [
-        'election' => $election,
-        'voters' => VoterResource::collection($voters),
-        'queryParams' => request()->query() ?: null,
-        'success' => session('success'),
-    ]);
-}
-
-    
 
     public function store(Request $request, Election $election)
     {
@@ -71,13 +69,5 @@ class VoterController extends Controller
             DB::rollBack();
             return back()->with('error', 'インポート中にエラーが発生しました。: ' . $e->getMessage());
         }
-    }
-
-    public function show(User $voter)
-    {
-        return Inertia('Admin/Voter/index', [
-            'voter' => new VoterResource($voter),
-        ]);
-        
     }
 }

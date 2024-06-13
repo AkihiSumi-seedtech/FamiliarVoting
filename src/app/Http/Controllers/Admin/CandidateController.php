@@ -24,32 +24,31 @@ class CandidateController extends Controller
     }
 
     public function index(Election $election)
-{
-    $query = $election->candidates();
+    {
+        $query = $election->candidates();
 
-    $sortField = request("sort_field", 'id');
-    $sortDirection = request("sort_direction", "asc");
+        $sortField = request("sort_field", 'id');
+        $sortDirection = request("sort_direction", "asc");
 
-    if (request("candidate_name")) {
-        $query->where("candidate_name", "like", "%" . request("candidate_name") . "%");
+        if (request("candidate_name")) {
+            $query->where("candidate_name", "like", "%" . request("candidate_name") . "%");
+        }
+
+        if (request("candidate_party")) {
+            $query->where("candidate_party", "like", "%" . request("candidate_party") . "%");
+
+        $candidates = $query
+            ->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
+
+        return Inertia('Admin/Candidates/index', [
+            'candidates' => CandidateResource::collection($candidates),
+            'election' => $election,
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
+        ]);
     }
-
-    if (request("candidate_party")) {
-        $query->where("candidate_party", "like", "%" . request("candidate_party") . "%");
-    }
-
-    $candidates = $query
-        ->orderBy($sortField, $sortDirection)
-        ->paginate(10)
-        ->onEachSide(1);
-
-    return Inertia('Admin/Candidates/index', [
-        'candidates' => CandidateResource::collection($candidates),
-        'election' => $election,
-        'queryParams' => request()->query() ?: null,
-        'success' => session('success'),
-    ]);
-}
 
 
     public function store(Request $request, Election $election)
@@ -73,12 +72,6 @@ class CandidateController extends Controller
             return back()->with('error', 'インポート中にエラーが発生しました。: ' . $e->getMessage());
         }
     }
-
-    public function show()
-    {}
-
-    public function edit()
-    {}
 
     public function update(UpdateCandidateRequest $request, Candidate $candidate)
     {

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ElectionResource;
 use App\Models\Election;
-use App\Models\Vote;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -35,6 +33,10 @@ class DashboardController extends Controller
         $votedElectionsResource = ElectionResource::collection($votedElections);
         $unVotedElectionsResource = ElectionResource::collection($unVotedElections);
 
+        // dd($usersElections);
+        // dd($votedElections);
+        // dd($unVotedElections);
+
         return inertia('User/Dashboard', [
             'usersElections' => ElectionResource::collection($usersElections),
             'votedElections' => $votedElectionsResource,
@@ -48,9 +50,10 @@ class DashboardController extends Controller
     public function adminIndex()
     {
         $user = auth()->user();
-        $elections = Election::query()
-            ->where('admin_id', $user->id)
+        $elections = Election::where('admin_id', $user->id)
             ->get();
+
+        // dd($elections);
 
         return inertia('Admin/Dashboard', [
             'elections' => ElectionResource::collection($elections),
