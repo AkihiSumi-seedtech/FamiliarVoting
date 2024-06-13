@@ -23,8 +23,7 @@ class VoterController extends Controller
 
     public function index(Election $election)
     {
-        $query = User::query();
-        // $query = $election->users();
+        $query = $election->users();
 
         $sortField = request("sort_field", 'id');
         $sortDirection = request("sort_direction", "asc");
@@ -33,8 +32,11 @@ class VoterController extends Controller
             $query->where("name", "like", "%" . request("name") . "%");
         }
 
-        // $voters = $query
-        $voters = $election->users()
+        if (request("email")) {
+            $query->where("email", "like", "%" . request("email") . "%");
+        }
+
+        $voters = $query
             ->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);

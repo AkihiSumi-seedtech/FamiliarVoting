@@ -78,6 +78,7 @@ const ElectionStatusBadge = ({ start_date, end_date, initialStatus, electionId }
             <span className='ml-4 bg-red-600 text-gray-100 text-sm font-bold py-1 px-2 text-center leading-none align-baseline rounded-sm'>
                 {status}
             </span>
+            
         )
     }
 }

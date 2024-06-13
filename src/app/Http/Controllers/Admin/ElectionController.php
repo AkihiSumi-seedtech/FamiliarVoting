@@ -120,4 +120,19 @@ class ElectionController extends Controller
             $status = 'Closed';
         }
     }
+        public function checkValidity($id)
+    {
+        $election = Election::find($id);
+
+        if (!$election) {
+            return response()->json(['isValid' => false], 404);
+        }
+
+        $hasCandidates = $election->candidates()->exists();
+        $hasVoters = DB::table('candidate_user')->where('election_id', $id)->exists();
+
+        $isValid = $hasCandidates && $hasVoters;
+
+        return response()->json(['isValid' => $isValid]);
+    }
 }

@@ -67,6 +67,11 @@ const Candidates = ({ candidates, election, queryParams = null, success }) => {
     }
 
     const deleteCandidate = (candidate) => {
+        if (candidates.data.length === 1) {
+            alert('立候補者は一人以上登録されている必要があります')
+            return
+        }
+
         if (!window.confirm("本当に削除してもよろしいですか？")) {
             return
         }

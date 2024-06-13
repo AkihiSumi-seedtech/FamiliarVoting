@@ -22,9 +22,7 @@ function CreateElection() {
             <Head title='Create Election' />
 
             <div className='mb-3'>
-                <Link href="/">
                     <ApplicationLogo className="w-20 h-20 fill-current text-gray-500 dark:text-gray-400" />
-                </Link>
             </div>
 
             <div className='text-5xl font-light dark:text-gray-400'>
