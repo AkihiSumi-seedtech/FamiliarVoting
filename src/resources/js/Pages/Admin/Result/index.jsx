@@ -9,7 +9,7 @@ const Result = ({ votes, election, results, electionId }) => {
         result => result.election_id === electionId
     )
 
-    console.log(filteredResults)
+    console.log(election)
 
     // chartDataを定義する
     const chartData = filteredResults.map(result => ({

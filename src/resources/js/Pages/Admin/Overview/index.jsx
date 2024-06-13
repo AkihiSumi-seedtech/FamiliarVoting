@@ -50,7 +50,7 @@ const Overview = ({ election }) => {
             title='概要'
             routeVoters={route('admin.election.voters.index', election.id)}
             routeCandidate={route('admin.election.candidates.index', election.id)}
-            routeResult={route('admin.election.indexAdminResult', election.id)}
+            routeResult={route('admin.election.showAdminResult', election.id)}
             electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}

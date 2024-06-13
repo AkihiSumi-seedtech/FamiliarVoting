@@ -26,6 +26,7 @@ class CandidateController extends Controller
     public function index(Election $election)
     {
         $query = Candidate::query();
+        // $query = $election->candidates();
 
         $sortField = request("sort_field", 'id');
         $sortDirection = request("sort_direction", "asc");
@@ -34,6 +35,7 @@ class CandidateController extends Controller
             $query->where("candidate_name", "like", "%" . request("candidate_name") . "%");
         }
 
+        // $candidates = $query
         $candidates = $election->candidates()
             ->orderBy($sortField, $sortDirection)
             ->paginate(10)
@@ -68,12 +70,6 @@ class CandidateController extends Controller
             return back()->with('error', 'インポート中にエラーが発生しました。: ' . $e->getMessage());
         }
     }
-
-    public function show()
-    {}
-
-    public function edit()
-    {}
 
     public function update(UpdateCandidateRequest $request, Candidate $candidate)
     {

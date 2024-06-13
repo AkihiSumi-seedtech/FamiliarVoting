@@ -34,7 +34,7 @@ Route::get('/dashboard', [DashboardController::class, 'voterIndex'])
     ->middleware(['auth', 'verified'])->name('voterDashboard');
 
 Route::resource('election.vote', VoteController::class);
-Route::get('/{election}/result', [VoteController::class, 'indexVoterResult'])->name('indexVoterResult');
+Route::get('/{election}/result', [VoteController::class, 'showVoterResult'])->name('showVoterResult');
 Route::get('/{election}/detail',[VoteController::class, 'showDetail'])->name('showDetail');
 
 require __DIR__.'/auth.php';

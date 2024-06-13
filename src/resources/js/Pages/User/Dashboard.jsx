@@ -2,6 +2,13 @@ import ElectionCard from '@/Components/voterPage/ElectionCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
+/**
+ * @param {Object} props - コンポーネントのプロパティ
+ * @param {Array} props.usersElections - 投票者と関連のある選挙の配列
+ * @param {Array} props.votedElections - 投票した選挙の配列
+ * @param {Array} props.unVotedElections - 投票していない選挙の配列
+ * @returns {JSX.Element} Dashboardコンポーネント
+ */
 export default function Dashboard({ auth, usersElections, votedElections, unVotedElections }) {
     const upcomingElections = usersElections.data.filter(
         election => election.status === 'Building' || election.status === 'Scheduling'
@@ -33,7 +40,7 @@ export default function Dashboard({ auth, usersElections, votedElections, unVote
             <Head title="選挙一覧" />
 
             {/* 選挙が作成されていない場合、もしくは既に投票済みで他に選挙が無い場合 */}
-            {usersElections.data.length === 0 && (
+            {usersElections.data.length === 0 || votedElections.data.length === 0 || unVotedElections.length > 0 && (
                 <div className='text-xl dark:text-white text-center p-10'>予定されている選挙はありません</div>
             )}
 
@@ -79,7 +86,7 @@ export default function Dashboard({ auth, usersElections, votedElections, unVote
                         <div key={election.id}>
                             <div className='p-4' key={election.id}>
                                 <ElectionCard
-                                    toRoute={route('indexVoterResult', election.id)}
+                                    toRoute={route('showVoterResult', election.id)}
                                     electionName={election.election_name}
                                     startDate={election.start_date}
                                     endDate={election.end_date}

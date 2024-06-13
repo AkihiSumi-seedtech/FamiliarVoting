@@ -107,7 +107,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
             title="投票者"
             routeOverview={route('admin.election.show', election.id)}
             routeCandidate={route('admin.election.candidates.index', election.id)}
-            routeResult={route('admin.election.indexAdminResult', election.id)}
+            routeResult={route('admin.election.showAdminResult', election.id)}
             electionId={election.id}
             electionName={election.election_name}
             electionStatus={election.status}

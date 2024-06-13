@@ -24,6 +24,7 @@ class VoterController extends Controller
     public function index(Election $election)
     {
         $query = User::query();
+        // $query = $election->users();
 
         $sortField = request("sort_field", 'id');
         $sortDirection = request("sort_direction", "asc");
@@ -32,6 +33,7 @@ class VoterController extends Controller
             $query->where("name", "like", "%" . request("name") . "%");
         }
 
+        // $voters = $query
         $voters = $election->users()
             ->orderBy($sortField, $sortDirection)
             ->paginate(10)
@@ -65,13 +67,5 @@ class VoterController extends Controller
             DB::rollBack();
             return back()->with('error', 'インポート中にエラーが発生しました。: ' . $e->getMessage());
         }
-    }
-
-    public function show(User $voter)
-    {
-        return Inertia('Admin/Voter/index', [
-            'voter' => new VoterResource($voter),
-        ]);
-        
     }
 }

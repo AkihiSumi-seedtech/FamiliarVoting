@@ -20,8 +20,8 @@ class ElectionResource extends JsonResource
         return [
             'id' => $this->id,
             'election_name' => $this->election_name,
-            'start_date' => (new Carbon($this->start_date))->toISOString(), // ISO 8601 形式に変換
-            'end_date' => (new Carbon($this->end_date))->toISOString(), // ISO 8601 形式に変換
+            'start_date' => (new Carbon($this->start_date))->toISOString(),
+            'end_date' => (new Carbon($this->end_date))->toISOString(),
             'status' => $this->status,
             'description' => $this->description,
             'admin_id' => Auth::id(),
