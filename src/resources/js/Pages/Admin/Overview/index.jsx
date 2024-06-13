@@ -38,6 +38,7 @@ const Overview = ({ election }) => {
                 }
             } else {
                 alert('投票者および立候補者が登録されている必要があります。');
+                window.location.href = `/admin/election/${election.id}`;
             }
         } catch (error) {
             console.error(error);
