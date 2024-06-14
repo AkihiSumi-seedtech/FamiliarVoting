@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
 use App\Http\Requests\Admin\UpdateElectionRequest;
+use App\Models\Candidate;
 use App\Models\Election;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -80,7 +81,7 @@ class ElectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Election $election)
+    public function destroy(Election $election, Candidate $candidate)
     {
         try {
             // 外部キー制約を一時的に無効にする
@@ -88,6 +89,15 @@ class ElectionController extends Controller
 
             $election->users()->detach();
             $election->candidates()->detach();
+            $election->votes()->delete();
+
+            $candidates = $candidate->candidates;
+            foreach ($candidates as $candidate) {
+            $candidate->delete();
+            }
+            
+
+    
 
             $election->delete();
 
