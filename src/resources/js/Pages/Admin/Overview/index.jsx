@@ -34,7 +34,6 @@ const Overview = ({ election }) => {
                     post(route('admin.launch-election', election.id), {
                         method: 'put',
                     });
-                    window.location.href = '/admin/dashboard';
                 }
             } else {
                 alert('投票者および立候補者が登録されている必要があります。');

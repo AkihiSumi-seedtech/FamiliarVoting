@@ -6,41 +6,41 @@ use App\Models\Admin;
 use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class DashboardControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     public function test_voter_index()
     {
         $admin = Admin::factory()->create();
         $user = User::factory()->create();
-        $candidate = Candidate::factory()->create();
+        $candidates = Candidate::factory(3)->create();
 
         // Create elections
         $elections = Election::factory(3)->create([
+            'status' => 'Running',
             'admin_id' => $admin->id
         ]);
 
         // Attach elections to the user
-        $user->elections()->attach($elections->pluck('id'));
+        $user->elections()->attach($elections->pluck('id')->toArray());
         // Attach elections to candidate
         foreach ($elections as $election) {
-            $election->candidates()->attach($candidate->pluck('id'));
+            $election->candidates()->attach($candidates->pluck('id')->toArray());
         }
 
         $data = [
             'voter_id' => $user->id,
-            'election_id' => $elections->random()->id,
-            'candidate_id' => rand(0, 1) ? $candidate->id : null,
-            'is_chose_not_select' => false ?: true,
+            'election_id' => $election->id,
+            'candidate_id' => rand(0, 1) ? $candidates->random()->id : null,
         ];
+        $data['is_chose_not_select'] = is_null($data['candidate_id']) ? true : false;
 
-        $response = $this->post(route('election.vote.store', $elections->random()->id), $data);
+        $response = $this->post(route('election.vote.store', $election->id), $data);
 
         $this->actingAs($user);
         $response = $this->get(route('voterDashboard'));

@@ -33,10 +33,6 @@ class DashboardController extends Controller
         $votedElectionsResource = ElectionResource::collection($votedElections);
         $unVotedElectionsResource = ElectionResource::collection($unVotedElections);
 
-        // dd($usersElections);
-        // dd($votedElections);
-        // dd($unVotedElections);
-
         return inertia('User/Dashboard', [
             'usersElections' => ElectionResource::collection($usersElections),
             'votedElections' => $votedElectionsResource,

@@ -59,7 +59,7 @@ class VoterController extends Controller
             Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
             $importedUserIds = $import->getImportedUserIds();
-            $election->users()->sync($importedUserIds);
+            $election->users()->syncWithoutDetaching($importedUserIds);
 
             DB::commit();
 
