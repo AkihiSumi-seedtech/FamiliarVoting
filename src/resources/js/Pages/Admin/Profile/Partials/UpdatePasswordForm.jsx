@@ -9,7 +9,7 @@ import { Transition } from '@headlessui/react';
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
     const currentPasswordInput = useRef();
-    const [passwordMatchError, setPasswordMatchError] = useState(false); // State to track password match error
+    const [passwordMatchError, setPasswordMatchError] = useState(false); 
 
     const { data, setData, errors, put, reset, processing, recentlySuccessful } = useForm({
         current_password: '',

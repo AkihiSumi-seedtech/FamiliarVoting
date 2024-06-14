@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\ElectionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,11 @@ Route::get('/dashboard', [DashboardController::class, 'voterIndex'])
 Route::resource('election.vote', VoteController::class);
 Route::get('/{election}/result', [VoteController::class, 'showVoterResult'])->name('showVoterResult');
 Route::get('/{election}/detail',[VoteController::class, 'showDetail'])->name('showDetail');
+
+Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    ->name('password.email');
+
+
 
 require __DIR__.'/auth.php';
 

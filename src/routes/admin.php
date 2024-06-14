@@ -75,5 +75,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('election/{election}/results', [VoteController::class, 'showAdminResult'])->name('election.showAdminResult');
 
         Route::delete('election-destroy/{election}', [ElectionController::class, 'destroy'])->name('admin.election.destroy');
+
+        
     });
 });

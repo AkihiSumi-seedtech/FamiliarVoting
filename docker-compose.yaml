@@ -86,4 +86,11 @@ services:
     ports:
       - 8080:80
     volumes:
-      - pma-session-store:/sessions
+      - pma-session-store:/sessions  
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - target: 8025
+        published: ${MAILPIT_PUBLISHED_PORT:-8025}
+        protocol: tcp
+        mode: host
