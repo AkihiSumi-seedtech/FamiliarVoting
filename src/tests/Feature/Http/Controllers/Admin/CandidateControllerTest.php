@@ -93,6 +93,15 @@ class CandidateControllerTest extends TestCase
 
         $election = Election::factory()->create(['admin_id' => $admin->id]);
         $candidates = Candidate::factory(2)->create();
-        $election->candidates()->attach($candidates->pluck('id')->toArray());
+
+        $election->candidates()->syncWithoutDetaching($candidates[0]->id);
+        $election->candidates()->syncWithoutDetaching($candidates[1]->id);
+
+        $response = $this->delete(route('admin.candidates.destroy', $candidates[1]->id));
+        $response->assertStatus(302);
+
+        $this->assertDatabaseMissing('candidates', ['id' => $candidates[1]->id]);
+        $this->assertDatabaseMissing('candidate_election', ['candidate_id' => $candidates[1]->id, 'election_id' => $election->id]);
+        // $this->assertDatabaseHas('candidates', ['id' => $candidates[0]->id]);
     }
 }

@@ -16,7 +16,10 @@ class VoteControllerTest extends TestCase
 
     public function test_index()
     {
-        $election = Election::factory()->create();
+        $election = Election::factory()->create([
+            'admin_id' => Admin::factory()->create()
+        ]);
+
         $candidates = Candidate::factory(5)->create();
         $election->candidates()->attach($candidates->pluck('id'));
 
@@ -31,7 +34,10 @@ class VoteControllerTest extends TestCase
 
     public function test_store()
     {
-        $election = Election::factory()->create();
+        $election = Election::factory()->create([
+            'admin_id' => Admin::factory()->create()
+        ]);
+
         $user = User::factory()->create();
         $candidate = Candidate::factory()->create();
 
@@ -57,7 +63,10 @@ class VoteControllerTest extends TestCase
 
     public function test_show_voter_result()
     {
-        $election = Election::factory()->create();
+        $election = Election::factory()->create([
+            'admin_id' => Admin::factory()->create()
+        ]);
+
         $candidates = Candidate::factory(2)->create();
         $user = User::factory(3)->create();
 
@@ -104,7 +113,7 @@ class VoteControllerTest extends TestCase
         $admin = Admin::factory()->create();
         $this->actingAs($admin, 'admin');
 
-        $election = Election::factory()->create();
+        $election = Election::factory()->create(['admin_id' => $admin->id]);
         $candidates = Candidate::factory(2)->create();
         $user = User::factory(3)->create();
 
