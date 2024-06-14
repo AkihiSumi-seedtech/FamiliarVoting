@@ -7,9 +7,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+
 
 class ProfileController extends Controller
 {
@@ -43,21 +45,30 @@ class ProfileController extends Controller
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
+   
+public function destroy(Request $request)
+{
+    $request->validate([
+        'password' => ['required', 'current_password'],
+    ]);
 
-        $user = $request->user();
+    // 外部キー制約を無効化
+    DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-        Auth::logout();
+    $user = $request->user();
 
-        $user->delete();
+    Auth::logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    // ユーザーを削除
+    $user->delete();
 
-        return Redirect::to('/admin/register');
-    }
+    // 外部キー制約を再度有効化
+    DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return Redirect::to('/admin/register');
+}
+
 }
