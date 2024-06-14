@@ -33,7 +33,7 @@ class Election extends Model
     {
         return $this->belongsToMany(Candidate::class, 'candidate_election', 'election_id', 'candidate_id')->withTimestamps();
     }
-    
+
     public function votes()
     {
         return $this->hasMany(Vote::class, 'election_id');

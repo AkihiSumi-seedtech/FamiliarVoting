@@ -86,7 +86,8 @@ services:
     ports:
       - 8080:80
     volumes:
-      - pma-session-store:/sessions  
+      - pma-session-store:/sessions
+
   mailpit:
     image: axllent/mailpit
     ports:

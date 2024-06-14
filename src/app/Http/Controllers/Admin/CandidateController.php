@@ -87,13 +87,12 @@ class CandidateController extends Controller
         DB::beginTransaction();
 
         try {
-            $candidate->elections()->detach($election->id);
-            $candidate->elections()->delete();
+            $candidate->elections()->detach();
 
             DB::commit();
 
             return to_route('admin.election.candidates.index', $election->id)
-                ->with('success', $name . 'さんを削除しました。');
+                ->with('success', "\"$name\"さんを削除しました。");
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', '削除中にエラーが発生しました。: ' . $e->getMessage());

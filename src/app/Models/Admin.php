@@ -10,7 +10,7 @@ use Illuminate\Contracts\Auth\CanResetPassword; // CanResetPasswordトレイト�
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, CanResetPassword; // CanResetPasswordトレイトの使用
+    use HasApiTokens, HasFactory, Notifiable, Notifiable;
 
     /**
      * The attributes that are mass assignable.
