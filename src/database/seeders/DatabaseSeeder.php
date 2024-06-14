@@ -2,13 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
 use App\Models\Admin;
 use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\User;
-use App\Models\Vote;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,16 +19,16 @@ class DatabaseSeeder extends Seeder
         $admin = Admin::factory()->create();
 
         // Create users
-        $users = User::factory()->count(8)->create();
+        $users = User::factory(5)->create();
 
         // Create elections with admin_id and random user_id
-        $elections = Election::factory()->count(3)->create([
+        $elections = Election::factory(3)->create([
             'admin_id' => $admin->id,
         ]);
 
         // Attach elections to each user
         foreach ($elections as $election) {
-            $election->users()->attach($users->pluck('id')->toArray());
+            $election->users()->sync($users->pluck('id')->toArray());
         }
 
         // Create candidates
@@ -39,18 +36,7 @@ class DatabaseSeeder extends Seeder
 
         // Attach elections to each candidate
         foreach ($elections as $election) {
-            $election->candidates()->attach($candidates->pluck('id'));
+            $election->candidates()->sync($candidates->pluck('id')->toArray());
         }
-
-        // // Create votes for some elections
-        // Vote::factory()->create([
-        //     'voter_id' => $user->id,
-        //     'election_id' => $elections[0]->id,
-        // ]);
-
-        // Vote::factory()->create([
-        //     'voter_id' => $user->id,
-        //     'election_id' => $elections[1]->id,
-        // ]);
     }
 }

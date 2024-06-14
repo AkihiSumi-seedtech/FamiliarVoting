@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\VoterResource;
 use App\Imports\UserImport;
 use App\Models\Election;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -61,16 +60,9 @@ class VoterController extends Controller
             // Import the data from the CSV file
             Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
-            
             $importedUserIds = $import->getImportedUserIds();
-<<<<<<< Fix2
-            //dd($importedUserIds);  // Dump and die to inspect the imported user IDs
 
-            $election->users()->sync($importedUserIds);
-            //dd($election->users);  // Dump and die to inspect the election's users
-=======
             $election->users()->syncWithoutDetaching($importedUserIds);
->>>>>>> test/election-controller
 
             DB::commit();
 
