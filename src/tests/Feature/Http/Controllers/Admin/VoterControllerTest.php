@@ -57,7 +57,7 @@ class VoterControllerTest extends TestCase
         $election = Election::factory()->create();
         
         Storage::fake('local');
-        $file = UploadedFile::fake()->createWithContent('import.csv', 'name,email' . PHP_EOL . 'John Doe, john@example.com');
+        $file = UploadedFile::fake()->createWithContent('import.csv', 'name,email,password,' . PHP_EOL . 'John Doe,john@example.com,johnpass');
 
     
         // Hit the store route with the mock file
@@ -65,6 +65,8 @@ class VoterControllerTest extends TestCase
             'file' => $file,
         ]);
         $response->assertStatus(302);
+
+        // $this->assertDatabaseHas('users', ['name'=> 'John Doe']);
         $response->assertRedirect(route('admin.election.voters.index', $election->id))
             ->assertSessionHas('success', '投票者のインポートに成功しました！');
     
@@ -74,8 +76,8 @@ class VoterControllerTest extends TestCase
         $this->assertEquals('john@example.com', $election->fresh()->users->first()->email);
         
     }
-    
 
+}
 
 
     // public function testStoreFailedImport()
@@ -108,4 +110,3 @@ class VoterControllerTest extends TestCase
     //     // Assert that the database state remains unchanged
     //     $this->assertEquals(0, DB::table('election_user')->count());
     // }
-}
