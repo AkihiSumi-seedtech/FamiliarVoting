@@ -81,36 +81,41 @@ class ElectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Election $election, Candidate $candidate)
-    {
-        try {
-            // 外部キー制約を一時的に無効にする
-            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+    public function destroy(Election $election)
+{
+    try {
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-            $election->users()->detach();
-            $election->candidates()->detach();
-            $election->votes()->delete();
+        
+        $election->users()->detach();
 
-            $candidates = $candidate->candidates;
-            foreach ($candidates as $candidate) {
-            $candidate->delete();
-            }
+        
+        $candidates = $election->candidates()->get();
+        foreach ($candidates as $candidate) {
             
-
-    
-
-            $election->delete();
-
-            // 外部キー制約を再度有効にする
-            DB::statement('SET FOREIGN_KEY_CHECKS=1');
-
-            // リダイレクトなど適切な処理を行う
-            return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
-        } catch (\Exception $e) {
-            dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
-            return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+            $candidate->elections()->detach();
+            
+            $candidate->delete();
         }
+
+        // 選挙に関連する投票を削除
+        $election->votes()->delete();
+
+        // 選挙自体を削除
+        $election->delete();
+
+        // 外部キー制約を再度有効にする
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        // リダイレクトなど適切な処理を行う
+        return redirect()->route('admin.dashboard')->with('success', '選挙が削除されました。');
+    } catch (\Exception $e) {
+        dd('削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
+        return redirect()->back()->with('error', '選挙の削除中にエラーが発生しました。エラーメッセージ：' . $e->getMessage());
     }
+}
+
 
     public function updateElectionStatus(Election $election)
     {
