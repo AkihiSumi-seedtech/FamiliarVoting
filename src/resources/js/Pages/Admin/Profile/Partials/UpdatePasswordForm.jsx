@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -9,6 +9,7 @@ import { Transition } from '@headlessui/react';
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
     const currentPasswordInput = useRef();
+    const [passwordMatchError, setPasswordMatchError] = useState(false); // State to track password match error
 
     const { data, setData, errors, put, reset, processing, recentlySuccessful } = useForm({
         current_password: '',
@@ -19,9 +20,18 @@ export default function UpdatePasswordForm({ className = '' }) {
     const updatePassword = (e) => {
         e.preventDefault();
 
+        // Check if current password and new password are the same
+        if (data.current_password === data.password) {
+            setPasswordMatchError(true);
+            return; // Stop further processing
+        }
+
         put(route('admin.password.update'), {
             preserveScroll: true,
-            onSuccess: () => reset(),
+            onSuccess: () => {
+                reset();
+                setPasswordMatchError(false); // Reset password match error state
+            },
             onError: (errors) => {
                 if (errors.password) {
                     reset('password', 'password_confirmation');
@@ -93,6 +103,10 @@ export default function UpdatePasswordForm({ className = '' }) {
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
+
+                {passwordMatchError && (
+                    <p className="text-sm text-red-600 mt-2">現在のパスワードと新しいパスワードが同じです。</p>
+                )}
 
                 <div className="flex items-center gap-4">
                     <PrimaryButton disabled={processing}>保存</PrimaryButton>
