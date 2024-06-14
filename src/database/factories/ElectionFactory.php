@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Admin;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,10 +22,10 @@ class ElectionFactory extends Factory
 
         return [
             'election_name' => $this->faker->word(),
-            'start_date' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
-            'end_date' => $this->faker->dateTimeBetween('+1 month', '+2 months'),
+            'start_date' => $this->faker->dateTimeBetween('now', '+1 week'),
+            'end_date' => $this->faker->dateTimeBetween('+2 week', '+1 months'),
             'status' => $this->faker->randomElement(['Building', 'Scheduling', 'Running', 'Closed']),
-            'admin_id' => Admin::factory(),
+            'admin_id' => '',
             'description' => $this->faker->sentence(40),
             'created_at' => time(),
             'updated_at' => time(),

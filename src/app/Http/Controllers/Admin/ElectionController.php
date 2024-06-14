@@ -33,7 +33,7 @@ class ElectionController extends Controller
 
         Election::create($data);
 
-        return redirect()->route('admin.dashboard');
+        return to_route('admin.dashboard');
     }
 
     /**
@@ -62,11 +62,10 @@ class ElectionController extends Controller
 
     public function launchElection(Election $election)
     {
-        if ($election->status != 'Scheduling') {
+        if ($election->status == 'Building') {
             $election->update(['status' => 'Scheduling']);
         }
-
-        return redirect()->back();
+        return to_route('admin.dashboard');
     }
 
     /**
@@ -134,20 +133,5 @@ class ElectionController extends Controller
             // 同様に$statusを更新する
             $status = 'Closed';
         }
-    }
-        public function checkValidity($id)
-    {
-        $election = Election::find($id);
-
-        if (!$election) {
-            return response()->json(['isValid' => false], 404);
-        }
-
-        $hasCandidates = $election->candidates()->exists();
-        $hasVoters = DB::table('candidate_user')->where('election_id', $id)->exists();
-
-        $isValid = $hasCandidates && $hasVoters;
-
-        return response()->json(['isValid' => $isValid]);
     }
 }

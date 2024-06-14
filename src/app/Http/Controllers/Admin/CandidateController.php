@@ -62,7 +62,7 @@ class CandidateController extends Controller
             Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
             $importedCandidateIds = $import->getImportedCandidateIds();
-            $election->candidates()->sync($importedCandidateIds);
+            $election->candidates()->syncWithoutDetaching($importedCandidateIds);
 
             DB::commit();
 
@@ -88,12 +88,12 @@ class CandidateController extends Controller
 
         try {
             $candidate->elections()->detach($election->id);
-            $candidate->delete();
+            $candidate->elections()->delete();
 
             DB::commit();
 
             return to_route('admin.election.candidates.index', $election->id)
-                ->with('success', "\"$name\"さんを削除しました。");
+                ->with('success', $name . 'さんを削除しました。');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', '削除中にエラーが発生しました。: ' . $e->getMessage());

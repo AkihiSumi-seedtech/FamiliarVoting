@@ -63,10 +63,14 @@ class VoterController extends Controller
 
             
             $importedUserIds = $import->getImportedUserIds();
+<<<<<<< Fix2
             //dd($importedUserIds);  // Dump and die to inspect the imported user IDs
 
             $election->users()->sync($importedUserIds);
             //dd($election->users);  // Dump and die to inspect the election's users
+=======
+            $election->users()->syncWithoutDetaching($importedUserIds);
+>>>>>>> test/election-controller
 
             DB::commit();
 

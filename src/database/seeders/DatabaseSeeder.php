@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
 
         // Attach elections to each candidate
         foreach ($elections as $election) {
-            $election->candidates()->attach($candidates->pluck('id')->toArray());
+            $election->candidates()->attach($candidates->pluck('id'));
         }
 
         // // Create votes for some elections

@@ -19,7 +19,7 @@ class CandidateFactory extends Factory
         return [
             'candidate_name' => $this->faker->name,
             'candidate_party' => $this->faker->company,
-            'candidate_manifest' => $this->faker->paragraph,
+            'candidate_manifest' => '',
         ];
     }
 }
