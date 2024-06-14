@@ -49,17 +49,28 @@ class VoterController extends Controller
         ]);
     }
 
-    public function store(Request $request, Election $election)
+        public function store(Request $request, Election $election)
     {
         DB::beginTransaction();
 
         try {
             $file = $request->file('file');
             $import = new UserImport($election->id);
+            //dd($import);  // Dump and die to inspect the import instance
+
+            // Import the data from the CSV file
             Excel::import($import, $file, null, \Maatwebsite\Excel\Excel::CSV);
 
+            
             $importedUserIds = $import->getImportedUserIds();
+<<<<<<< Fix2
+            //dd($importedUserIds);  // Dump and die to inspect the imported user IDs
+
             $election->users()->sync($importedUserIds);
+            //dd($election->users);  // Dump and die to inspect the election's users
+=======
+            $election->users()->syncWithoutDetaching($importedUserIds);
+>>>>>>> test/election-controller
 
             DB::commit();
 
@@ -67,7 +78,10 @@ class VoterController extends Controller
                 ->with('success', '投票者のインポートに成功しました！');
         } catch (\Exception $e) {
             DB::rollBack();
+            //dd($e);  // Dump and die to inspect the exception
+
             return back()->with('error', 'インポート中にエラーが発生しました。: ' . $e->getMessage());
         }
     }
 }
+

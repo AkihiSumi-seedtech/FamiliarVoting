@@ -6,15 +6,13 @@ use App\Models\Admin;
 use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\User;
-use App\Models\Vote;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class VoteControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     public function test_index()
     {
