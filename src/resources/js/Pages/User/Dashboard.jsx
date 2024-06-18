@@ -40,7 +40,7 @@ export default function Dashboard({ auth, usersElections, votedElections, unVote
             <Head title="選挙一覧" />
 
             {/* 選挙が作成されていない場合、もしくは既に投票済みで他に選挙が無い場合 */}
-            {usersElections.data.length === 0 || votedElections.data.length === 0 || unVotedElections.length > 0 && (
+            {usersElections.data.length === 0 || (votedElections.data.length > 0 && unVotedElections.data.length === 0) && (
                 <div className='text-xl dark:text-white text-center p-10'>予定されている選挙はありません</div>
             )}
 
