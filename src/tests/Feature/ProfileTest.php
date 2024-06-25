@@ -3,13 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Admin;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_profile_page_is_displayed(): void
     {
         $admin = Admin::factory()->create();
@@ -27,7 +24,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($admin, 'admin')
-            ->patch(route('admin.profile.update'), [
+            ->put(route('admin.profile.update'), [
                 'name' => 'Test User',
                 'email' => 'test@example.com',
             ]);
@@ -49,7 +46,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($admin, 'admin')
-            ->patch(route('admin.profile.update'), [
+            ->put(route('admin.profile.update'), [
                 'name' => 'Test User',
                 'email' => $admin->email,
             ]);
