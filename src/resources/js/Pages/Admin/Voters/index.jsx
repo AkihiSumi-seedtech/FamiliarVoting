@@ -20,7 +20,7 @@ import React from 'react'
  */
 const Voters = ({ voters, election, queryParams = null, success }) => {
     queryParams = queryParams || {}
-    
+
     /**
      * ソート条件が変更されたときに呼び出す
      *
@@ -145,7 +145,7 @@ const Voters = ({ voters, election, queryParams = null, success }) => {
                         <PageHeader icon="voters" pageName="投票者">
                             <div className='mr-auto flex-[0_0_33%] max-w-[33%] px-[15px]'>
                                 <div className='mb-0 flex'>
-                                    <ElectionMuiIcon name="candidates" className="text-white mr-3" />
+                                    <ElectionMuiIcon name="voters" className="text-white mr-3" />
                                     <div className='dark:text-white text-lg font-extrabold'>投票者</div>
                                 </div>
                             </div>

@@ -4,13 +4,10 @@ import PieChart from '@/Components/result/PieChart';
 import PageHeader from '@/Layouts/PageHeader';
 import ElectionMuiIcon from '@/Layouts/Navbar/ElectionMuiIcon';
 
-const Result = ({ election, results, electionId }) => {
+const Result = ({ election, results, electionId, votes }) => {
     const filteredResults = results.filter(
         result => result.election_id === electionId
     );
-
-    // 投票総数を計算
-    const totalVotes = filteredResults.reduce((acc, result) => acc + result.count, 0);
 
     // chartDataを定義する
     const chartData = filteredResults.map(result => ({
@@ -88,7 +85,7 @@ const Result = ({ election, results, electionId }) => {
                                                             ))}
                                                         </tbody>
                                                     </table>
-                                                    {/* 投票総数 : {totalVotes} */}
+                                                    投票総数 : {votes}
                                                 </div>
                                                 <div className='basis-0 grow max-w-full'>
                                                     <div className='relative w-full h-[300px]'>
